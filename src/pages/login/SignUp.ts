@@ -164,10 +164,7 @@ signupForm.addEventListener('submit', async (event) => {
     email: signupEmail.value,
     name: nickname.value,
     password: signupPassword.value,
-    phone: '01011112222',
-    address: '서울시 강남구 역삼동 123',
     type: 'user',
-    image: 'https://res.cloudinary.com/ddedslqvv/image/upload/v1762361889/openmarket/bK6Io05NOx1.png',
   };
 
   try {
