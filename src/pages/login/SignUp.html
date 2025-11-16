@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/styles/style.css" />
+    <script type="module" src="/src/main.ts"></script>
+    <title>회원가입</title>
+  </head>
+  <body class="font-Pretendard">
+    <div class="pt-5 px-5 my-0 mx-auto">
+      <h1 class="font-semibold mb-11 text-center">회원가입</h1>
+      <form id="signup-form" class="flex flex-col">
+        <!-- 별명 입력 칸 -->
+        <div class="relative w-full">
+          <label for="signup-nickname" class="sr-only">별명 입력</label>
+          <input type="text" id="signup-nickname" name="nickname" required placeholder="별명" class="w-full h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+          <button type="button" id="nickname-check-btn" aria-label="별명 중복 확인" class="right-0 top-1/2 -translate-y-1/2 absolute border px-2.5 py-1 text-xs text-br-primary border-br-primary rounded-full active:bg-br-primary active:text-white">중복확인</button>
+        </div>
+        <p id="nickname-message" class="text-xs text-br-primary mt-2 w-full h-3" aria-live="polite"></p>
+
+        <!-- 이메일 입력 칸 -->
+        <div class="relative w-full mt-9">
+          <label for="signup-email" class="sr-only">이메일 입력</label>
+          <input type="email" id="signup-email" name="email" required placeholder="이메일" class="w-full h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+          <button type="button" id="email-check-btn" aria-label="이메일 중복 확인" class="right-0 top-1/2 -translate-y-1/2 absolute border px-2.5 py-1 text-xs text-br-primary border-br-primary rounded-full active:bg-br-primary active:text-white">중복확인</button>
+        </div>
+        <p id="email-message" class="text-xs text-br-primary mt-2 mb-2.5 w-full h-3" aria-live="polite"></p>
+        <!-- 비밀번호 입력 칸 -->
+        <div class="relative mt-9">
+          <label for="signup-pwd" class="sr-only">비밀번호 입력</label>
+          <input type="password" id="signup-pwd" name="password" required placeholder="비밀번호" class="w-full h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+
+          <button class="right-0 top-1/2 -translate-y-1/2 absolute" type="button" id="signup-icon-eye" aria-label="비밀번호 보이기">
+            <!-- 숨기기 아이콘 -->
+            <img src="../../assets/icon/LoginCloseEye.svg" alt="비밀번호 보기" />
+            <!-- 보이기 아이콘 -->
+            <img src="../../assets/icon/LoginOpenEye.svg" alt="비밀번호 숨기기" class="hidden" />
+          </button>
+        </div>
+        <!-- 비밀번호 확인 입력 칸 -->
+        <div class="relative">
+          <label for="signup-check-pwd" class="sr-only">비밀번호 확인 입력</label>
+          <input type="password" id="signup-check-pwd" name="password-check" required placeholder="비밀번호 확인" class="w-full h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+          <button class="right-0 top-1/2 -translate-y-1/2 absolute" type="button" id="signup-icon-eye2" aria-label="비밀번호 확인 보이기">
+            <!-- 숨기기 아이콘 -->
+            <img src="../../assets/icon/LoginCloseEye.svg" alt="비밀번호 보기" />
+            <!-- 보이기 아이콘 -->
+            <img src="../../assets/icon/LoginOpenEye.svg" alt="비밀번호 숨기기" class="hidden" />
+          </button>
+        </div>
+        <p id="email-message" class="text-xs text-br-warning mt-2 w-full h-3" aria-live="polite"></p>
+        <button type="submit" class="text-sm mt-[88.5px] mb-7 w-full bg-br-loginButton py-3.5 rounded-sm text-white">회원가입</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+[33m5f8ed19[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature-28-web-component[m[33m)[m 아이콘 경로 수정
+[33m8eb37b8[m svg 이미지를 파일로
+[33md86a29f[m 공통컴포넌트로 index.html 작성
+[33m646b6f9[m[33m ([m[1;32mdevelop[m[33m)[m 수동 merge가 되는지 확인
+[33m91d5cfc[m[33m ([m[1;31morigin/feature-26-detail-markup[m[33m)[m Feat:원 컴포넌트 구현
+[33ma57f73b[m Merge branch 'develop' into feature/#16-circle-component
+[33me82a412[m Merge pull request #19 from FRONTENDBOOTCAMP-15th/feature-17-btncomp
+[33me1e3606[m Merge branch 'develop' into feature-17-btncomp
+[33m1a3fb68[m Merge pull request #18 from FRONTENDBOOTCAMP-15th/feature-14-inputcomponent
+[33m7bac334[m Merge branch 'develop' into feature-14-inputcomponent
+[33m7f826ca[m Merge pull request #24 from FRONTENDBOOTCAMP-15th/12-상단바-작업
+[33ma413b63[m aria-label추가
+[33ma43fbeb[m[33m ([m[1;31morigin/12-상단바-작업[m[33m)[m 상단바 작업
+[33mc137d64[m Feat:원 컴포넌트 구현
+[33m9c94763[m[33m ([m[1;31morigin/feature-16-circle-component[m[33m)[m main.ts 수정
+[33m219e1ca[m 폰트 주소 수정
+[33mc3fd1db[m[33m ([m[1;31morigin/feature-17-btncomp[m[33m)[m Feat: 구독 버튼 컴포넌트 작성
+[33mc70ff1e[m[33m ([m[1;31morigin/feature-14-inputcomponent[m[33m)[m  Feat: input text 컴포넌트 구현
+[33m058b38b[m[33m ([m[1;31morigin/feature/#16-circle-component[m[33m)[m reset.css font 삭제
+[33m6a838c0[m style.css 폰트 추가
+[33md8794fb[m 폰트 경로 수정
+[33m5e68677[m 개인 작업 파일 삭제
+[33m8f579aa[m style 폴더 이름 변경2
+[33mf6a1f6d[m style 폴더 이름 변경
+[33mdbdeadb[m base reset 추가
+[33maa254ca[m style.css 경로 수정
+[33m3cfd1b6[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m typescipt 테스트
+[33m623a83e[m reset.css 추가
+[33m5390e5f[m root 스타일 폰트
+[33mec0e2d4[m[33m ([m[1;31morigin/features-8-write-markup[m[33m, [m[1;31morigin/feature-6-search-markup[m[33m, [m[1;32mvanilla-02-brunch-clone.git[m[33m)[m 폴더 구조 추가
+[33md50cf1b[m 폴더 구조
+[33m97fd52f[m Merge branch 'develop' of https://github.com/FRONTENDBOOTCAMP-15th/vanilla-02-brunch-clone into develop
+[33me63d8af[m 폴더생성
+[33m2ca3d43[m Merge pull request #5 from FRONTENDBOOTCAMP-15th/feature-4-del
+[33m2cb5a89[m test.js 파일 삭제
+[33mb166b26[m Merge pull request #3 from FRONTENDBOOTCAMP-15th/feature-2-PRTest
+[33m30e3030[m pr test
+[33m2c4a34f[m 데이터 초기화
+[33me0717d7[m docs: PR 템플릿 추가
+[33mfd7e42c[m tailwind 추가
+[33m02cb431[m README 수정
+[33m5f6a718[m inital commit

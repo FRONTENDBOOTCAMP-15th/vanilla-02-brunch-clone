@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/styles/style.css" />
+    <script type="module" src="/src/main.ts"></script>
+    <title>로그인</title>
+  </head>
+  <body class="font-Pretendard">
+    <div class="my-0 mx-auto px-5 pb-7">
+      <h1 class="sr-only">로그인 페이지</h1>
+      <div class="flex flex-col items-center">
+        <img src="../../assets/img/BrunchLoginImage.svg" alt="" class="mt-[72px]" aria-hidden="true" />
+        <p class="text-[20px] mt-4">브런치 작가로 데뷔하세요.</p>
+        <p class="text-[13px] text-br-contentSecondary mt-2">진솔한 에세이부터 업계 전문 지식까지,</p>
+        <p class="text-[13px] text-br-contentSecondary">당신의 이야기를 세상에 선보이세요.</p>
+      </div>
+
+      <form id="login-form" class="w-full mt3 flex flex-wrap mt-5">
+        <!-- 이메일 입력 -->
+        <div class="w-full">
+          <label for="signin-email" class="sr-only">이메일 입력</label>
+          <input type="email" id="signin-email" name="email" required placeholder="이메일" class="w-full h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+        </div>
+        <!-- 패스워드 입력 -->
+        <div class="w-full">
+          <label for="signin-pwd" class="sr-only">비밀번호 입력</label>
+          <input type="password" id="signin-pwd" name="password" required placeholder="비밀번호" class="w-full h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+        </div>
+        <!-- 로그인 정보 저장 체크박스 -->
+        <div class="relative flex items-center mt-[23px] w-full">
+          <input type="checkbox" id="signin-checkbox-1" name="login-save-checkbox" class="size-5 absolute appearance-none peer" />
+          <label for="signin-checkbox-1" class="text-xs text-br-detailsSubtitle ps-7 bg-[url('../../assets/icon/LoginUnCheckbox.svg')] bg-no-repeat h-5 inline-flex items-center peer-checked:bg-[url('../../assets/icon/LoginCheckbox.svg')]"> 로그인 정보 저장 </label>
+        </div>
+        <button type="submit" class="text-sm mt-[30px] w-full bg-br-loginButton py-3.5 rounded-sm text-white">로그인</button>
+      </form>
+      <a href="./SignUp.html" class="text-sm flex mt-3 w-full justify-center py-3.5 text-br-primary rounded-sm border border-br-primary active:bg-br-primary active:text-white">회원가입</a>
+    </div>
+  </body>
+</html>
