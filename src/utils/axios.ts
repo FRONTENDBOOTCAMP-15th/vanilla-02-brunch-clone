@@ -48,7 +48,7 @@ export function getAxios() {
       // 2xx 외의 범위에 있는 상태 코드는 이 함수가 호출됨
       // 공통 에러 처리
 
-      return Promise.reject(new Error('잠시 후 다시 이용해 주시기 바랍니다.'));
+      return Promise.reject(error);
     }
   );
 
