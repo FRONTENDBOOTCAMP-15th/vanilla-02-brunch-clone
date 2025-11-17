@@ -226,7 +226,7 @@ class TopComponent extends HTMLElement {
     const user = this.getUser();
     console.log(user);
     this.innerHTML = `
-        <div class="flex items-center justify-between px-10 py-4 min-w-[360px]">
+        <div class="flex items-center justify-between px-0 py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
       <div class="flex items-center space-x-1 text-[var(--detailsTitle)]">
         <img src="../../src/assets/img/Logo.svg" alt="브런치스토리 로고" />
@@ -250,7 +250,7 @@ class TopComponent extends HTMLElement {
     }
   }
 
-  private appendAvatarBtn() {   
+  private appendAvatarBtn() {
     const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
     const avatarBtn = document.createElement('button');
     avatarBtn.id = 'avatar-icon';
@@ -278,11 +278,18 @@ class TopComponent extends HTMLElement {
     alertBtn.appendChild(img);
     parentDiv?.prepend(alertBtn);
   }
+  private appendStartBtn() {
+    const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
+
+    const startBtn = document.createElement('button');
+    //startBtn.id = 'alert-icon';
+    startBtn.className = 'bg-black text-white rounded-full px-6 py-2 text-sm hover:bg-gray-800 transition cursor-pointer';
+    startBtn.textContent = '시작하기';
+    parentDiv?.appendChild(startBtn);
+  }
 
   private loggedOutHTML() {
-    return `
-        <button id="start-button" class="bg-[var(--start)] text-[var(--line)] rounded-full w-[62px] h-[24px] text-[10px] hover:bg-[var(--icon)] transition cursor-pointer">시작하기</button>
-    `;
+    this.appendStartBtn();
   }
 
   private loggedInHTML() {
@@ -335,7 +342,7 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'client-id': 'febc15-vanilla02-ecad', 
+      'client-id': 'febc15-vanilla02-ecad',
     },
     body: JSON.stringify({ email, password }),
   });
@@ -349,8 +356,8 @@ export async function loginUser(email: string, password: string): Promise<LoginR
   return data;
 }
 
-
 // 로그인 함수 호출
+/*
 (async () => {
   try {
     const result = await loginUser('w1@market.com', '11111111');
@@ -368,3 +375,4 @@ export async function loginUser(email: string, password: string): Promise<LoginR
   }
   
 })();
+*/
