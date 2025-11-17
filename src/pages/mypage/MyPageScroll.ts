@@ -23,8 +23,9 @@ carousels.forEach((slider) => {
   });
 
   //마우스 떼ㅁ
-  window.addEventListener('mouseup', () => {
+  window.addEventListener('mouseup', (e) => {
     isDown = false;
+    e.preventDefault();
   });
 
   //이동 구현
