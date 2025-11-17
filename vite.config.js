@@ -10,7 +10,7 @@ export default defineConfig({
       input: {
         index: path.resolve(__dirname, 'index.html'),
         login: path.resolve(__dirname, 'src/pages/login/SignIn.html'),
-        member: path.resolve(__dirname, 'src/pages/login/SignUP.html'),
+        member: path.resolve(__dirname, 'src/pages/login/SignUp.html'),
         details: path.resolve(__dirname, 'src/pages/details/DetailsPage.html'),
       },
     },
