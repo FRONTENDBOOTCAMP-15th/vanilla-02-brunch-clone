@@ -1,21 +1,18 @@
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 
 export default defineConfig({
+  plugins: [tailwindcss()],
+  appType: 'mpa',
   build: {
     rollupOptions: {
       input: {
-        // 메인 페이지
-        index: 'index.html',
-
-        // 사용자 관련
-
-        // 게시판 관련
-
-        // 에러 페이지
+        index: path.resolve(__dirname, 'index.html'),
+        login: path.resolve(__dirname, 'src/pages/login/SignIn.html'),
+        member: path.resolve(__dirname, 'src/pages/login/SignUp.html'),
+        details: path.resolve(__dirname, 'src/pages/details/DetailsPage.html'),
       },
     },
   },
-  plugins: [tailwindcss()],
-  appType: 'mpa', // fallback 사용안함
 });
