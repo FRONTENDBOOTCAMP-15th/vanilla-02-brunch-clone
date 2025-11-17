@@ -4,6 +4,7 @@
 
 import { AxiosError } from 'axios';
 import { getAxios } from '../../utils/axios';
+import type { DetailRes, LoginUser } from '../../utils/types';
 
 const axios = getAxios();
 
@@ -42,11 +43,11 @@ LoginForm.addEventListener('submit', async (event) => {
 
   try {
     if (checkBox.checked) {
-      const { data } = await axios.post('/users/login', login, { params: { expiresIn: '1d' } });
+      const { data } = await axios.post<DetailRes<LoginUser>>('/users/login', login, { params: { expiresIn: '1d' } });
       const accessToken = data.item.token.accessToken;
       localStorage.setItem('accessToken', accessToken);
     } else {
-      const { data } = await axios.post('/users/login', login);
+      const { data } = await axios.post<DetailRes<LoginUser>>('/users/login', login);
       const accessToken = data.item.token.accessToken;
       sessionStorage.setItem('accessToken', accessToken);
     }

@@ -5,6 +5,7 @@
 
 import { AxiosError } from 'axios';
 import { getAxios } from '../../utils/axios';
+import type { DetailRes, LoginUser } from '../../utils/types';
 
 const axios = getAxios();
 let NicknameVerified = false;
@@ -38,7 +39,7 @@ async function checkNickname() {
     return;
   }
   try {
-    const { data } = await axios.get('/users/name', {
+    const { data } = await axios.get<DetailRes<LoginUser>>('/users/name', {
       params: {
         name: nicknameValue,
       },
@@ -73,7 +74,7 @@ async function checkEmail() {
     return;
   }
   try {
-    const { data } = await axios.get('/users/email', {
+    const { data } = await axios.get<DetailRes<LoginUser>>('/users/email', {
       params: {
         email: emailValue,
       },
@@ -146,6 +147,8 @@ passwordCheck.addEventListener('input', PasswordCheckLive);
 //회원가입 버튼
 signupForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  const cleanNickname = nickname.value.replace(/\s/g, '');
+  const cleanEmail = signupEmail.value.replace(/\s/g, '');
   if (NicknameVerified == false) {
     alert('별명 중복 확인을 해주세요.');
     return;
@@ -161,14 +164,14 @@ signupForm.addEventListener('submit', async (event) => {
   }
 
   const signup = {
-    email: signupEmail.value,
-    name: nickname.value,
+    email: cleanEmail,
+    name: cleanNickname,
     password: signupPassword.value,
     type: 'user',
   };
 
   try {
-    await axios.post('/users', signup);
+    await axios.post<DetailRes<LoginUser>>('/users', signup);
     alert('회원가입 성공했습니다. 로그인 페이지로 이동합니다.');
     location.href = './SignIn.html';
   } catch (err) {
