@@ -8,6 +8,7 @@
   --line: #eeeeee;
   --icon: #444444;
   --warning: #fc3b75;
+  --searchBackground: #f8f8f8;
 
   --contentPrimary: #231f20;
   --contentSecondary: #959595;
@@ -33,6 +34,7 @@
   --color-br-line: var(--line);
   --color-br-icon: var(--icon);
   --color-br-warning: var(--warning);
+  --color-br-searchBackground: var(--searchBackground);
 
   --color-br-contentPrimary: var(--contentPrimary);
   --color-br-contentSecondary: var(--contentSecondary);

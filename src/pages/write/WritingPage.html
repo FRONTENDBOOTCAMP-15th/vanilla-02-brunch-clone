@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles/style.css" />
+    <script type="module" src="../../main.ts"></script>
+    <title>글쓰기 페이지</title>
+  </head>
+  <body class="font-Pretendard">
+    <div class="inline-flex flex-nowrap gap-[105px] justify-between items-center w-[360px]">
+      <button class="writing-close cursor-pointer"><img src="../../assets/icon/IconClose.svg" alt="화면 닫기" /></button>
+
+      <p class="font-semibold text-[19px]">글쓰기</p>
+
+      <button class="writing-registar cursor-pointer"><img src="../../assets/icon/IconCheck.svg" alt="게시글 등록" /></button>
+    </div>
+
+    <div class="text-input">
+      <label for="title" class="sr-only">제목 입력</label>
+      <input type="text" id="writingpage-title-input" name="text" required placeholder="제목" class="py-[25px] px-[25px] w-[360px] border-b border-br-loginLine placeholder:text-2xl focus:outline-none focus:border-br-primary text-2xl" />
+    </div>
+    <div class="text-input">
+      <label for="subtitle" class="sr-only">소제목 입력</label>
+      <input type="text" id="writingpage-subtitle-input" name="text" required placeholder="소제목" class="py-[25px] px-[25px] w-[360px] border-b border-br-loginLine placeholder:text-[20px] focus:outline-none focus:border-br-primary text-[20px]" />
+    </div>
+    <div class="writingpage-contents-input">
+      <label for="text" class="sr-only">내용 입력</label>
+      <textarea type="text" name="input-name" required placeholder="내용을 입력하세요." class="py-[25px] px-[25px] w-[360px] h-[332px] resize-none placeholder:text-[20px] border-b border-br-loginLine caret-br-primary focus:outline-none text-[20px]"></textarea>
+    </div>
+    <div class="writingpage-icon-box inline-flex flex-nowrap gap-[230px] items-center justify-center w-[360px] h-[84px] bg-br-contentsBg">
+      <!-- 사진 아이콘 -->
+      <button class="writing-picture cursor-pointer"><img src="../../assets/icon/IconPicture.svg" alt="사진 업로드" /></button>
+      <!-- 키보드 아이콘 -->
+      <button class="writing-keyboard cursor-pointer"><img src="../../assets/icon/IconKeyboard.svg" alt="키보드" /></button>
+    </div>
+  </body>
+</html>
