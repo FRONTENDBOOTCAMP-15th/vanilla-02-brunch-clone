@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    상대경로로 수정하기
+    <link rel="stylesheet" href="../../styles/style.css" />
+    <script type="module" src="../../main.ts"></script>
+    <script src="../../commons/Commons.ts"></script>
+    <title>상세 페이지</title>
+  </head>
+  <!-- 폰트 수정하기 -->
+  <body class="font-Pretendard">
+    <header>헤더 상단바</header>
+
+    <main class="details-contents">
+      <section class="relative details-header h-[239px]">
+        <img src="/" alt="게시글 썸네일" class="absolute w-full h-full inset-0" />
+
+        <!-- 게시글 헤더 텍스트 -->
+        <div class="detail-textcontent relative z-10 flex flex-col">
+          <p class="details-title text-[28px] mt-[79px]">우여곡절 끝에 도착한 첫 번째 목적지</p>
+          <p class="details-subtitle text-[16px] mt-[3px]">Val carlos</p>
+          <div class="details-info inline-flex gap-2.5 items-center mt-8">
+            <p class="details-author">
+              <i class="text-br-contentSecondary">by</i>
+              <a href="/" class="text-br-detailsSubtitle">Sunny</a>
+            </p>
+            <span class="text-br-contentSecondary">&#183;</span>
+            <span class="details-time text-br-contentSecondary">Jul 23.2024</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 게시글 본문 -->
+      <section class="details-maincontents mt-[70px] mx-auto px-5 text-[17px]">그래 지난 화를 요약해 보면 생장에 도착한 나는 도착 당일 바로 첫 여정을 시작하기로 마음 먹었고...</section>
+
+      <!-- 게시글 작성자 프로필 -->
+      <section class="details-profile w-full h-[284px] mt-16 flex flex-col justify-between px-5 py-6">
+        <div class="flex items-start justify-between">
+          <div class="details-writer-info">
+            <p class="details-writer-name text-[22px] text-br-detailsTitle">Sunny</p>
+            <a href="/" class="details-writer-job text-[12px] text-br-contentSecondary">회사원</a>
+          </div>
+
+          <a href="/" class="details-writer-img"><img src="/" alt="작성자 사진" class="w-[50px] h-[50px] rounded-full" /></a>
+        </div>
+
+        <a href="/" class="details-explain text-[12px] text-br-contentSecondary">12년 차 국내 항공사 승무원의 겨울 산티아고 순례길 이야기 연재 중. 커피 한 잔을 벗 삼아 편하게 읽을 수 있는 글쓰기에 꽤나 진심인 편입니다. 후후</a>
+
+        <div class="details-subscribe-info mt-[22px] flex items-center justify-between">
+          <div>
+            <a href="/" class="text-[14px] text-br-contentSecondary">구독자</a>
+            <a href="/" class="details-subscribe-count text-[14px] text-br-detailsSubtitle">108</a>
+          </div>
+          <button class="">구독 버튼</button>
+        </div>
+      </section>
+
+      <!-- 좋아요 버튼 -->
+      <section class="details-like-btn border-t border-t-br-line h-[52px] flex flex-row gap-[3px]">
+        <img src="../../assets/icon/IconLike.svg" alt="좋아요 버튼" aria-pressed="false" class="w-[21px] h-[21px]" />
+        <p class="details-like-count">81</p>
+      </section>
+    </main>
+  </body>
+</html>

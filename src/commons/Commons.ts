@@ -1,4 +1,224 @@
+//CircleContents
+class CircleContentsComponent extends HTMLElement {
+  // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
+  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  connectedCallback() {
+    this.render();
+  }
 
+  // UI를 렌더링
+  render() {
+    this.innerHTML = `
+     <!--원 컴포넌트-->
+    <div class="circle-contents w-20 h-20 rounded-full bg-br-loginButton role=img aria-label=이미지 영역"></div>
+
+    `;
+  }
+}
+
+// InputComponent
+class InputComponent extends HTMLElement {
+  // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
+  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  connectedCallback() {
+    this.render();
+  }
+
+  // UI를 렌더링
+  render() {
+    this.innerHTML = `
+    <!-- 로그인 입력 서식 -->
+    <div class="email-input">
+      <label for="emailinput" class="sr-only font-Pretendard">레이블</label>
+      <input type="email" id="login-email-input" name="login" required placeholder="이메일" class="w-80 h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+    </div>
+    <div class="pwd-input">
+      <label for="pwdinput" class="sr-only">레이블</label>
+      <input type="password" id="login-pwd-input" name="password" required placeholder="비밀번호" class="w-80 h-[43px] border-b border-br-loginLine placeholder:text-sm focus:outline-none focus:border-br-primary" />
+    </div>
+    <!-- 입력 서식 -->
+    <div class="text-input">
+      <input type="text" id="page-text-input" name="text" required placeholder="텍스트" class="py-[25px] px-[25px] w-[360px] border-b border-br-loginLine placeholder:text-xl focus:outline-none focus:border-br-primary" />
+    </div>
+    <div class="본인 페이지-input">
+      <textarea type="text" name="input-name" required placeholder="텍스트" class="py-[25px] px-[25px] w-[360px] resize-none placeholder:text-xl border-b border-br-loginLine caret-br-primary focus:outline-none"></textarea>
+    </div>
+    `;
+  }
+}
+
+customElements.define('input-component', InputComponent);
+
+// Navigate
+class NavigateComponent extends HTMLElement {
+  // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
+  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  connectedCallback() {
+    this.render();
+  }
+
+  // UI를 렌더링
+  render() {
+    this.innerHTML = `
+  <div class="bg-white w-full overflow-x-auto">
+  <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
+    <!-- 홈 -->
+    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+        <!-- 체크박스 숨김 -->
+    <input type="checkbox" class="sr-only peer" />
+     <!-- 기본 아이콘 (체크 전) -->
+    <img
+      src="../../public/Home.svg"
+      alt="검색 아이콘 기본"
+      class="peer-checked:hidden"
+    />
+          <!-- 체크 아이콘 (체크 후) -->
+    <img
+       src="../../public/HomeActive.svg"
+      alt="검색 아이콘 채움"
+      class="hidden peer-checked:block"
+    />
+      </label>
+      <span class="text-center py-[10px]">홈</span>
+    </div>
+
+    <!-- 발견 -->
+    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+       <!-- 체크박스 숨김 -->
+    <input type="checkbox" class="sr-only peer" />
+      <!-- 기본 아이콘 (체크 전) -->
+    <img
+      src="../../public/Search.svg"
+      alt="발견 아이콘 기본"
+      class="peer-checked:hidden"
+    />
+            <!-- 체크 아이콘 (체크 후) -->
+    <img
+       src="../../public/SearchActive.svg"
+      alt="발견 아이콘 채움"
+      class="hidden peer-checked:block"
+    />
+      </label>
+      <span class="text-center">발견</span>
+    </div>
+
+    <!-- 글쓰기 -->
+    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+      <!-- 체크박스 숨김 -->
+    <input type="checkbox" class="sr-only peer" />
+    <!-- 기본 아이콘 (체크 전) -->
+    <img
+      src="../../public/EditSquare.svg"
+      alt="글쓰기 아이콘 기본"
+      class="peer-checked:hidden"
+    />
+            <!-- 체크 아이콘 (체크 후) -->
+    <img
+       src="../../public/EditSquare.svg"
+      alt="글쓰기 아이콘 채움"
+      class="hidden peer-checked:block"
+    />
+      </label>
+      <span class="text-center">글쓰기</span>
+    </div>
+
+    <!-- 내 서랍 -->
+    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+       <!-- 체크박스 숨김 -->
+    <input type="checkbox" class="sr-only peer" />
+      <!-- 기본 아이콘 (체크 전) -->
+    <img
+      src="../../public/inventory.svg"
+      alt="내서랍 아이콘 기본"
+      class="peer-checked:hidden"
+    />
+            <!-- 체크 아이콘 (체크 후) -->
+    <img
+       src="../../public/inventoryActive.svg"
+      alt="내서랍 아이콘 채움"
+      class="hidden peer-checked:block"
+    />
+
+      </label>
+      <span class="text-center">내 서랍</span>
+    </div>
+  </div>
+</div>
+
+    `;
+  }
+}
+
+customElements.define('navigate-component', NavigateComponent);
+
+//SubscribeButton
+class SubscribeButtonComponent extends HTMLElement {
+  // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
+  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  connectedCallback() {
+    this.render();
+  }
+
+  // UI를 렌더링
+  render() {
+    this.innerHTML = `    
+    <button type="button" aria-pressed="false" class="inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
+      <svg class="icon-plus" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <rect width="17" height="17" fill="url(#pattern0_1_16927)" />
+        <defs>
+          <pattern id="pattern0_1_16927" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_1_16927" transform="scale(0.0294118)" />
+          </pattern>
+          <image
+            id="image0_1_16927"
+            width="34"
+            height="34"
+            preserveAspectRatio="none"
+            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiAQMAAAAAiZmBAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAGUExURUdwTADGvi5TahIAAAABdFJOUwBA5thmAAAAGUlEQVQI12NgIAocIJtk/v//A4ykxBwiAABTehTj/uJoSwAAAABJRU5ErkJggg=="
+          />
+        </defs>
+      </svg>
+
+      <svg class="icon-check hidden" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <rect width="17" height="17" fill="url(#pattern0_3153_10)" />
+        <defs>
+          <pattern id="pattern0_3153_10" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_3153_10" transform="scale(0.0294118)" />
+          </pattern>
+          <image
+            id="image0_3153_10"
+            width="34"
+            height="34"
+            preserveAspectRatio="none"
+            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURUdwTP///////////////////////////////////////////////w2imYoAAAAMdFJOUwBJ7SIN1aqABTC+eRc69w0AAABbSURBVCjPY2AYzKABXYAxGF3E6DSaAEtMApoI21EHNJE9yujmnhHAbS4LhrlGBejmyhxrQDOXUWcJurmTjhqguZc5RhPdvV6HxNDcy5FzBt297BjuZRActLEIAIXPFQAhksVqAAAAAElFTkSuQmCC"
+          />
+        </defs>
+      </svg>
+
+      <span class="font-Pretendard">구독</span>
+    </button>
+    `;
+  }
+}
+
+customElements.define('subscribe-button', SubscribeButtonComponent);
+
+//TopComponent
+class TopComponent extends HTMLElement {
+  // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
+  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  connectedCallback() {
+    this.render();
+  }
+
+  // UI를 렌더링
+  render() {
+    this.innerHTML = `
+  
   <div class="flex items-center justify-between px-10 py-4 w-full">
     
     <!-- 왼쪽: brunchstory -->
@@ -32,3 +252,20 @@
       </button>
     </div>
   </div>
+    `;
+  }
+}
+
+/* customElements.define('태그명'), Component);
+ * html에서 <태그명>을 이용하여 사용
+ */
+
+customElements.define('top-header', TopComponent);
+
+customElements.define('circle-component', CircleContentsComponent);
+
+customElements.define('navigate-component', NavigateComponent);
+
+customElements.define('subscribe-button', SubscribeButtonComponent);
+
+customElements.define('input-component', InputComponent);

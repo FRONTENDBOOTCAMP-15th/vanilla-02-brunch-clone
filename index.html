@@ -5,15 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>vanilla-02-brunch-clone</title>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <script src="./src/commons/Commons.ts"></script>
     <script type="module" src="/src/main.ts"></script>
   </head>
-  <body>
+  <body class="font-Pretendard">
     <h1 class="text-3xl text-blue-500 font-bold underline">Vite + Tailwind CSS</h1>
     <div id="app"></div>
-    <a href="./src/commons/CircleContents.html">원 컴포넌트</a><br />
-    <a href="./src/commons/SubscribesButton.html">버튼 컴포넌트</a><br />
-    <a href="./src/commons/InputComponent.html">여기다</a><br />
+    <a href="./src/commons/CircleContents.html">원 컴포넌트</a>
+    <a href="./src/commons/SubscribesButton.html">버튼 컴포넌트</a>
+    <a href="./src/commons/InputComponent.html">여기다</a>
     <a href="./src/pages/write/WritingPage.html">글쓰기 페이지</a><br />
     <a href="./src/pages/author/AuthorPage.html">작가홈</a><br />
+    <!-- 공통 컴포넌트 불러오기-->
+    <top-header></top-header>
+    <circle-component></circle-component>
+    <input-component></input-component>
+    <subscribe-button></subscribe-button>
+    <navigate-component></navigate-component>
   </body>
 </html>
