@@ -13,6 +13,7 @@ export default defineConfig({
         member: path.resolve(__dirname, 'src/pages/login/SignUp.html'),
         details: path.resolve(__dirname, 'src/pages/details/DetailsPage.html'),
         write: path.resolve(__dirname, 'src/pages/write/WritingPage.html'),
+        mypage: path.resolve(__dirname, 'src/pages/mypage/Mypage.html'),
       },
     },
   },
