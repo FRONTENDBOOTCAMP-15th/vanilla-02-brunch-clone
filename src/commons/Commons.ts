@@ -206,7 +206,9 @@ class SubscribeButtonComponent extends HTMLElement {
   // UI를 렌더링
   render() {
     this.innerHTML = `    
-    <button type="button" aria-pressed="false" class="inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
+    <button type="button" aria-pressed="false" 
+      id="subscribe-button"
+      class="inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
       <svg class="icon-plus" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <rect width="17" height="17" fill="url(#pattern0_1_16927)" />
         <defs>
@@ -242,6 +244,40 @@ class SubscribeButtonComponent extends HTMLElement {
       <span class="font-Pretendard">구독</span>
     </button>
     `;
+    //const btn = document.querySelector('button');
+    const btn = document.getElementById('subscribe-button');
+
+    let subscribed = false;
+
+    btn?.addEventListener('click', () => {
+      subscribed = !subscribed; // subscribed = true
+      // aria-pressed = true -> 버튼이 눌린 상태
+      btn.setAttribute('aria-pressed', String(subscribed));
+
+      // 스타일 변경
+      btn.classList.toggle('bg-br-contentsBg', !subscribed);
+      btn.classList.toggle('bg-br-primary', subscribed);
+      btn.classList.toggle('text-br-primary', !subscribed);
+      btn.classList.toggle('text-br-contentsBg', subscribed);
+      btn.classList.toggle('w-[65px]', !subscribed);
+      btn.classList.toggle('w-[78px]', subscribed);
+
+      // 아이콘 변경
+      const plus = btn.querySelector('.icon-plus');
+      const check = btn.querySelector('.icon-check');
+
+      plus?.classList.toggle('hidden', subscribed);
+      check?.classList.toggle('hidden', !subscribed);
+
+      // 텍스트 변경
+      let label = btn.querySelector('span');
+
+      if (subscribed) {
+        label!.textContent = '구독중';
+      } else {
+        label!.textContent = '구독';
+      }
+    });
   }
 }
 
