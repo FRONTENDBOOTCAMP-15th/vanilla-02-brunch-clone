@@ -31,7 +31,9 @@ export const getUserPosts = async (userId: number, page: number = 1, limit: numb
 // 1. 회원 정보 조회
 async function loadUserProfile() {
   try {
-    const data = await getUserProfile(2); // 사용자 ID
+    const authorId = new URLSearchParams(window.location.search).get('_id')!;
+    const data = await getUserProfile(parseInt(authorId)); // 사용자 ID
+
     console.log('사용자 이름:', data.item.name);
     console.log('직업:', data.item.extra.job);
     console.log('작성한 글 수:', data.item.posts);
@@ -63,7 +65,8 @@ async function loadUserProfile() {
 // 2. 사용자가 작성한 글 목록 조회
 async function loadUserPosts() {
   try {
-    const data = await getUserPosts(3, 1); // ID: 3, 1페이지
+    const authorId = new URLSearchParams(window.location.search).get('_id')!;
+    const data = await getUserPosts(parseInt(authorId), 1); // ID: 3, 1페이지
     console.log('총 글 개수:', data.pagination.total);
     console.log('글 목록:', data.item);
 
