@@ -16,8 +16,9 @@ export const getUserProfile = async (userId: number) => {
  * 사용자가 작성한 글 목록 조회
  */
 export const getUserPosts = async (userId: number, page: number = 1, limit: number = 10) => {
-  const response = await axios.get<UserPostList>(`/users/${userId}/posts`, {
+  const response = await axios.get<UserPostList>(`posts/users/${userId}/`, {
     params: {
+      type: 'brunch',
       page,
       limit,
     },
@@ -30,10 +31,30 @@ export const getUserPosts = async (userId: number, page: number = 1, limit: numb
 // 1. 회원 정보 조회
 async function loadUserProfile() {
   try {
-    const data = await getUserProfile(123); // 사용자 ID: 123
+    const data = await getUserProfile(2); // 사용자 ID
     console.log('사용자 이름:', data.item.name);
     console.log('직업:', data.item.extra.job);
     console.log('작성한 글 수:', data.item.posts);
+    console.log('이미지:', data.item.image);
+    console.log('구독자수:', data.item.bookmarkedBy.users);
+    console.log('관심작가 수:', data.item.bookmark.users);
+
+    const name = document.querySelector('#name')!;
+    name.textContent = data.item.name;
+
+    const job = document.querySelector('#job')!;
+    job.textContent = data.item.extra.job;
+
+    const image = document.querySelector('#image') as HTMLImageElement;
+    image.src = data.item.image;
+    image.width = 80;
+    image.height = 80;
+
+    const subCount = document.querySelector('#subCount')!;
+    subCount.textContent = data.item.bookmarkedBy.users.toString();
+
+    const followCount = document.querySelector('#followCount')!;
+    followCount.textContent = data.item.bookmark.users.toString();
   } catch (error) {
     console.error('회원 정보 조회 실패:', error);
   }
@@ -42,12 +63,36 @@ async function loadUserProfile() {
 // 2. 사용자가 작성한 글 목록 조회
 async function loadUserPosts() {
   try {
-    const data = await getUserPosts(123, 1, 10); // ID: 123, 1페이지, 10개씩
+    const data = await getUserPosts(3, 1); // ID: 3, 1페이지
     console.log('총 글 개수:', data.pagination.total);
     console.log('글 목록:', data.item);
 
+    const articleList = document.querySelector('#article-list')!;
+
     data.item.forEach((post) => {
       console.log(`제목: ${post.title}, 작성일: ${post.createdAt}`);
+      console.log(`내용: ${post.content}`);
+      console.log('댓글', post.repliesCount);
+      console.log('부제목', post.extra.subTitle);
+      console.log('날짜', post.updatedAt);
+
+      const article = `          
+        <article class="border-b border-br-line py-4">
+          <a href="/">
+            <div class="underline decoration text-[13px] text-br-primary pb-[10px]">${post.extra.subTitle}</div>
+            <h3 class="text-[17px] mt-[14px]">${post.title}</h3>
+            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden">${post.content}</p>
+          
+            <div class="flex items-center gap-2 mt-[8px]">
+              <p class="text-[12px] text-br-detailsSubtitle">댓글 ${post.repliesCount}</p>
+              <span class="text-[12px] text-br-contentSecondary">${post.updatedAt}</span>
+            </div>
+          </a>
+        </article>
+        
+      `;
+
+      articleList.innerHTML += article;
     });
   } catch (error) {
     console.error('글 목록 조회 실패:', error);

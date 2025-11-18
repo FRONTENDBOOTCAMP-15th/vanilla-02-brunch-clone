@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/style.css" />
     <script type="module" src="/src/utils/types.ts"></script>
-    <script type="module" src="/src/pages/author/UserPostList.ts"></script>
     <script type="module" src="/src/pages/author/AuthorPage.ts"></script>
     <script type="module" src="/src/main.ts"></script>
 
@@ -15,63 +14,28 @@
     <main class="max-w-sm mx-auto px-4 pt-6 pb-10">
       <div class="flex justify-between items-start">
         <div>
-          <h2 class="text-[27px] text-br-detailsTitle mb-2">AB</h2>
-          <h3 class="text-[12px] text-br-contentSecondary">기획자</h3>
+          <h2 id="name" class="text-[27px] text-br-detailsTitle mb-2">AB</h2>
+          <h3 id="job" class="text-[12px] text-br-contentSecondary">기획자</h3>
         </div>
-        <img src="/src/assets/icon/universe.svg" alt="우주이미지" />
+        <img id="image" src="/src/assets/icon/universe.svg" alt="우주이미지" />
       </div>
 
       <section class="mt-2">
         <a href="/" class="flex gap-7">
           <div class="Subscribers">
             <p class="text-[12px] text-br-contentSecondary mb-2">구독자</p>
-            <p class="text-[16px] text-br-detailsSubtitle">30</p>
+            <p id="subCount" class="text-[16px] text-br-detailsSubtitle">30</p>
           </div>
-          <div class="Following">
+          <div class="following">
             <p class="text-[12px] text-br-contentSecondary mb-2">관심작가</p>
-            <p class="text-[16px] text-br-detailsSubtitle">16</p>
+            <p id="followCount" class="text-[16px] text-br-detailsSubtitle">16</p>
           </div>
         </a>
       </section>
 
       <!-- 글 목록 -->
       <section id="article-list" class="mt-6">
-        <!-- <section class="mt-6"> -->
-        <!-- 글 1 -->
-        <!-- <article class="border-b border-br-line py-5">
-          <a href="/" class="article-link" data-article-id="1">
-            <div class="underline decoration text-[13px] text-br-primary pb-[10px]">취준은 처음이라</div>
-            <h3 class="text-[17px] mt-[14px]">[취업특강] 노션 포트폴리오 만들기</h3>
-            <p class="mt-5 text-[12px] text-br-detailsSubtitle mt-[8px]">with 노션과 슈크림 마을, 마포청년나루 │</p>
-            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px]">취업 준비를 위해 반드시 필요한 것 세 가지. 자기소개서, 이력서, 포트폴리오. 그중에서 쉽게 만들 수 있는 노션 포트폴리오를 소개합니다.</p>
-
-            <span class="mt-2 block text-[12px] text-br-contentSecondary mt-[6px]"> 댓글 0 · Jul 02, 2024 </span>
-          </a>
-        </article> -->
-
-        <!-- 글 2 -->
-        <!-- <article class="border-b border-br-line py-4">
-          <a href="/">
-            <div class="underline decoration text-[13px] text-br-primary pb-[10px]">취준은 처음이라</div>
-            <h3 class="text-[17px] mt-[14px]">[취업특강] 노션 포트폴리오 만들기</h3>
-            <p class="mt-5 text-[12px] text-br-detailsSubtitle mt-[8px]">with 노션과 슈크림 마을, 마포청년나루 │</p>
-            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px]">취업 준비를 위해 반드시 필요한 것 세 가지. 자기소개서, 이력서, 포트폴리오. 그중에서 쉽게 만들 수 있는 노션 포트폴리오를 소개합니다.</p>
-
-            <span class="mt-2 block text-[12px] text-br-contentSecondary mt-[6px]"> 댓글 0 · Jul 02, 2024 </span>
-          </a>
-        </article> -->
-
-        <!-- 글 3 -->
-        <!-- <article class="border-b border-br-line py-4">
-          <a href="/">
-            <div class="underline decoration text-[13px] text-br-primary pb-[10px]">취준은 처음이라</div>
-            <h3 class="text-[17px] mt-[14px]">[취업특강] 노션 포트폴리오 만들기</h3>
-            <p class="text-[12px] text-br-detailsSubtitle mt-[8px]">with 노션과 슈크림 마을, 마포청년나루 │</p>
-            <p class="text-[12px] text-xs text-br-contentSecondary mt-[8px]">취업 준비를 위해 반드시 필요한 것 세 가지. 자기소개서, 이력서, 포트폴리오. 그중에서 쉽게 만들 수 있는 노션 포트폴리오를 소개합니다.</p>
-
-            <span class="block text-[12px] text-br-contentSecondary mt-[6px]"> 댓글 0 · Jul 02, 2024 </span>
-          </a>
-        </article> -->
+        <!-- 글 -->
       </section>
     </main>
   </body>

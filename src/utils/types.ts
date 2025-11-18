@@ -36,12 +36,8 @@ export interface UserPost {
   image: string;
   createdAt: string;
   updatedAt: string;
-  product: {
-    name: string;
-    image: {
-      url: string;
-      name: string;
-    };
+  extra: {
+    subTitle: string;
   };
   bookmarks: number;
   myBookmarkId: number | null;
