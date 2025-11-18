@@ -5,34 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../styles/style.css" />
     <script type="module" src="../../main.ts"></script>
+    <script type="module" src="./WritingPage.ts"></script>
     <title>글쓰기 페이지</title>
   </head>
-  <body class="font-Pretendard">
-    <div class="inline-flex flex-nowrap gap-[105px] justify-between items-center w-[360px]">
-      <button class="writing-close cursor-pointer"><img src="../../assets/icon/IconClose.svg" alt="화면 닫기" /></button>
+  <body class="font-Pretendard text-center min-h-screen flex flex-col">
+    <div class="flex flex-col flex-1">
+      <div class="inline-flex flex-nowrap justify-between items-center w-full h-[47px] border-b border-b-br-line">
+        <!-- x 버튼 누르면 내 서랍 페이지(명규님이 만드신 페이지)로 이동 -->
+        <a href="../../../index.html">
+          <button type="button" aria-label="닫기" class="writing-close cursor-pointer ml-5"><img src="../../assets/icon/IconClose.svg" alt="" /></button>
+        </a>
 
-      <p class="font-semibold text-[19px]">글쓰기</p>
+        <p class="font-semibold text-[19px]">글쓰기</p>
 
-      <button class="writing-registar cursor-pointer"><img src="../../assets/icon/IconCheck.svg" alt="게시글 등록" /></button>
-    </div>
+        <button type="submit" aria-label="작성 완료" class="writing-registar cursor-pointer mr-5"><img src="../../assets/icon/IconCheck.svg" alt="" /></button>
+      </div>
 
-    <div class="text-input">
-      <label for="title" class="sr-only">제목 입력</label>
-      <input type="text" id="writingpage-title-input" name="text" required placeholder="제목" class="py-[25px] px-[25px] w-[360px] border-b border-br-loginLine placeholder:text-2xl focus:outline-none focus:border-br-primary text-2xl" />
+      <div class="writingpage-title-input">
+        <label for="writingpage-title-input" class="sr-only">제목 입력</label>
+        <input type="text" id="writingpage-title-input" name="title" required placeholder="제목" class="py-[25px] px-[25px] w-full border-b border-br-loginLine placeholder:text-2xl focus:outline-none focus:border-br-primary text-2xl" />
+      </div>
+      <div class="writingpage-subtitle-input">
+        <label for="writingpage-subtitle-input" class="sr-only">소제목 입력</label>
+        <input type="text" id="writingpage-subtitle-input" name="subtitle" required placeholder="소제목" class="py-[25px] px-[25px] w-full border-b border-br-loginLine placeholder:text-[20px] focus:outline-none focus:border-br-primary text-[20px]" />
+      </div>
+      <div class="writingpage-contents-textarea">
+        <!-- <label for="writingpage-contents-editor" class="sr-only">내용 입력</label> -->
+        <!-- <textarea id="writigpage-contents-textarea" name="contents" required placeholder="내용을 입력하세요." class="hidden py-[25px] px-[25px] w-full h-[332px] resize-none placeholder:text-[20px] caret-br-primary focus:outline-none text-[20px]"></textarea> -->
+        <!-- 이미지 렌더링을 위해 textarea 대신 아래 div 태그 사용 -->
+        <div
+          aria-label="내용 입력"
+          data-placeholder="내용을 입력하세요."
+          id="writingpage-contents-editor"
+          contenteditable="true"
+          class="py-[25px] px-[25px] w-full h-[332px] overflow-y-auto caret-br-primary focus:outline-none text-[20px] text-left empty:before:content-[attr(data-placeholder)] empty:before:text-br-contentSecondary empty:before:pointer-events-none empty:before:block"
+        ></div>
+      </div>
     </div>
-    <div class="text-input">
-      <label for="subtitle" class="sr-only">소제목 입력</label>
-      <input type="text" id="writingpage-subtitle-input" name="text" required placeholder="소제목" class="py-[25px] px-[25px] w-[360px] border-b border-br-loginLine placeholder:text-[20px] focus:outline-none focus:border-br-primary text-[20px]" />
-    </div>
-    <div class="writingpage-contents-input">
-      <label for="text" class="sr-only">내용 입력</label>
-      <textarea type="text" name="input-name" required placeholder="내용을 입력하세요." class="py-[25px] px-[25px] w-[360px] h-[332px] resize-none placeholder:text-[20px] border-b border-br-loginLine caret-br-primary focus:outline-none text-[20px]"></textarea>
-    </div>
-    <div class="writingpage-icon-box inline-flex flex-nowrap gap-[230px] items-center justify-center w-[360px] h-[84px] bg-br-contentsBg">
+    <div class="writingpage-icon-box inline-flex flex-nowrap justify-between w-full h-[84px] bg-br-contentsBg">
       <!-- 사진 아이콘 -->
-      <button class="writing-picture cursor-pointer"><img src="../../assets/icon/IconPicture.svg" alt="사진 업로드" /></button>
+      <button type="button" aria-label="사진 첨부" class="writing-picture cursor-pointer ml-[25px]"><img src="../../assets/icon/IconPicture.svg" alt="" /></button>
+      <!-- 모바일 환경에서 갤러리를 여는 file input (화면에서는 숨김) -->
+      <input type="file" id="writing-image-input" name="images" accept="image/*" multiple class="hidden" />
       <!-- 키보드 아이콘 -->
-      <button class="writing-keyboard cursor-pointer"><img src="../../assets/icon/IconKeyboard.svg" alt="키보드" /></button>
+      <button type="button" aria-label="키보드 전환" aria-pressed="false" class="writing-keyboard cursor-pointer mr-[25px]">
+        <img class="writing-keyboard-off" src="../../assets/icon/IconKeyboardOff.svg" alt="" />
+        <img class="writing-keyboard-on hidden" src="../../assets/icon/IconKeyboardON.svg" alt="" />
+      </button>
     </div>
   </body>
 </html>
