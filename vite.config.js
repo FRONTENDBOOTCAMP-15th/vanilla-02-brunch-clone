@@ -12,6 +12,7 @@ export default defineConfig({
         login: path.resolve(__dirname, 'src/pages/login/SignIn.html'),
         member: path.resolve(__dirname, 'src/pages/login/SignUp.html'),
         details: path.resolve(__dirname, 'src/pages/details/DetailsPage.html'),
+        mypage: path.resolve(__dirname, 'src/pages/mypage/Mypage.html'),
       },
     },
   },
