@@ -1,81 +1,14 @@
-// 1. 타입 정의 -------------------------------------------------
-export interface UserInfo {
-  _id: number;
-  email: string;
-  name: string;
-  phone: string;
-  address: string;
-  type: string;
-  loginType: string;
-  image: string;
-  extra: {
-    job: string;
-    biography: string;
-    keyword: string[];
-  };
-  createdAt: string;
-  updatedAt: string;
-  posts: number; // 작성한 게시물 수
-  bookmarkedBy: {
-    users: number; // 북마크한 사용자 수
-  };
-  likedBy: {
-    users: number; // 좋아요한 사용자 수
-  };
-  postViews: number; // 조회수
-}
+import type { PostItem, PostsResponse, UsersResponse, UserInfo } from '../../utils/types';
 
-export interface ProductImage {
-  url: string;
-  name: string;
-}
-
-export interface ProductInfo {
-  name: string;
-  image: ProductImage;
-}
-
-export interface PostItem {
-  _id: number;
-  type: string;
-  product_id: number;
-  seller_id: number;
-  user: UserInfo;
-  title: string;
-  content: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-  product: ProductInfo;
-  bookmarks: number;
-  myBookmarkId: number;
-  repliesCount: number;
-}
-
-export interface Pagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-export interface PostsResponse {
-  ok: number;
-  item: PostItem[];
-  pagination: Pagination;
-}
-
-export interface UsersResponse {
-  ok: number;
-  item: UserInfo[];
-  pagination: Pagination;
-}
-// 3. DOM 생성 함수 ---------------------------------------------
+// DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
 function createBrunchCard(post: PostItem, index: number): HTMLElement {
   const wrapper: HTMLDivElement = document.createElement('div');
   wrapper.className = 'flex items-start gap-5';
-
+  wrapper.addEventListener('click', () => {
+    //클릭했을 때 해당 글로 이동
+    window.location.href = './src/pages/details/DetailsPage.html?post=id';
+  });
   wrapper.innerHTML = `
     <div class="text-[26px] font-bold text-black w-10 flex-shrink-0 flex items-center gap-[6px]">
       ${index + 1}      
