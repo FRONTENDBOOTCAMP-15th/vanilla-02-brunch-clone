@@ -67,16 +67,18 @@ class NavigateComponent extends HTMLElement {
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
         <!-- 체크박스 숨김 -->
       <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+       <a href='/'>
       <!-- 기본 아이콘 (체크 전) -->
       <img
         src="/icon/Home.svg"
-        alt="검색 아이콘 기본"
+        alt="홈 아이콘 기본"
         class="peer-checked:hidden"
       />
+      </a>
         <!-- 체크 아이콘 (체크 후) -->
       <img
         src="/icon/HomeActive.svg"
-        alt="검색 아이콘 채움"
+        alt="홈 아이콘 채움"
         class="hidden peer-checked:block"
       />
         </label>
@@ -89,17 +91,19 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-    <img
-      src="/icon/Search.svg"
-      alt="발견 아이콘 기본"
-      class="peer-checked:hidden"
-    />
-      <!-- 체크 아이콘 (체크 후) -->
-    <img
-       src="/icon/SearchActive.svg"
-      alt="발견 아이콘 채움"
-      class="hidden peer-checked:block"
-    />
+       <a href='./src/pages/author/AuthorPage.html'>
+      <img
+        src="/icon/Search.svg"
+        alt="발견 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+      </a>
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/SearchActive.svg"
+        alt="발견 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
       </label>
       <span class="text-center">발견</span>
     </div>
@@ -110,11 +114,13 @@ class NavigateComponent extends HTMLElement {
       <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
     <!-- 기본 아이콘 (체크 전) -->
+    <a href='./src/pages/write/WritingPage.html'>
     <img
       src="/icon/EditSquare.svg"
       alt="글쓰기 아이콘 기본"
       class="peer-checked:hidden"
     />
+    </a>
             <!-- 체크 아이콘 (체크 후) -->
     <img
        src="/icon/EditSquareActive.svg"
@@ -131,17 +137,19 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-    <img
-      src="/icon/Inventory.svg"
-      alt="내서랍 아이콘 기본"
-      class="peer-checked:hidden"
-    />
-      <!-- 체크 아이콘 (체크 후) -->
-    <img
-       src="/icon/InventoryActive.svg"
-      alt="내서랍 아이콘 채움"
-      class="hidden peer-checked:block"
-    />
+       <a href='./src/pages/mypage/MyPage.html'>
+      <img
+        src="/icon/Inventory.svg"
+        alt="내서랍 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+      </a>
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/InventoryActive.svg"
+        alt="내서랍 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
 
       </label>
       <span class="text-center">내 서랍</span>
@@ -169,6 +177,7 @@ class NavigateComponent extends HTMLElement {
      * 현재 클릭한 네비의 상태를 저장해야 함.
      * 어떻게????
      */
+    /*
     document.getElementById('home-button')?.addEventListener('click', () => {
       window.location.href = '/';
     });
@@ -181,6 +190,7 @@ class NavigateComponent extends HTMLElement {
     document.getElementById('Inventory-button')?.addEventListener('click', () => {
       window.location.href = './src/pages/mypage/MyPage.html';
     });
+    */
   }
 }
 
