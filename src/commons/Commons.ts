@@ -50,6 +50,11 @@ class InputComponent extends HTMLElement {
   }
 }
 
+type User = {
+  name: string;
+  avatarUrl: string;
+};
+
 // Navigate
 class NavigateComponent extends HTMLElement {
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
@@ -57,10 +62,25 @@ class NavigateComponent extends HTMLElement {
   connectedCallback() {
     this.render();
   }
+  // 세션스토리지에서 현재 로그인 정보 읽기
+  private getUser(): User | null {
+    const name = sessionStorage.getItem('userName');
+    const token = sessionStorage.getItem('accessToken');
+
+    if (!name || !token) return null;
+
+    return {
+      name,
+      avatarUrl: 'https://via.placeholder.com/50',
+    };
+  }
 
   // UI를 렌더링
   render() {
-    this.innerHTML = `
+    // 로그인이 되었을 때
+    const user: User | null = this.getUser();
+    if (user) {
+      this.innerHTML = `      
   <div class="bg-white w-full overflow-x-auto">
   <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
     <!-- 홈 -->
@@ -173,7 +193,110 @@ class NavigateComponent extends HTMLElement {
   });
   </script>
     `;
+    } else {
+      /* 로그인이 안 되었을 때 */
+      this.innerHTML = `
+       
+  <div class="bg-white w-full overflow-x-auto">
+  <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
+    <!-- 홈 -->
+    <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+        <!-- 체크박스 숨김 -->
+      <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+       
+      <!-- 기본 아이콘 (체크 전) -->
+      <img
+        src="/icon/Home.svg"
+        alt="홈 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+      
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/HomeActive.svg"
+        alt="홈 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
+        </label>
+        <span class="text-center">홈</span>
+      </div>
 
+    <!-- 발견 -->
+    <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+       <!-- 체크박스 숨김 -->
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+      <!-- 기본 아이콘 (체크 전) -->
+      
+      <img
+        src="/icon/Search.svg"
+        alt="발견 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+      
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/SearchActive.svg"
+        alt="발견 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
+      </label>
+      <span class="text-center">발견</span>
+    </div>
+
+    <!-- 글쓰기 -->
+    <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+      <!-- 체크박스 숨김 -->
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+    <!-- 기본 아이콘 (체크 전) -->
+    
+    <img
+      src="/icon/EditSquare.svg"
+      alt="글쓰기 아이콘 기본"
+      class="peer-checked:hidden"
+    />
+    
+            <!-- 체크 아이콘 (체크 후) -->
+    <img
+       src="/icon/EditSquareActive.svg"
+      alt="글쓰기 아이콘 채움"
+      class="hidden peer-checked:block"
+    />
+      </label>
+      <span class="text-center">글쓰기</span>
+    </div>
+
+    <!-- 내 서랍 -->
+    <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+       <!-- 체크박스 숨김 -->
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+      <!-- 기본 아이콘 (체크 전) -->
+    
+      <img
+        src="/icon/Inventory.svg"
+        alt="내서랍 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+    
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/InventoryActive.svg"
+        alt="내서랍 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
+
+      </label>
+      <span class="text-center">내 서랍</span>
+    </div>
+  </div>
+</div>
+       `;
+    }
+
+    /*------------------------------------------------------
     /*
      * 현재 클릭한 네비의 상태를 저장해야 함.
      * 어떻게????
