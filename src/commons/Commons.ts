@@ -69,13 +69,13 @@ class NavigateComponent extends HTMLElement {
       <input type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
       <img
-        src="../../src/assets/icon/Home.svg"
+        src="/icon/Home.svg"
         alt="검색 아이콘 기본"
         class="peer-checked:hidden"
       />
         <!-- 체크 아이콘 (체크 후) -->
       <img
-        src="../../src/assets/icon/HomeActive.svg"
+        src="/icon/HomeActive.svg"
         alt="검색 아이콘 채움"
         class="hidden peer-checked:block"
       />
@@ -90,13 +90,13 @@ class NavigateComponent extends HTMLElement {
     <input type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
     <img
-      src="../../src/assets/icon/Search.svg"
+      src="/icon/Search.svg"
       alt="발견 아이콘 기본"
       class="peer-checked:hidden"
     />
             <!-- 체크 아이콘 (체크 후) -->
     <img
-       src="../../src/assets/icon/SearchActive.svg"
+       src="/icon/SearchActive.svg"
       alt="발견 아이콘 채움"
       class="hidden peer-checked:block"
     />
@@ -111,13 +111,13 @@ class NavigateComponent extends HTMLElement {
     <input type="checkbox" class="sr-only peer" />
     <!-- 기본 아이콘 (체크 전) -->
     <img
-      src="../../src/assets/icon/EditSquare.svg"
+      src="/icon/EditSquare.svg"
       alt="글쓰기 아이콘 기본"
       class="peer-checked:hidden"
     />
             <!-- 체크 아이콘 (체크 후) -->
     <img
-       src="../../src/assets/icon/EditSquareActive.svg"
+       src="/icon/EditSquareActive.svg"
       alt="글쓰기 아이콘 채움"
       class="hidden peer-checked:block"
     />
@@ -132,13 +132,13 @@ class NavigateComponent extends HTMLElement {
     <input type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
     <img
-      src="../../src/assets/icon/Inventory.svg"
+      src="/icon/Inventory.svg"
       alt="내서랍 아이콘 기본"
       class="peer-checked:hidden"
     />
             <!-- 체크 아이콘 (체크 후) -->
     <img
-       src="../../src/assets/icon/InventoryActive.svg"
+       src="/icon/InventoryActive.svg"
       alt="내서랍 아이콘 채움"
       class="hidden peer-checked:block"
     />
@@ -231,7 +231,7 @@ class TopComponent extends HTMLElement {
         <div class="flex items-center justify-between px-4 py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
       <div id="main-logo" class="flex items-center space-x-1 text-[var(--detailsTitle)] cursor-pointer">
-        <img src="../../src/assets/icon/Logo.svg" alt="브런치스토리 로고" />
+        <img src="/icon/Logo.svg" alt="브런치스토리 로고" />
       </div>
 
       <!-- 오른쪽: 검색 아이콘 + 시작하기 버튼 -->
@@ -239,7 +239,7 @@ class TopComponent extends HTMLElement {
         
         <!-- 검색 아이콘 -->
         <button class="text-br-start hover:text-[var(--start)] cursor-pointer">
-          <img src="../../src/assets/icon/SearchVector.svg" alt="검색 아이콘" />
+          <img src="/icon/SearchVector.svg" alt="검색 아이콘" />
         </button>
       </div>
     </div>
@@ -263,7 +263,7 @@ class TopComponent extends HTMLElement {
     avatarBtn.className = 'text-br-start hover:text-[var(--start)] cursor-pointer';
 
     const img = document.createElement('img');
-    img.src = '../../src/assets/icon/Face.svg';
+    img.src = '/icon/Face.svg';
     img.alt = '검색 아이콘';
 
     avatarBtn.appendChild(img);
@@ -278,7 +278,7 @@ class TopComponent extends HTMLElement {
     alertBtn.className = 'text-br-start hover:text-[var(--start)] cursor-pointer';
 
     const img = document.createElement('img');
-    img.src = '../../src/assets/icon/Alarm.svg';
+    img.src = '/icon/Alarm.svg';
     img.alt = '검색 아이콘';
 
     alertBtn.appendChild(img);
