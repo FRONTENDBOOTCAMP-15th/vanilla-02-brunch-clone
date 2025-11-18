@@ -6,22 +6,24 @@
     <link rel="stylesheet" href="/src/styles/style.css" />
     <script type="module" src="/src/utils/types.ts"></script>
     <script type="module" src="/src/pages/author/AuthorPage.ts"></script>
+    <script type="module" src="/src/commons/Commons.ts"></script>
     <script type="module" src="/src/main.ts"></script>
 
     <title>Document</title>
   </head>
   <body>
+    <top-header></top-header>
     <main class="max-w-sm mx-auto px-4 pt-6 pb-10">
       <div class="flex justify-between items-start">
         <div>
-          <h2 id="name" class="text-[27px] text-br-detailsTitle mb-2">AB</h2>
-          <h3 id="job" class="text-[12px] text-br-contentSecondary">기획자</h3>
+          <h2 id="name" class="text-[27px] text-br-detailsTitle mb-2"></h2>
+          <h3 id="job" class="text-[12px] text-br-contentSecondary"></h3>
         </div>
-        <img id="image" src="/src/assets/icon/universe.svg" alt="우주이미지" />
+        <img id="image" src="" alt="작가이미지" />
       </div>
 
       <section class="mt-2">
-        <a href="/" class="flex gap-7">
+        <!-- <a href="/" class="flex gap-7">
           <div class="Subscribers">
             <p class="text-[12px] text-br-contentSecondary mb-2">구독자</p>
             <p id="subCount" class="text-[16px] text-br-detailsSubtitle">30</p>
@@ -30,7 +32,7 @@
             <p class="text-[12px] text-br-contentSecondary mb-2">관심작가</p>
             <p id="followCount" class="text-[16px] text-br-detailsSubtitle">16</p>
           </div>
-        </a>
+        </a> -->
       </section>
 
       <!-- 글 목록 -->
@@ -38,5 +40,6 @@
         <!-- 글 -->
       </section>
     </main>
+    <navigate-component></navigate-component>
   </body>
 </html>
