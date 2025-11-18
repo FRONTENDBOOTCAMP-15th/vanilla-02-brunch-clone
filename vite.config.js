@@ -14,6 +14,7 @@ export default defineConfig({
         details: path.resolve(__dirname, 'src/pages/details/DetailsPage.html'),
         write: path.resolve(__dirname, 'src/pages/write/WritingPage.html'),
         mypage: path.resolve(__dirname, 'src/pages/mypage/MyPage.html'),
+        authorpage: path.resolve(__dirname, 'src/pages/author/AuthorPage.html'),
       },
     },
   },

@@ -1,4 +1,4 @@
-import type { LoginResponse } from './Types';
+import type { LoginResponse } from '../utils/types';
 
 //CircleContents
 class CircleContentsComponent extends HTMLElement {
@@ -63,10 +63,10 @@ class NavigateComponent extends HTMLElement {
   <div class="bg-white w-full overflow-x-auto">
   <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
     <!-- 홈 -->
-    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+    <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
         <!-- 체크박스 숨김 -->
-      <input type="checkbox" class="sr-only peer" />
+      <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
       <img
         src="/icon/Home.svg"
@@ -84,17 +84,17 @@ class NavigateComponent extends HTMLElement {
       </div>
 
     <!-- 발견 -->
-    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+    <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
        <!-- 체크박스 숨김 -->
-    <input type="checkbox" class="sr-only peer" />
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
     <img
       src="/icon/Search.svg"
       alt="발견 아이콘 기본"
       class="peer-checked:hidden"
     />
-            <!-- 체크 아이콘 (체크 후) -->
+      <!-- 체크 아이콘 (체크 후) -->
     <img
        src="/icon/SearchActive.svg"
       alt="발견 아이콘 채움"
@@ -105,10 +105,10 @@ class NavigateComponent extends HTMLElement {
     </div>
 
     <!-- 글쓰기 -->
-    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+    <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
       <!-- 체크박스 숨김 -->
-    <input type="checkbox" class="sr-only peer" />
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
     <!-- 기본 아이콘 (체크 전) -->
     <img
       src="/icon/EditSquare.svg"
@@ -126,17 +126,17 @@ class NavigateComponent extends HTMLElement {
     </div>
 
     <!-- 내 서랍 -->
-    <div class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+    <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
        <!-- 체크박스 숨김 -->
-    <input type="checkbox" class="sr-only peer" />
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
     <img
       src="/icon/Inventory.svg"
       alt="내서랍 아이콘 기본"
       class="peer-checked:hidden"
     />
-            <!-- 체크 아이콘 (체크 후) -->
+      <!-- 체크 아이콘 (체크 후) -->
     <img
        src="/icon/InventoryActive.svg"
       alt="내서랍 아이콘 채움"
@@ -148,8 +148,39 @@ class NavigateComponent extends HTMLElement {
     </div>
   </div>
 </div>
-
+    <script>
+    const checkboxes = document.querySelectorAll('input[name="navi-checkbox"]');
+    // 클릭한 것 제외하고 나머지 체크 해제
+    
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('click', () => {
+      if (checkbox.checked) {
+        // 클릭한 것 제외하고 나머지 체크 해제
+        checkboxes.forEach((cb) => {
+          if (cb !== checkbox) cb.checked = false;
+        });
+      }
+    });
+  });
+  </script>
     `;
+
+    /*
+     * 현재 클릭한 네비의 상태를 저장해야 함.
+     * 어떻게????
+     */
+    document.getElementById('home-button')?.addEventListener('click', () => {
+      window.location.href = '/';
+    });
+    document.getElementById('search-button')?.addEventListener('click', () => {
+      window.location.href = './src/pages/author/AuthorPage.html';
+    });
+    document.getElementById('write-button')?.addEventListener('click', () => {
+      window.location.href = './src/pages/write/WritingPage.html';
+    });
+    document.getElementById('Inventory-button')?.addEventListener('click', () => {
+      window.location.href = './src/pages/mypage/MyPage.html';
+    });
   }
 }
 
@@ -228,7 +259,7 @@ class TopComponent extends HTMLElement {
     const user = this.getUser();
     console.log(user);
     this.innerHTML = `
-        <div class="flex items-center justify-between px-4 py-4 min-w-[360px]">
+        <div class="flex items-center justify-between px-[24px] py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
       <div id="main-logo" class="flex items-center space-x-1 text-[var(--detailsTitle)] cursor-pointer">
         <img src="/icon/Logo.svg" alt="브런치스토리 로고" />
