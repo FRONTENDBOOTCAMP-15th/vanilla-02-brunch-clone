@@ -1,0 +1,23 @@
+meta {
+  name: 04-파일 업로드
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/files
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "bugatti.png",
+    "path":"/files/00-brunch/sample-bugatti.png"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
