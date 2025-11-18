@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { LoginResponse } from '../utils/types';
 
 //CircleContents
@@ -267,9 +268,9 @@ class TopComponent extends HTMLElement {
   // UI를 렌더링
   render() {
     const user = this.getUser();
-    console.log(user);
+    //console.log(user);
     this.innerHTML = `
-        <div class="flex items-center justify-between px-[24px] py-4 min-w-[360px]">
+        <div class="sticky top-0 bg-white flex items-center justify-between px-[24px] py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
       <div id="main-logo" class="flex items-center space-x-1 text-[var(--detailsTitle)] cursor-pointer">
         <img src="/icon/Logo.svg" alt="브런치스토리 로고" />
@@ -362,24 +363,31 @@ customElements.define('subscribe-button', SubscribeButtonComponent);
 
 customElements.define('input-component', InputComponent);
 
-// 로그인 요청 함수
+// 로그인 요청 함수 (Axios 버전)
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
-  const response = await fetch('https://fesp-api.koyeb.app/market/users/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'client-id': 'febc15-vanilla02-ecad',
-    },
-    body: JSON.stringify({ email, password }),
-  });
+  try {
+    const response = await axios.post<LoginResponse>(
+      'https://fesp-api.koyeb.app/market/users/login',
+      { email, password },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': 'febc15-vanilla02-ecad',
+        },
+      }
+    );
 
-  if (!response.ok) {
-    throw new Error('로그인 요청 실패');
+    return response.data;
+  } catch (error: any) {
+    // Axios 에러 처리
+    if (error.response) {
+      throw new Error(`로그인 요청 실패: ${error.response.status}`);
+    } else if (error.request) {
+      throw new Error('로그인 요청 실패: 서버 응답 없음');
+    } else {
+      throw new Error(`로그인 요청 실패: ${error.message}`);
+    }
   }
-
-  const data: LoginResponse = await response.json();
-
-  return data;
 }
 
 // 로그인 함수 호출
