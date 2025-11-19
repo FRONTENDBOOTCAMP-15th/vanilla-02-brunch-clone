@@ -15,7 +15,7 @@ const writerName = document.querySelector('.details-writer-name') as HTMLParagra
 const writerJob = document.querySelector('.details-writer-job') as HTMLAnchorElement;
 const writerImg = document.querySelector('.details-writer-img img') as HTMLImageElement;
 const writerExplain = document.querySelector('.details-explain') as HTMLAnchorElement;
-// const subscribeCount = document.querySelector('.details-subscribe-count') as HTMLAnchorElement;
+//const subscribeCount = document.querySelector('.details-subscribe-count') as HTMLAnchorElement;
 
 // 좋아요 버튼
 

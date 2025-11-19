@@ -64,8 +64,8 @@ class NavigateComponent extends HTMLElement {
   }
   // 세션스토리지에서 현재 로그인 정보 읽기
   private getUser(): User | null {
-    const name = sessionStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken');
+    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
+    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
 
     if (!name || !token) return null;
 
@@ -438,9 +438,10 @@ class TopComponent extends HTMLElement {
   }
 
   // 세션스토리지에서 현재 로그인 정보 읽기
+  //로컬세션 확인
   private getUser() {
-    const name = sessionStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken');
+    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
+    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
     if (!name || !token) return null;
 
     return {
