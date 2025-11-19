@@ -125,7 +125,7 @@ export interface PostItem {
   user: UserInfo;
   title: string;
   extra: {
-    subtitle: string;
+    subTitle: string;
   };
   content: string;
   image: string;
