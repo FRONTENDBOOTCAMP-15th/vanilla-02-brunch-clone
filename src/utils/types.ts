@@ -109,10 +109,10 @@ export interface UserInfo {
   updatedAt: string;
   posts: number; // 작성한 게시물 수
   bookmarkedBy: {
-    users: number; 
+    users: number;
   };
   likedBy: {
-    users: number; 
+    users: number;
   };
   postViews: number; // 조회수
 }
@@ -143,7 +143,7 @@ export interface Pagination {
   totalPages: number;
 }
 
-export type PostsResponse =
+export type PostsListResponse =
   | {
       ok: 1;
       item: PostItem[];
