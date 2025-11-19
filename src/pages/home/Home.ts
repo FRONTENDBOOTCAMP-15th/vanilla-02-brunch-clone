@@ -70,13 +70,16 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
 //구독자 급등 작가
 function createWriterCard(post: any): HTMLElement {
   const card = document.createElement('div');
-  card.className = 'text-center p-[30px_20px] border-r border-b border-[#eee]';
+  card.addEventListener('click', () => {
+    window.location.href = '/src/pages/author/AuthorPage.html?id=9';
+  });
+  card.className = 'cursor-pointer text-center p-[30px_20px] border-r border-b border-[#eee]';
   /* 현재 db에 이미지 경로가 없음. 임시 이미지 사용
    * 회원가입 처리 후 db에 데이터가 들어가면 ${post.image}로 대체
    */
   const srcImg = getValidImageUrl(post.image);
   card.innerHTML = `    
-      <a href="./src/pages/author/AuthorPage.html?id=9">
+      <a href="/src/pages/author/AuthorPage.html?id=9">
       <img 
         src="${srcImg}"
         onerror="this.onerror=null; this.src='/img/NoFaceImage.png';" 
@@ -206,7 +209,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
       const card = document.createElement('div');
       card.addEventListener('click', () => {
         // window.location.href 쓸 경우 배포 되는지 확인 필요
-        window.location.href = `./src/pages/author/AuthorPage.html?id=${post._id}`;
+        window.location.href = `src/pages/details/detailspage?id=${post._id}`;
       });
       card.className = 'flex py-[15px] border-b border-[#eee] bg-[#f8f8f8] cursor-pointer';
 

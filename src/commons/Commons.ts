@@ -206,11 +206,13 @@ class NavigateComponent extends HTMLElement {
       <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
        
       <!-- 기본 아이콘 (체크 전) -->
+      <a href="/index.html">
       <img
         src="/icon/Home.svg"
         alt="홈 아이콘 기본"
         class="peer-checked:hidden"
       />
+      </a>
       
         <!-- 체크 아이콘 (체크 후) -->
       <img
