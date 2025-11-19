@@ -41,39 +41,11 @@ export interface RegisterPostReq {
   type?: string;
   title: string;
   extra: {
-    subtitle: string;
+    subTitle: string;
   };
   content: string;
   image?: string[];
 }
-
-// 서버로부터 응답받는 게시글 정보
-// export interface PostInfo {
-//   type: string;
-//   title: string;
-//   extra: {
-//     subtitle: string;
-//   };
-//   content: string;
-//   image?: string[];
-//   tag?: string;
-//   views: number;
-//   user: {
-//     _id: number;
-//     name: string;
-//   };
-//   _id: number;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
-// 게시글 상세조회 응답 타입
-// export type PostDetailsRes =
-//   | {
-//       ok: 1;
-//       item: PostInfo;
-//     }
-//   | APIError;
 
 export interface DetailRes<T> {
   ok: 1;
