@@ -1,6 +1,5 @@
 import { getAxios } from '../../utils/axios';
-import type { uploadFileInfo } from '../../utils/types';
-import type { fileUploadRes, postRes } from './WritingResponse';
+import type { fileUploadRes, postRes, uploadFileInfo } from '../../utils/types';
 
 const keyboardBtn = document.querySelector('.writing-keyboard') as HTMLButtonElement;
 const titleInput = document.querySelector('#writingpage-title-input') as HTMLInputElement;
@@ -170,7 +169,7 @@ async function uploadPost() {
   const body = {
     type: 'brunch',
     title: titleInput?.value,
-    content: contentDiv?.textContent,
+    content: contentDiv?.innerHTML,
     extra: { subtitle: subtitleInput?.value },
     image: uploadedImgs.map((item) => item.path),
   };
@@ -182,7 +181,7 @@ async function uploadPost() {
     if (data.ok === 1) {
       alert('글이 등록되었습니다.');
       const postId = data.item._id;
-      location.replace(`../details/DetailsPage.html?id=${postId}`);
+      // location.replace(`../details/DetailsPage.html?id=${postId}`);
     } else {
       alert(data.message);
     }
