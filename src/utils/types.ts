@@ -100,6 +100,7 @@ export interface UserInfo {
   type: string;
   loginType: string;
   image: string;
+
   extra: {
     job: string;
     biography: string;
@@ -108,11 +109,12 @@ export interface UserInfo {
   createdAt: string;
   updatedAt: string;
   posts: number; // 작성한 게시물 수
+  bookmarks: number;
   bookmarkedBy: {
-    users: number; 
+    users: number;
   };
   likedBy: {
-    users: number; 
+    users: number;
   };
   postViews: number; // 조회수
 }
@@ -125,7 +127,7 @@ export interface PostItem {
   user: UserInfo;
   title: string;
   extra: {
-    subtitle: string;
+    subTitle: string;
   };
   content: string;
   image: string;
@@ -156,6 +158,13 @@ export type UsersResponse =
       ok: 1;
       item: UserInfo[];
       pagination: Pagination;
+    }
+  | APIError;
+
+export type UserResponse =
+  | {
+      ok: 1;
+      item: UserInfo;
     }
   | APIError;
 
