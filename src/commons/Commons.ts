@@ -230,7 +230,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-        <a href='/src/pages/author/AuthorPage.html'>
+        <a href='/src/pages/search/Search.html'>
       <img
         src="/icon/Search.svg"
         alt="발견 아이콘 기본"
@@ -462,7 +462,9 @@ class TopComponent extends HTMLElement {
       <div id="menu-items" class="flex items-center space-x-4">
         
         <!-- 검색 아이콘 -->
-        <button class="text-br-start hover:text-[var(--start)] cursor-pointer">
+        <button 
+          onclick="location.href='/src/pages/search/Search.html'"
+          class="text-br-start hover:text-[var(--start)] cursor-pointer">
           <img src="/icon/SearchVector.svg" alt="검색 아이콘" />
         </button>
       </div>
