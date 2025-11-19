@@ -228,18 +228,19 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-      
+        <a href='./src/pages/author/AuthorPage.html'>
       <img
         src="/icon/Search.svg"
         alt="발견 아이콘 기본"
         class="peer-checked:hidden"
       />
+      </a>
       
         <!-- 체크 아이콘 (체크 후) -->
       <img
         src="/icon/SearchActive.svg"
         alt="발견 아이콘 채움"
-        class="hidden peer-checked:block"
+        class="hidden peer-checked:block"        
       />
       </label>
       <span class="text-center">발견</span>
@@ -253,9 +254,11 @@ class NavigateComponent extends HTMLElement {
     <!-- 기본 아이콘 (체크 전) -->
     
     <img
+      onClick="alert('로그인이 필요한 화면입니다')"
       src="/icon/EditSquare.svg"
       alt="글쓰기 아이콘 기본"
       class="peer-checked:hidden"
+      
     />
     
             <!-- 체크 아이콘 (체크 후) -->
@@ -274,13 +277,13 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-    
+     <a href='./src/pages/mypage/MyPage.html'>
       <img
         src="/icon/Inventory.svg"
         alt="내서랍 아이콘 기본"
         class="peer-checked:hidden"
       />
-    
+    </a>
         <!-- 체크 아이콘 (체크 후) -->
       <img
         src="/icon/InventoryActive.svg"
@@ -297,13 +300,14 @@ class NavigateComponent extends HTMLElement {
     }
 
     /*------------------------------------------------------
-    /*
+     *
      * 현재 클릭한 네비의 상태를 저장해야 함.
      * 어떻게????
-     */
-    /*
+     *
+     * MPA 환경에서는 절대 경로 대신 HTML 기준 상대 경로를 사용하면 안전합니다.
+    
     document.getElementById('home-button')?.addEventListener('click', () => {
-      window.location.href = '/';
+      window.location.href = './';
     });
     document.getElementById('search-button')?.addEventListener('click', () => {
       window.location.href = './src/pages/author/AuthorPage.html';
@@ -410,6 +414,23 @@ class TopComponent extends HTMLElement {
   // 컴포넌트 렌더링과 이벤트 초기화를 수행
   connectedCallback() {
     this.render();
+    const user = this.getUser();
+    console.log('user: ', user);
+
+    // 로그인 성공시 아바타 버튼 추가
+    if (user != null) {
+      this.loggedInHTML();
+    } else {
+      this.loggedOutHTML();
+    }
+    //탑헤더를 화면에 렌더링
+
+    //로고를 클릭했을 때 메인화면으로 이동
+    const logo = document.querySelector('#main-logo');
+    logo?.addEventListener('click', () => {
+      // SPA 환경에서는 window.location.assign을 사용하면 안전
+      window.location.assign('/');
+    });
   }
 
   // 세션스토리지에서 현재 로그인 정보 읽기
@@ -426,8 +447,6 @@ class TopComponent extends HTMLElement {
 
   // UI를 렌더링
   render() {
-    const user = this.getUser();
-    //console.log(user);
     this.innerHTML = `
         <div class="sticky top-0 bg-white flex items-center justify-between px-[24px] py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
@@ -445,16 +464,6 @@ class TopComponent extends HTMLElement {
       </div>
     </div>
     `;
-    // 로그인 성공시 아바타 버튼 추가
-    if (user) {
-      this.loggedInHTML();
-    } else {
-      this.loggedOutHTML();
-    }
-    //로고를 클릭했을 때 메인화면으로 이동
-    document.getElementById('main-logo')?.addEventListener('click', () => {
-      window.location.href = '/';
-    });
   }
 
   private appendAvatarBtn() {

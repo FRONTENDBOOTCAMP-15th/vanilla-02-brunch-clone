@@ -75,13 +75,15 @@ function createWriterCard(post: any): HTMLElement {
    * 회원가입 처리 후 db에 데이터가 들어가면 ${post.image}로 대체
    */
   const srcImg = getValidImageUrl(post.image);
-  card.innerHTML = `
+  card.innerHTML = `    
+      <a href="./src/pages/author/AuthorPage.html?id=9">
       <img 
         src="${srcImg}"
         onerror="this.onerror=null; this.src='/img/NoFaceImage.png';" 
         alt="${post.name || '작가'}" 
-        class="w-[90px] h-[90px] rounded-full object-cover mb-[15px] inline-block"
+        class="w-[90px] h-[90px] rounded-full object-cover mb-[15px] inline-block cursor-pointer"
       />
+      </a>
 
       <h3 class="text-[17px] font-semibold mt-[5px] mb-[3px]">
         ${post.name || '이름 없음'}
@@ -93,7 +95,7 @@ function createWriterCard(post: any): HTMLElement {
 
       <p class="text-[14px] text-[#444] leading-[1.4] max-w-[200px] mx-auto overflow-hidden  whitespace-nowrap">
         ${post.extra?.biography || '소개글이 없습니다.'}
-      </p>
+      </p>      
   `;
 
   return card;
