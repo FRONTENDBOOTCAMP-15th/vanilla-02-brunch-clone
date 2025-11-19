@@ -20,6 +20,22 @@ export interface uploadFileInfo {
   path: string;
 }
 
+// 파일 업로드
+export type fileUploadRes =
+  | {
+      ok: 1;
+      item: uploadFileInfo[];
+    }
+  | APIError;
+
+// 게시글 등록
+export type postRes =
+  | {
+      ok: 1;
+      item: PostItem;
+    }
+  | APIError;
+
 // 게시글 등록
 export interface RegisterPostReq {
   type?: string;
@@ -28,28 +44,36 @@ export interface RegisterPostReq {
     subtitle: string;
   };
   content: string;
-  image?: string | string[];
-}
-
-// 게시글을 작성한 유저 정보
-export interface PostUser {
-  _id: number;
-  name: string;
+  image?: string[];
 }
 
 // 서버로부터 응답받는 게시글 정보
-export interface PostInfo {
-  type: string;
-  title: string;
-  content: string;
-  image?: string | string[];
-  tag?: string;
-  views: number;
-  user: PostUser;
-  _id: number;
-  createdAt: string;
-  updatedAt: string;
-}
+// export interface PostInfo {
+//   type: string;
+//   title: string;
+//   extra: {
+//     subtitle: string;
+//   };
+//   content: string;
+//   image?: string[];
+//   tag?: string;
+//   views: number;
+//   user: {
+//     _id: number;
+//     name: string;
+//   };
+//   _id: number;
+//   createdAt: string;
+//   updatedAt: string;
+// }
+
+// 게시글 상세조회 응답 타입
+// export type PostDetailsRes =
+//   | {
+//       ok: 1;
+//       item: PostInfo;
+//     }
+//   | APIError;
 
 export interface DetailRes<T> {
   ok: 1;
@@ -90,21 +114,20 @@ export interface UserInfo {
   postViews: number; // 조회수
 }
 
-
 export interface PostItem {
   _id: number;
   type: string;
-  product_id: number;
-  seller_id: number;
   user: UserInfo;
   title: string;
+  extra: {
+    subTitle: string;
+  };
   content: string;
-  image: string;
+  image: string[];
   createdAt: string;
   updatedAt: string;
   bookmarks: number;
   myBookmarkId: number;
-  repliesCount: number;
 }
 
 export interface Pagination {
@@ -114,88 +137,35 @@ export interface Pagination {
   totalPages: number;
 }
 
-export interface PostsResponse {
-  ok: number;
-  item: PostItem[];
-  pagination: Pagination;
-}
+// PostsResponse -> PostListResponse로 바꿈 (게시글 목록 전체 조회)
+export type PostListResponse =
+  | {
+      ok: 1;
+      item: PostItem[];
+      pagination: Pagination;
+    }
+  | APIError;
 
-export interface UsersResponse {
-  ok: number;
-  item: UserInfo[];
-  pagination: Pagination;
-}
+// 게시글 상세 조회(한 개만 조회)
+export type PostResponse =
+  | {
+      ok: 1;
+      item: PostItem;
+    }
+  | APIError;
+
+export type UsersResponse =
+  | {
+      ok: 1;
+      item: UserInfo[];
+      pagination: Pagination;
+    }
+  | APIError;
 
 // 응답 타입 정의
-export interface LoginResponse {
-  ok: number;
-  item: UserInfo;
-}
-
-export interface UserInfo {
-  _id: number;
-  email: string;
-  name: string;
-  phone: string;
-  address: string;
-  type: string;
-  loginType: string;
-  image: string;
-  extra: {
-    job: string;
-    biography: string;
-    keyword: string[];
-  };
-  createdAt: string;
-  updatedAt: string;
-  posts: number; // 작성한 게시물 수
-  bookmarkedBy: {
-    users: number; // 북마크한 사용자 수
-  };
-  likedBy: {
-    users: number; // 좋아요한 사용자 수
-  };
-  postViews: number; // 조회수
-}
-
-
-export interface ProductImage {
-  url: string;
-  name: string;
-}
-
-export interface PostItem {
-  _id: number;
-  type: string;
-  product_id: number;
-  seller_id: number;
-  user: UserInfo;
-  title: string;
-  content: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-  bookmarks: number;
-  myBookmarkId: number;
-  repliesCount: number;
-}
-
-export interface Pagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-export interface PostsResponse {
-  ok: number;
-  item: PostItem[];
-  pagination: Pagination;
-}
-
-export interface UsersResponse {
-  ok: number;
-  item: UserInfo[];
-  pagination: Pagination;
-}
-
+export type LoginResponse =
+  | {
+      ok: 1;
+      item: UserInfo;
+    }
+  | APIError;

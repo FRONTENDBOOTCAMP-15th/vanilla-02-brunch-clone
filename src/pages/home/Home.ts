@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { PostItem, PostsResponse, UsersResponse, UserInfo } from '../../utils/types';
+import type { PostItem, PostListResponse, UsersResponse, UserInfo } from '../../utils/types';
 
 function removeImgTags(html: string): string {
   return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
@@ -105,38 +105,38 @@ function createWriterCard(post: any): HTMLElement {
 }
 
 //오늘의 작가 dom 구현
-export async function fetchAuthorPosts(authorId: number): Promise<PostsResponse | undefined> {
+export async function fetchAuthorPosts(authorId: number): Promise<PostListResponse | undefined> {
   const url = `https://fesp-api.koyeb.app/market/posts?type=brunch&_id=${authorId}`;
 
   try {
-    const response = await axios.get<PostsResponse>(url, {
+    const response = await axios.get<PostListResponse>(url, {
       headers: {
         'Content-Type': 'application/json',
         'client-id': 'febc15-vanilla02-ecad',
       },
     });
-    if (response.data.ok === 1){
-    const data: PostsResponse = response.data;
+    if (response.data.ok === 1) {
+      const data: PostListResponse = response.data;
 
-    // user._id가 authorId와 일치하는 게시물만 필터링
-    const filteredItems = data.item.filter((post) => post.user._id === authorId);
+      // user._id가 authorId와 일치하는 게시물만 필터링
+      const filteredItems = data.item.filter((post) => post.user._id === authorId);
 
-    // bookData 생성
-    const bookData: PostsResponse = {
-      ok: data.ok,
-      item: filteredItems,
-      pagination: {
-        page: 1,
-        limit: filteredItems.length,
-        total: filteredItems.length,
-        totalPages: 1,
-      },
-    };
-  
-    console.log(JSON.stringify(bookData.item[0], null, 2));
-  
-    return bookData;
-  }  
+      // bookData 생성
+      const bookData: PostListResponse = {
+        ok: data.ok,
+        item: filteredItems,
+        pagination: {
+          page: 1,
+          limit: filteredItems.length,
+          total: filteredItems.length,
+          totalPages: 1,
+        },
+      };
+
+      console.log(JSON.stringify(bookData.item[0], null, 2));
+
+      return bookData;
+    }
   } catch (err: any) {
     console.error('작가 작품 가져오기 실패:', err);
 
@@ -204,7 +204,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
   if (!worksArea) return;
 
   // 작가 작품 가져오기
-  const authorPosts: PostsResponse | undefined = await fetchAuthorPosts(post._id || 0);
+  const authorPosts: PostListResponse | undefined = await fetchAuthorPosts(post._id || 0);
   if (authorPosts?.ok === 1) {
     authorPosts.item.forEach((p, idx) => {
       if (idx >= 2) return;
@@ -244,7 +244,7 @@ export async function retrieveAPI(url: string): Promise<any> {
     });
 
     // Axios는 자동으로 JSON 변환을 해줌
-    const data: PostsResponse = response.data;
+    const data: PostListResponse = response.data;
     return data;
   } catch (error: any) {
     console.error('POST 목록 가져오기 실패:', error);
@@ -265,12 +265,12 @@ export async function retrieveAPI(url: string): Promise<any> {
 // -------------------------------------------
 
 (async () => {
-  let postRes: PostsResponse;
+  let postRes: PostListResponse;
   let userRes: UsersResponse;
 
   //요즘 뜨는 브런치
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
-  postRes = await retrieveAPI(url);  
+  postRes = await retrieveAPI(url);
   if (postRes.ok === 1) {
     //console.log(JSON.stringify(postRes.item[3]));
     //console.log(JSON.stringify(postRes.item[4]));

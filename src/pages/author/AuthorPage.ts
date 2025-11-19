@@ -1,6 +1,6 @@
 // src/api/user.ts
 import { getAxios } from '../../utils/axios';
-import type { UserResponse, PostsResponse } from '../../utils/types';
+import type { UserResponse, PostListResponse } from '../../utils/types';
 
 const axios = getAxios();
 
@@ -16,7 +16,7 @@ export const getUserProfile = async (userId: number) => {
  * 사용자가 작성한 글 목록 조회
  */
 export const getUserPosts = async (userId: number, page: number = 1, limit: number = 10) => {
-  const response = await axios.get<PostsResponse>(`posts/users/${userId}/`, {
+  const response = await axios.get<PostListResponse>(`posts/users/${userId}/`, {
     params: {
       type: 'brunch',
       page,
@@ -79,7 +79,6 @@ async function loadUserPosts() {
       data.item.forEach((post) => {
         console.log(`제목: ${post.title}, 작성일: ${post.createdAt}`);
         console.log(`내용: ${post.content}`);
-        console.log('댓글', post.repliesCount);
         console.log('부제목', post.extra.subTitle);
         console.log('날짜', post.updatedAt);
 
@@ -92,7 +91,6 @@ async function loadUserPosts() {
             <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden ">${post.content}</p>
 
             <div class="flex items-center gap-2 mt-[8px]">
-              <p class="text-[12px] text-br-detailsSubtitle">댓글 ${post.repliesCount}</p>
               <span class="text-[12px] text-br-contentSecondary">${post.updatedAt}</span>
             </div>
           </a>

@@ -32,7 +32,7 @@ export type fileUploadRes =
 export type postRes =
   | {
       ok: 1;
-      item: PostInfo;
+      item: PostItem;
     }
   | APIError;
 
@@ -44,39 +44,36 @@ export interface RegisterPostReq {
     subtitle: string;
   };
   content: string;
-  image?: string | string[];
-}
-
-// 게시글을 작성한 유저 정보
-export interface PostUser {
-  _id: number;
-  name: string;
+  image?: string[];
 }
 
 // 서버로부터 응답받는 게시글 정보
-export interface PostInfo {
-  type: string;
-  title: string;
-  extra: {
-    subtitle: string;
-  };
-  content: string;
-  image?: string | string[];
-  tag?: string;
-  views: number;
-  user: PostUser;
-  _id: number;
-  createdAt: string;
-  updatedAt: string;
-}
+// export interface PostInfo {
+//   type: string;
+//   title: string;
+//   extra: {
+//     subtitle: string;
+//   };
+//   content: string;
+//   image?: string[];
+//   tag?: string;
+//   views: number;
+//   user: {
+//     _id: number;
+//     name: string;
+//   };
+//   _id: number;
+//   createdAt: string;
+//   updatedAt: string;
+// }
 
 // 게시글 상세조회 응답 타입
-export type PostDetailsRes =
-  | {
-      ok: 1;
-      item: PostInfo;
-    }
-  | APIError;
+// export type PostDetailsRes =
+//   | {
+//       ok: 1;
+//       item: PostInfo;
+//     }
+//   | APIError;
 
 export interface DetailRes<T> {
   ok: 1;
@@ -111,10 +108,10 @@ export interface UserInfo {
   posts: number; // 작성한 게시물 수
   bookmarks: number;
   bookmarkedBy: {
-    users: number;
+    users: number; // 북마크한 사용자 수
   };
   likedBy: {
-    users: number;
+    users: number; // 좋아요한 사용자 수
   };
   postViews: number; // 조회수
 }
@@ -122,20 +119,17 @@ export interface UserInfo {
 export interface PostItem {
   _id: number;
   type: string;
-  product_id: number;
-  seller_id: number;
   user: UserInfo;
   title: string;
   extra: {
     subTitle: string;
   };
   content: string;
-  image: string;
+  image: string[];
   createdAt: string;
   updatedAt: string;
   bookmarks: number;
   myBookmarkId: number;
-  repliesCount: number;
 }
 
 export interface Pagination {
@@ -145,11 +139,20 @@ export interface Pagination {
   totalPages: number;
 }
 
-export type PostsResponse =
+// PostsResponse -> PostListResponse로 바꿈 (게시글 목록 전체 조회)
+export type PostListResponse =
   | {
       ok: 1;
       item: PostItem[];
       pagination: Pagination;
+    }
+  | APIError;
+
+// 게시글 상세 조회(한 개만 조회)
+export type PostResponse =
+  | {
+      ok: 1;
+      item: PostItem;
     }
   | APIError;
 
