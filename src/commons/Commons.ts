@@ -88,7 +88,7 @@ class NavigateComponent extends HTMLElement {
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
         <!-- 체크박스 숨김 -->
       <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-       <a href='/'>
+       <a href='/index.html'>
       <!-- 기본 아이콘 (체크 전) -->
       <img
         src="/icon/Home.svg"
@@ -112,7 +112,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-       <a href='./src/pages/author/AuthorPage.html'>
+       <a href='/src/pages/author/AuthorPage.html'>
       <img
         src="/icon/Search.svg"
         alt="발견 아이콘 기본"
@@ -135,7 +135,7 @@ class NavigateComponent extends HTMLElement {
       <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
     <!-- 기본 아이콘 (체크 전) -->
-    <a href='./src/pages/write/WritingPage.html'>
+    <a href='/src/pages/write/WritingPage.html'>
     <img
       src="/icon/EditSquare.svg"
       alt="글쓰기 아이콘 기본"
@@ -158,7 +158,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-       <a href='./src/pages/mypage/MyPage.html'>
+       <a href='/src/pages/mypage/MyPage.html'>
       <img
         src="/icon/Inventory.svg"
         alt="내서랍 아이콘 기본"
@@ -228,7 +228,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-        <a href='./src/pages/author/AuthorPage.html'>
+        <a href='/src/pages/author/AuthorPage.html'>
       <img
         src="/icon/Search.svg"
         alt="발견 아이콘 기본"
@@ -307,16 +307,16 @@ class NavigateComponent extends HTMLElement {
      * MPA 환경에서는 절대 경로 대신 HTML 기준 상대 경로를 사용하면 안전합니다.
     
     document.getElementById('home-button')?.addEventListener('click', () => {
-      window.location.href = './';
+      window.location.href = '/index.html';
     });
     document.getElementById('search-button')?.addEventListener('click', () => {
-      window.location.href = './src/pages/author/AuthorPage.html';
+      window.location.href = '/src/pages/author/AuthorPage.html';
     });
     document.getElementById('write-button')?.addEventListener('click', () => {
-      window.location.href = './src/pages/write/WritingPage.html';
+      window.location.href = '/src/pages/write/WritingPage.html';
     });
     document.getElementById('Inventory-button')?.addEventListener('click', () => {
-      window.location.href = './src/pages/mypage/MyPage.html';
+      window.location.href = '/src/pages/mypage/MyPage.html';
     });
     */
   }
@@ -500,7 +500,7 @@ class TopComponent extends HTMLElement {
     const startBtn = document.createElement('button');
     startBtn.id = 'start-button';
     startBtn.addEventListener('click', () => {
-      window.location.href = './src/pages/login/SignIn.html';
+      window.location.href = '/src/pages/login/SignIn.html';
     });
     startBtn.className = 'bg-black text-white rounded-full px-6 py-2 text-sm hover:bg-gray-800 transition cursor-pointer';
     startBtn.textContent = '시작하기';
