@@ -6,6 +6,7 @@
     <script type="module" src="../../commons/Commons.ts"></script>
     <script type="module" src="../../main.ts"></script>
     <script type="module" src="./MyPageScroll.ts"></script>
+    <!-- <script type="module" src="./MyPage.ts"></script> -->
     <title>Document</title>
   </head>
   <body class="font-Pretendard">
@@ -20,34 +21,34 @@
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <div class="flex gap-[26px] whitespace-nowrap px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels">
-          <a href="#">
+        <div id="bookmark-user" class="flex gap-[26px] whitespace-nowrap px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels">
+          <a href="../author/AuthorPage.html">
             <figure class="flex flex-col w-20 items-center shrink-0">
-              <img src="/img/universe.svg" alt="프로필 사진" />
+              <img src="/img/universe.svg" alt="프로필 사진" class="w-20 h-20 rounded-full object-cover border border-gray-200" />
               <figcaption class="my-4 text-br-contentSecondary text-[13px]">그레이스</figcaption>
             </figure>
           </a>
-          <a href="#">
+          <a href="../author/AuthorPage.html">
             <figure class="flex flex-col w-20 items-center shrink-0">
-              <img src="/img/universe.svg" alt="프로필 사진" />
+              <img src="/img/universe.svg" alt="프로필 사진" class="w-20 h-20 rounded-full object-cover border border-gray-200" />
               <figcaption class="my-4 text-br-contentSecondary text-[13px]">그레이스</figcaption>
             </figure>
           </a>
-          <a href="#">
+          <a href="../author/AuthorPage.html">
             <figure class="flex flex-col w-20 items-center shrink-0">
-              <img src="/img/universe.svg" alt="프로필 사진" />
+              <img src="/img/universe.svg" alt="프로필 사진" class="w-20 h-20 rounded-full object-cover border border-gray-200" />
               <figcaption class="my-4 text-br-contentSecondary text-[13px]">그레이스</figcaption>
             </figure>
           </a>
-          <a href="#">
+          <a href="../author/AuthorPage.html">
             <figure class="flex flex-col w-20 items-center shrink-0">
-              <img src="/img/universe.svg" alt="프로필 사진" />
+              <img src="/img/universe.svg" alt="프로필 사진" class="w-20 h-20 rounded-full object-cover border border-gray-200" />
               <figcaption class="my-4 text-br-contentSecondary text-[13px]">그레이스</figcaption>
             </figure>
           </a>
-          <a href="#">
+          <a href="../author/AuthorPage.html">
             <figure class="flex flex-col w-20 items-center shrink-0">
-              <img src="/img/universe.svg" alt="프로필 사진" />
+              <img src="/img/universe.svg" alt="프로필 사진" class="w-20 h-20 rounded-full object-cover border border-gray-200" />
               <figcaption class="my-4 text-br-contentSecondary text-[13px]">그레이스</figcaption>
             </figure>
           </a>
@@ -61,8 +62,8 @@
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <div class="flex gap-[26px] whitespace-nowrap px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels">
-          <a href="#" class="flex flex-col items-center shrink-0">
+        <div id="recently" class="flex gap-[26px] whitespace-nowrap px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels">
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
             <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
@@ -70,7 +71,7 @@
               <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
             </div>
           </a>
-          <a href="#" class="flex flex-col items-center shrink-0">
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
             <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
@@ -78,7 +79,7 @@
               <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
             </div>
           </a>
-          <a href="#" class="flex flex-col items-center shrink-0">
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
             <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
@@ -86,7 +87,7 @@
               <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
             </div>
           </a>
-          <a href="#" class="flex flex-col items-center shrink-0">
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
             <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
@@ -98,38 +99,38 @@
       </section>
       <!-- 관심 글 -->
       <section class="mt-[46px]">
-        <a href="#" class="px-[25px] flex items-center font-semibold text-[19px]">
+        <a href="../details/DetailsPage.html" class="px-[25px] flex items-center font-semibold text-[19px]">
           <p>관심 글</p>
           <button class="mb-0.5 ml-0.5">
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <div class="flex gap-[26px] whitespace-nowrap px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels">
-          <a href="#" class="flex flex-col items-center shrink-0">
-            <img src="/assets/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
+        <div id="bookmark-post" class="flex gap-[26px] whitespace-nowrap px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels">
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
+            <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
               <i class="text-[13px] text-br-contentTertiary">by</i>
               <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
             </div>
           </a>
-          <a href="#" class="flex flex-col items-center shrink-0">
-            <img src="/assets/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
+            <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
               <i class="text-[13px] text-br-contentTertiary">by</i>
               <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
             </div>
           </a>
-          <a href="#" class="flex flex-col items-center shrink-0">
-            <img src="/assets/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
+            <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
               <i class="text-[13px] text-br-contentTertiary">by</i>
               <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
             </div>
           </a>
-          <a href="#" class="flex flex-col items-center shrink-0">
+          <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
             <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
             <p class="text-xs mb-0.5">책 이름</p>
             <div class="flex gap-1">
@@ -147,20 +148,22 @@
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <a href="#">
-          <div class="border-t border-br-line py-3.5 px-[25px]">
-            <h1 class="text-[17px]">제목</h1>
-            <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">소제목</p>
-            <p class="text-br-contentSecondary text-xs">날짜</p>
-          </div>
-        </a>
-        <a href="#">
-          <div class="border-t border-br-line py-3.5 px-[25px]">
-            <h1 class="text-[17px]">제목</h1>
-            <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">소제목</p>
-            <p class="text-br-contentSecondary text-xs">날짜</p>
-          </div>
-        </a>
+        <div id="post-user">
+          <a href="../details/DetailsPage.html">
+            <div class="border-t border-br-line py-3.5 px-[25px]">
+              <h1 class="text-[17px]">제목</h1>
+              <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">소제목</p>
+              <p class="text-br-contentSecondary text-xs">날짜</p>
+            </div>
+          </a>
+          <a href="../details/DetailsPage.html">
+            <div class="border-t border-br-line py-3.5 px-[25px]">
+              <h1 class="text-[17px]">제목</h1>
+              <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">소제목</p>
+              <p class="text-br-contentSecondary text-xs">날짜</p>
+            </div>
+          </a>
+        </div>
       </section>
       <!-- 로그아웃 -->
       <button class="text-xs text-red-400 active:text-red-600 my-7 ml-[25px]">로그아웃</button>
