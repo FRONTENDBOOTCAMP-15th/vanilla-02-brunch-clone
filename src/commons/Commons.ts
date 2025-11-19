@@ -277,7 +277,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-     <a href='./src/pages/mypage/MyPage.html'>
+     <a href='/src/pages/mypage/MyPage.html'>
       <img
         src="/icon/Inventory.svg"
         alt="내서랍 아이콘 기본"
