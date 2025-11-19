@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+//local인지 session인지 storage에서 토큰 찾기
+function getToken(): string | null {
+  return localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+}
+
 const API_SERVER = 'https://fesp-api.koyeb.app/market';
 
 export function getAxios() {
@@ -17,6 +22,11 @@ export function getAxios() {
   // 요청 인터셉터 추가하기
   instance.interceptors.request.use(
     (config) => {
+      //토큰이 있으면 꺼내서 헤드에 넣기
+      const token = getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
       console.log('요청 인터셉터 호출', config);
       // 요청이 전달되기 전에 필요한 공통 작업 수행
       config.params = {

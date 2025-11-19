@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { LoginResponse } from '../utils/types';
 
 //CircleContents
@@ -49,6 +50,11 @@ class InputComponent extends HTMLElement {
   }
 }
 
+type User = {
+  name: string;
+  avatarUrl: string;
+};
+
 // Navigate
 class NavigateComponent extends HTMLElement {
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
@@ -56,10 +62,25 @@ class NavigateComponent extends HTMLElement {
   connectedCallback() {
     this.render();
   }
+  // 세션스토리지에서 현재 로그인 정보 읽기
+  private getUser(): User | null {
+    const name = sessionStorage.getItem('userName');
+    const token = sessionStorage.getItem('accessToken');
+
+    if (!name || !token) return null;
+
+    return {
+      name,
+      avatarUrl: 'https://via.placeholder.com/50',
+    };
+  }
 
   // UI를 렌더링
   render() {
-    this.innerHTML = `
+    // 로그인이 되었을 때
+    const user: User | null = this.getUser();
+    if (user) {
+      this.innerHTML = `      
   <div class="bg-white w-full overflow-x-auto">
   <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
     <!-- 홈 -->
@@ -172,14 +193,121 @@ class NavigateComponent extends HTMLElement {
   });
   </script>
     `;
+    } else {
+      /* 로그인이 안 되었을 때 */
+      this.innerHTML = `
+       
+  <div class="bg-white w-full overflow-x-auto">
+  <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
+    <!-- 홈 -->
+    <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+        <!-- 체크박스 숨김 -->
+      <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+       
+      <!-- 기본 아이콘 (체크 전) -->
+      <img
+        src="/icon/Home.svg"
+        alt="홈 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+      
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/HomeActive.svg"
+        alt="홈 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
+        </label>
+        <span class="text-center">홈</span>
+      </div>
 
-    /*
+    <!-- 발견 -->
+    <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+       <!-- 체크박스 숨김 -->
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+      <!-- 기본 아이콘 (체크 전) -->
+        <a href='./src/pages/author/AuthorPage.html'>
+      <img
+        src="/icon/Search.svg"
+        alt="발견 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+      </a>
+      
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/SearchActive.svg"
+        alt="발견 아이콘 채움"
+        class="hidden peer-checked:block"        
+      />
+      </label>
+      <span class="text-center">발견</span>
+    </div>
+
+    <!-- 글쓰기 -->
+    <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+      <!-- 체크박스 숨김 -->
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+    <!-- 기본 아이콘 (체크 전) -->
+    
+    <img
+      onClick="alert('로그인이 필요한 화면입니다')"
+      src="/icon/EditSquare.svg"
+      alt="글쓰기 아이콘 기본"
+      class="peer-checked:hidden"
+      
+    />
+    
+            <!-- 체크 아이콘 (체크 후) -->
+    <img
+       src="/icon/EditSquareActive.svg"
+      alt="글쓰기 아이콘 채움"
+      class="hidden peer-checked:block"
+    />
+      </label>
+      <span class="text-center">글쓰기</span>
+    </div>
+
+    <!-- 내 서랍 -->
+    <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+      <label class="w-8 h-8 flex items-center justify-center ">
+       <!-- 체크박스 숨김 -->
+    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+      <!-- 기본 아이콘 (체크 전) -->
+     <a href='./src/pages/mypage/MyPage.html'>
+      <img
+        src="/icon/Inventory.svg"
+        alt="내서랍 아이콘 기본"
+        class="peer-checked:hidden"
+      />
+    </a>
+        <!-- 체크 아이콘 (체크 후) -->
+      <img
+        src="/icon/InventoryActive.svg"
+        alt="내서랍 아이콘 채움"
+        class="hidden peer-checked:block"
+      />
+
+      </label>
+      <span class="text-center">내 서랍</span>
+    </div>
+  </div>
+</div>
+       `;
+    }
+
+    /*------------------------------------------------------
+     *
      * 현재 클릭한 네비의 상태를 저장해야 함.
      * 어떻게????
-     */
-    /*
+     *
+     * MPA 환경에서는 절대 경로 대신 HTML 기준 상대 경로를 사용하면 안전합니다.
+    
     document.getElementById('home-button')?.addEventListener('click', () => {
-      window.location.href = '/';
+      window.location.href = './';
     });
     document.getElementById('search-button')?.addEventListener('click', () => {
       window.location.href = './src/pages/author/AuthorPage.html';
@@ -205,7 +333,9 @@ class SubscribeButtonComponent extends HTMLElement {
   // UI를 렌더링
   render() {
     this.innerHTML = `    
-    <button type="button" aria-pressed="false" class="inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
+    <button type="button" aria-pressed="false" 
+      id="subscribe-button"
+      class="inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
       <svg class="icon-plus" width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <rect width="17" height="17" fill="url(#pattern0_1_16927)" />
         <defs>
@@ -241,6 +371,40 @@ class SubscribeButtonComponent extends HTMLElement {
       <span class="font-Pretendard">구독</span>
     </button>
     `;
+    //const btn = document.querySelector('button');
+    const btn = document.getElementById('subscribe-button');
+
+    let subscribed = false;
+
+    btn?.addEventListener('click', () => {
+      subscribed = !subscribed; // subscribed = true
+      // aria-pressed = true -> 버튼이 눌린 상태
+      btn.setAttribute('aria-pressed', String(subscribed));
+
+      // 스타일 변경
+      btn.classList.toggle('bg-br-contentsBg', !subscribed);
+      btn.classList.toggle('bg-br-primary', subscribed);
+      btn.classList.toggle('text-br-primary', !subscribed);
+      btn.classList.toggle('text-br-contentsBg', subscribed);
+      btn.classList.toggle('w-[65px]', !subscribed);
+      btn.classList.toggle('w-[78px]', subscribed);
+
+      // 아이콘 변경
+      const plus = btn.querySelector('.icon-plus');
+      const check = btn.querySelector('.icon-check');
+
+      plus?.classList.toggle('hidden', subscribed);
+      check?.classList.toggle('hidden', !subscribed);
+
+      // 텍스트 변경
+      let label = btn.querySelector('span');
+
+      if (subscribed) {
+        label!.textContent = '구독중';
+      } else {
+        label!.textContent = '구독';
+      }
+    });
   }
 }
 
@@ -250,6 +414,23 @@ class TopComponent extends HTMLElement {
   // 컴포넌트 렌더링과 이벤트 초기화를 수행
   connectedCallback() {
     this.render();
+    const user = this.getUser();
+    console.log('user: ', user);
+
+    // 로그인 성공시 아바타 버튼 추가
+    if (user != null) {
+      this.loggedInHTML();
+    } else {
+      this.loggedOutHTML();
+    }
+    //탑헤더를 화면에 렌더링
+
+    //로고를 클릭했을 때 메인화면으로 이동
+    const logo = document.querySelector('#main-logo');
+    logo?.addEventListener('click', () => {
+      // SPA 환경에서는 window.location.assign을 사용하면 안전
+      window.location.assign('/');
+    });
   }
 
   // 세션스토리지에서 현재 로그인 정보 읽기
@@ -266,10 +447,8 @@ class TopComponent extends HTMLElement {
 
   // UI를 렌더링
   render() {
-    const user = this.getUser();
-    console.log(user);
     this.innerHTML = `
-        <div class="flex items-center justify-between px-[24px] py-4 min-w-[360px]">
+        <div class="sticky top-0 bg-white flex items-center justify-between px-[24px] py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
       <div id="main-logo" class="flex items-center space-x-1 text-[var(--detailsTitle)] cursor-pointer">
         <img src="/icon/Logo.svg" alt="브런치스토리 로고" />
@@ -285,16 +464,6 @@ class TopComponent extends HTMLElement {
       </div>
     </div>
     `;
-    // 로그인 성공시 아바타 버튼 추가
-    if (user) {
-      this.loggedInHTML();
-    } else {
-      this.loggedOutHTML();
-    }
-    //로고를 클릭했을 때 메인화면으로 이동
-    document.getElementById('main-logo')?.addEventListener('click', () => {
-      window.location.href = '/';
-    });
   }
 
   private appendAvatarBtn() {
@@ -362,24 +531,31 @@ customElements.define('subscribe-button', SubscribeButtonComponent);
 
 customElements.define('input-component', InputComponent);
 
-// 로그인 요청 함수
+// 로그인 요청 함수 (Axios 버전)
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
-  const response = await fetch('https://fesp-api.koyeb.app/market/users/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'client-id': 'febc15-vanilla02-ecad',
-    },
-    body: JSON.stringify({ email, password }),
-  });
+  try {
+    const response = await axios.post<LoginResponse>(
+      'https://fesp-api.koyeb.app/market/users/login',
+      { email, password },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': 'febc15-vanilla02-ecad',
+        },
+      }
+    );
 
-  if (!response.ok) {
-    throw new Error('로그인 요청 실패');
+    return response.data;
+  } catch (error: any) {
+    // Axios 에러 처리
+    if (error.response) {
+      throw new Error(`로그인 요청 실패: ${error.response.status}`);
+    } else if (error.request) {
+      throw new Error('로그인 요청 실패: 서버 응답 없음');
+    } else {
+      throw new Error(`로그인 요청 실패: ${error.message}`);
+    }
   }
-
-  const data: LoginResponse = await response.json();
-
-  return data;
 }
 
 // 로그인 함수 호출
