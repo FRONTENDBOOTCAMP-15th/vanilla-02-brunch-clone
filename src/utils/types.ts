@@ -74,6 +74,10 @@ export interface UserInfo {
     biography: string;
     keyword: string[];
   };
+  bookmark: {      
+      users: number;
+      posts: number;
+  };
   createdAt: string;
   updatedAt: string;
   posts: number; // 작성한 게시물 수
@@ -126,10 +130,20 @@ export type PostResponse =
     }
   | APIError;
 
-export type UsersResponse =
+// 회원 목록 조회(UsersResponse -> UserListResponse)
+export type UserListResponse =
   | {
       ok: 1;
       item: UserInfo[];
+      pagination: Pagination;
+    }
+  | APIError;
+
+// 회원 정보 조회(모든 속성)
+export type UserResponse =
+  | {
+      ok: 1;
+      item: UserInfo;
       pagination: Pagination;
     }
   | APIError;
@@ -141,3 +155,5 @@ export type LoginResponse =
       item: UserInfo;
     }
   | APIError;
+
+//

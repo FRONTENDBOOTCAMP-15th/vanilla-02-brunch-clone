@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { PostItem, PostListResponse, UsersResponse, UserInfo } from '../../utils/types';
+import type { PostItem, PostListResponse, UserListResponse, UserInfo } from '../../utils/types';
 
 function removeImgTags(html: string): string {
   return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
@@ -266,7 +266,7 @@ export async function retrieveAPI(url: string): Promise<any> {
 
 (async () => {
   let postRes: PostListResponse;
-  let userRes: UsersResponse;
+  let userRes: UserListResponse;
 
   //요즘 뜨는 브런치
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
@@ -305,7 +305,7 @@ export async function retrieveAPI(url: string): Promise<any> {
   //오늘의 작가
   // 오늘 날짜와 회원번호를 매핑
   url = 'https://fesp-api.koyeb.app/market/users?sort={"bookmarkedBy.users": -1}';
-  userRes = (await retrieveAPI(url)) as UsersResponse;
+  userRes = (await retrieveAPI(url)) as UserListResponse;
   if (userRes.ok === 1) {
     const date: Date = new Date();
     const day: string = String(date.getDate()).padStart(2, '0');
