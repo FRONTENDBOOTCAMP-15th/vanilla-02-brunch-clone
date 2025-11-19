@@ -1,3 +1,4 @@
+
 export interface APIError {
   ok: 0;
   message: string;
@@ -20,6 +21,22 @@ export interface uploadFileInfo {
   path: string;
 }
 
+// 파일 업로드
+export type fileUploadRes =
+  | {
+      ok: 1;
+      item: uploadFileInfo[];
+    }
+  | APIError;
+
+// 게시글 등록
+export type postRes =
+  | {
+      ok: 1;
+      item: PostInfo;
+    }
+  | APIError;
+
 // 게시글 등록
 export interface RegisterPostReq {
   type?: string;
@@ -41,6 +58,9 @@ export interface PostUser {
 export interface PostInfo {
   type: string;
   title: string;
+  extra: {
+    subtitle: string;
+  };
   content: string;
   image?: string | string[];
   tag?: string;
@@ -50,6 +70,14 @@ export interface PostInfo {
   createdAt: string;
   updatedAt: string;
 }
+
+// 게시글 상세조회 응답 타입
+export type PostDetailsRes =
+  | {
+      ok: 1;
+      item: PostInfo;
+    }
+  | APIError;
 
 export interface DetailRes<T> {
   ok: 1;
@@ -90,16 +118,6 @@ export interface UserInfo {
   postViews: number; // 조회수
 }
 
-export interface ProductImage {
-  url: string;
-  name: string;
-}
-
-export interface ProductInfo {
-  name: string;
-  image: ProductImage;
-}
-
 export interface PostItem {
   _id: number;
   type: string;
@@ -111,7 +129,6 @@ export interface PostItem {
   image: string;
   createdAt: string;
   updatedAt: string;
-  product: ProductInfo;
   bookmarks: number;
   myBookmarkId: number;
   repliesCount: number;
@@ -124,99 +141,26 @@ export interface Pagination {
   totalPages: number;
 }
 
-export interface PostsResponse {
-  ok: number;
-  item: PostItem[];
-  pagination: Pagination;
-}
+export type PostsResponse =
+  | {
+      ok: 1;
+      item: PostItem[];
+      pagination: Pagination;
+    }
+  | APIError;
 
-export interface UsersResponse {
-  ok: number;
-  item: UserInfo[];
-  pagination: Pagination;
-}
+export type UsersResponse =
+  | {
+      ok: 1;
+      item: UserInfo[];
+      pagination: Pagination;
+    }
+  | APIError;
 
 // 응답 타입 정의
-export interface LoginResponse {
-  ok: number;
-  item: UserInfo;
-}
-
-export interface UserInfo {
-  _id: number;
-  email: string;
-  name: string;
-  phone: string;
-  address: string;
-  type: string;
-  loginType: string;
-  image: string;
-  extra: {
-    job: string;
-    biography: string;
-    keyword: string[];
-  };
-  createdAt: string;
-  updatedAt: string;
-  posts: number; // 작성한 게시물 수
-  bookmarkedBy: {
-    users: number; // 북마크한 사용자 수
-  };
-  likedBy: {
-    users: number; // 좋아요한 사용자 수
-  };
-  postViews: number; // 조회수
-}
-
-export interface TokenInfo {
-  accessToken: string;
-  refreshToken: string;
-}
-
-export interface ProductImage {
-  url: string;
-  name: string;
-}
-
-export interface ProductInfo {
-  name: string;
-  image: ProductImage;
-}
-
-export interface PostItem {
-  _id: number;
-  type: string;
-  product_id: number;
-  seller_id: number;
-  user: UserInfo;
-  title: string;
-  content: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-  product: ProductInfo;
-  bookmarks: number;
-  myBookmarkId: number;
-  repliesCount: number;
-}
-
-export interface Pagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-export interface PostsResponse {
-  ok: number;
-  item: PostItem[];
-  pagination: Pagination;
-}
-
-export interface UsersResponse {
-  ok: number;
-  item: UserInfo[];
-  pagination: Pagination;
-}
-
-// 요청 타입 정의
+export type LoginResponse =
+  | {
+      ok: 1;
+      item: UserInfo;
+    }
+  | APIError;

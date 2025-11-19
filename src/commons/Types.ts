@@ -90,15 +90,6 @@ export interface UserInfo {
   postViews: number; // 조회수
 }
 
-export interface ProductImage {
-  url: string;
-  name: string;
-}
-
-export interface ProductInfo {
-  name: string;
-  image: ProductImage;
-}
 
 export interface PostItem {
   _id: number;
@@ -111,7 +102,6 @@ export interface PostItem {
   image: string;
   createdAt: string;
   updatedAt: string;
-  product: ProductInfo;
   bookmarks: number;
   myBookmarkId: number;
   repliesCount: number;
@@ -168,19 +158,10 @@ export interface UserInfo {
   postViews: number; // 조회수
 }
 
-export interface TokenInfo {
-  accessToken: string;
-  refreshToken: string;
-}
 
 export interface ProductImage {
   url: string;
   name: string;
-}
-
-export interface ProductInfo {
-  name: string;
-  image: ProductImage;
 }
 
 export interface PostItem {
@@ -194,7 +175,6 @@ export interface PostItem {
   image: string;
   createdAt: string;
   updatedAt: string;
-  product: ProductInfo;
   bookmarks: number;
   myBookmarkId: number;
   repliesCount: number;
@@ -219,4 +199,3 @@ export interface UsersResponse {
   pagination: Pagination;
 }
 
-// 요청 타입 정의

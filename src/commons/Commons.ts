@@ -281,6 +281,7 @@ class NavigateComponent extends HTMLElement {
       <!-- 기본 아이콘 (체크 전) -->
      <a href='/src/pages/mypage/MyPage.html'>
       <img
+        onClick="alert('로그인이 필요한 화면입니다')"
         src="/icon/Inventory.svg"
         alt="내서랍 아이콘 기본"
         class="peer-checked:hidden"
@@ -415,10 +416,11 @@ class TopComponent extends HTMLElement {
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
   // 컴포넌트 렌더링과 이벤트 초기화를 수행
   connectedCallback() {
+    // appendChild 를 사용하므로 먼저 html이 렌더 되어야 함
     this.render();
-    const user = this.getUser();
-    console.log('user: ', user);
-
+    //세션 스토리지에서 로그인된 사용자 정보를 가져옴
+    const user: User | null = this.getUser();
+    console.log(user);
     // 로그인 성공시 아바타 버튼 추가
     if (user != null) {
       this.loggedInHTML();
@@ -476,7 +478,7 @@ class TopComponent extends HTMLElement {
 
     const img = document.createElement('img');
     img.src = '/icon/Face.svg';
-    img.alt = '검색 아이콘';
+    img.alt = '아바타 아이콘';
 
     avatarBtn.appendChild(img);
 
@@ -497,7 +499,7 @@ class TopComponent extends HTMLElement {
     parentDiv?.prepend(alertBtn);
   }
   private appendStartBtn() {
-    const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
+    const parentDiv = document.getElementById('menu-items');
 
     const startBtn = document.createElement('button');
     startBtn.id = 'start-button';
@@ -510,6 +512,7 @@ class TopComponent extends HTMLElement {
   }
 
   private loggedOutHTML() {
+    console.log('호출됨');
     this.appendStartBtn();
   }
 
@@ -577,11 +580,9 @@ export async function loginUser(email: string, password: string): Promise<LoginR
       localStorage.setItem('accessToken', result.item.token.accessToken);
       localStorage.setItem('refreshToken', result.item.token.refreshToken);
       localStorage.setItem('userName', result.item.name);
-
     }
   } catch (e) {
     console.error(e);
   }
-  
 })();
 */
