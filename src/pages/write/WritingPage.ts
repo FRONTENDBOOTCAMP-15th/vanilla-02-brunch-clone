@@ -181,7 +181,7 @@ async function uploadPost() {
     if (data.ok === 1) {
       alert('글이 등록되었습니다.');
       const postId = data.item._id;
-      // location.replace(`../details/DetailsPage.html?id=${postId}`);
+      location.replace(`../details/DetailsPage.html?_id=${postId}`);
     } else {
       alert(data.message);
     }
