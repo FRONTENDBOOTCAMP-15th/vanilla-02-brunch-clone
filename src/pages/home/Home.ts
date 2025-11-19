@@ -210,7 +210,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
       if (idx >= 2) return;
       const card = document.createElement('div');
       card.addEventListener('click', () => {
-        window.location.href = `./src/pages/details/detailspage?_id=${post._id}`;
+        window.location.href = `./src/pages/details/DetailsPage.html?_id=${p._id}`;
       });
       card.className = 'flex py-[15px] border-b border-[#eee] bg-[#f8f8f8] cursor-pointer';
 
