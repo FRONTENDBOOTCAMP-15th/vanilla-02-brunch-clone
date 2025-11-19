@@ -1,4 +1,3 @@
-
 export interface APIError {
   ok: 0;
   message: string;
@@ -110,10 +109,10 @@ export interface UserInfo {
   updatedAt: string;
   posts: number; // 작성한 게시물 수
   bookmarkedBy: {
-    users: number; // 북마크한 사용자 수
+    users: number; 
   };
   likedBy: {
-    users: number; // 좋아요한 사용자 수
+    users: number; 
   };
   postViews: number; // 조회수
 }
@@ -125,6 +124,9 @@ export interface PostItem {
   seller_id: number;
   user: UserInfo;
   title: string;
+  extra: {
+    subtitle: string;
+  };
   content: string;
   image: string;
   createdAt: string;
