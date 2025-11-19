@@ -21,7 +21,7 @@
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <div id="bookmark-user" class="flex gap-[26px] whitespace-nowrap h-[155px] px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels text-br-contentSecondary">작가를 구독해보세요!</div>
+        <div id="bookmark-user" class="flex gap-[26px] whitespace-nowrap h-[155px] px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels text-br-contentSecondary"></div>
       </section>
       <!-- 최근 본 -->
       <section class="mt-[30px]">
@@ -74,7 +74,7 @@
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <div id="bookmark-post" class="flex gap-[26px] h-[249px] px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels text-br-contentSecondary">좋아요를 눌러보세요!</div>
+        <div id="bookmark-post" class="flex gap-[26px] h-[249px] px-[25px] py-[15px] overflow-x-auto cursor-grab active:cursor-grabbing [&::-webkit-scrollbar]:hidden carousels text-br-contentSecondary"></div>
       </section>
       <!-- 내 브런치 -->
       <section class="mt-[46px]">
@@ -84,25 +84,10 @@
             <img src="/icon/ArrowRight.svg" />
           </button>
         </a>
-        <div id="post-user px-[25px]">
-          <a href="../details/DetailsPage.html">
-            <div class="border-t border-br-line py-3.5 px-[25px]">
-              <h1 class="text-[17px]">제목</h1>
-              <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">소제목</p>
-              <p class="text-br-contentSecondary text-xs">날짜</p>
-            </div>
-          </a>
-          <a href="../details/DetailsPage.html">
-            <div class="border-t border-br-line py-3.5 px-[25px]">
-              <h1 class="text-[17px]">제목</h1>
-              <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">소제목</p>
-              <p class="text-br-contentSecondary text-xs">날짜</p>
-            </div>
-          </a>
-        </div>
+        <div id="post-user"></div>
       </section>
       <!-- 로그아웃 -->
-      <button class="text-xs text-red-400 active:text-red-600 my-7 ml-[25px]">로그아웃</button>
+      <button id="logout" class="text-xs text-red-400 active:text-red-600 my-7 ml-[25px]">로그아웃</button>
     </article>
     <!-- 하단 바 -->
     <navigate-component></navigate-component>

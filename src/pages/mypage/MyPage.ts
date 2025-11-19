@@ -1,5 +1,5 @@
 import { getAxios } from '../../utils/axios';
-import type { ListRes, Bookmark } from '../../utils/types';
+import type { ListRes, Bookmark, PostItem } from '../../utils/types';
 
 //토큰이 있어야만 내 서랍 진입 가능 없으면 로그인페이지로 이동 //이건 home에서 처리해줄듯
 //관심작가 - /bookmarks/user // item.user.name, item.user.image
@@ -50,7 +50,27 @@ if (data?.ok) {
 }
 
 //최근 본
-
+// function RecenterPosts() {
+//   //1. 로컬 키 꺼내
+//   //2.데이터 없을 때
+//   //return
+//   // <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
+//   //           <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
+//   //           <p class="text-xs mb-0.5">책 이름</p>
+//   //           <div class="flex gap-1">
+//   //             <i class="text-[13px] text-br-contentTertiary">by</i>
+//   //             <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
+//   //           </div>
+//   //         </a>
+//   // const RecentlyPost = document.querySelector('#recently');
+//   // if (RecentlyPost) {
+//   //   RecentlyPost.innerHTML = result.join('');
+//   // }
+//   // const recently = await RecenterPosts();
+//   // if (recently?.ok) {
+//   //   RecenterPosts(recently.item);
+//   // }
+// }
 //관심 글
 async function getBookmarkPost() {
   try {
@@ -64,7 +84,7 @@ async function getBookmarkPost() {
 function renderBookmarkPost(posts: Bookmark[]) {
   const result = posts.map((post) => {
     return `
-    <a href="../details/DetailsPage.html?_id=${post.post?._id}" >
+    <a href="/src/pages/details/DetailsPage.html?_id=${post.post?._id}" >
             <div class="flex flex-col items-center shrink-0 w-[123px]">
               <img src="${post.post?.image}" alt="${post.post?.title}표지" class="w-[123px] h-[172px] mb-4 object-cover" />
               <p class="text-xs mb-0.5 text-black text-center ">${post.post?.title}</p>
@@ -87,3 +107,49 @@ const post = await getBookmarkPost();
 if (post?.ok) {
   renderBookmarkPost(post.item);
 }
+
+//내 브런치
+async function getMyPost() {
+  try {
+    const { data } = await axios.get<ListRes<PostItem>>(`/posts/users`, { params: { type: 'brunch' } });
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function renderMyPost(Myposts: PostItem[]) {
+  const result = Myposts.slice(0, 5).map((Mypost) => {
+    return `
+    <a href="/src/pages/details/DetailsPage.html?_id=${Mypost._id}">
+            <div class="border-t border-br-line py-3.5 px-[25px]">
+              <h1 class="text-[17px]">${Mypost.title}</h1>
+              <p class="mt-2 mb-[9px] text-br-contentSecondary text-xs">${Mypost.extra?.subTitle || ''}</p>
+              <p class="text-br-contentSecondary text-xs">${Mypost.createdAt}</p>
+            </div>
+          </a>
+
+    `;
+  });
+  const MyPost = document.querySelector('#post-user');
+  if (MyPost) {
+    MyPost.innerHTML = result.join('');
+  }
+}
+
+const Minepost = await getMyPost();
+if (Minepost?.ok) {
+  renderMyPost(Minepost.item);
+}
+
+//로그아웃
+const logout = document.getElementById('logout');
+
+logout?.addEventListener('click', () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userName');
+  sessionStorage.removeItem('accessToken');
+  sessionStorage.removeItem('userName');
+  alert('로그아웃 성공! 홈으로 이동합니다');
+  location.href = '/index.html';
+});
