@@ -88,7 +88,7 @@ class NavigateComponent extends HTMLElement {
       <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
         <!-- 체크박스 숨김 -->
       <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-       <a href='/'>
+       <a href='/index.html'>
       <!-- 기본 아이콘 (체크 전) -->
       <img
         src="/icon/Home.svg"
@@ -112,7 +112,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-       <a href='./src/pages/author/AuthorPage.html'>
+       <a href='/src/pages/author/AuthorPage.html'>
       <img
         src="/icon/Search.svg"
         alt="발견 아이콘 기본"
@@ -135,7 +135,7 @@ class NavigateComponent extends HTMLElement {
       <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
     <!-- 기본 아이콘 (체크 전) -->
-    <a href='./src/pages/write/WritingPage.html'>
+    <a href='/src/pages/write/WritingPage.html'>
     <img
       src="/icon/EditSquare.svg"
       alt="글쓰기 아이콘 기본"
@@ -158,7 +158,7 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-       <a href='./src/pages/mypage/MyPage.html'>
+       <a href='/src/pages/mypage/MyPage.html'>
       <img
         src="/icon/Inventory.svg"
         alt="내서랍 아이콘 기본"
@@ -206,11 +206,13 @@ class NavigateComponent extends HTMLElement {
       <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
        
       <!-- 기본 아이콘 (체크 전) -->
+      <a href="/index.html">
       <img
         src="/icon/Home.svg"
         alt="홈 아이콘 기본"
         class="peer-checked:hidden"
       />
+      </a>
       
         <!-- 체크 아이콘 (체크 후) -->
       <img
@@ -228,18 +230,19 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-      
+        <a href='/src/pages/search/Search.html'>
       <img
         src="/icon/Search.svg"
         alt="발견 아이콘 기본"
         class="peer-checked:hidden"
       />
+      </a>
       
         <!-- 체크 아이콘 (체크 후) -->
       <img
         src="/icon/SearchActive.svg"
         alt="발견 아이콘 채움"
-        class="hidden peer-checked:block"
+        class="hidden peer-checked:block"        
       />
       </label>
       <span class="text-center">발견</span>
@@ -253,9 +256,11 @@ class NavigateComponent extends HTMLElement {
     <!-- 기본 아이콘 (체크 전) -->
     
     <img
+      onClick="alert('로그인이 필요한 화면입니다')"
       src="/icon/EditSquare.svg"
       alt="글쓰기 아이콘 기본"
       class="peer-checked:hidden"
+      
     />
     
             <!-- 체크 아이콘 (체크 후) -->
@@ -274,13 +279,14 @@ class NavigateComponent extends HTMLElement {
        <!-- 체크박스 숨김 -->
     <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
       <!-- 기본 아이콘 (체크 전) -->
-    
+     <a href='/src/pages/mypage/MyPage.html'>
       <img
+        onClick="alert('로그인이 필요한 화면입니다')"
         src="/icon/Inventory.svg"
         alt="내서랍 아이콘 기본"
         class="peer-checked:hidden"
       />
-    
+    </a>
         <!-- 체크 아이콘 (체크 후) -->
       <img
         src="/icon/InventoryActive.svg"
@@ -297,22 +303,23 @@ class NavigateComponent extends HTMLElement {
     }
 
     /*------------------------------------------------------
-    /*
+     *
      * 현재 클릭한 네비의 상태를 저장해야 함.
      * 어떻게????
-     */
-    /*
+     *
+     * MPA 환경에서는 절대 경로 대신 HTML 기준 상대 경로를 사용하면 안전합니다.
+    
     document.getElementById('home-button')?.addEventListener('click', () => {
-      window.location.href = '/';
+      window.location.href = '/index.html';
     });
     document.getElementById('search-button')?.addEventListener('click', () => {
-      window.location.href = './src/pages/author/AuthorPage.html';
+      window.location.href = '/src/pages/author/AuthorPage.html';
     });
     document.getElementById('write-button')?.addEventListener('click', () => {
-      window.location.href = './src/pages/write/WritingPage.html';
+      window.location.href = '/src/pages/write/WritingPage.html';
     });
     document.getElementById('Inventory-button')?.addEventListener('click', () => {
-      window.location.href = './src/pages/mypage/MyPage.html';
+      window.location.href = '/src/pages/mypage/MyPage.html';
     });
     */
   }
@@ -409,7 +416,25 @@ class TopComponent extends HTMLElement {
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
   // 컴포넌트 렌더링과 이벤트 초기화를 수행
   connectedCallback() {
+    // appendChild 를 사용하므로 먼저 html이 렌더 되어야 함
     this.render();
+    //세션 스토리지에서 로그인된 사용자 정보를 가져옴
+    const user: User | null = this.getUser();
+    console.log(user);
+    // 로그인 성공시 아바타 버튼 추가
+    if (user != null) {
+      this.loggedInHTML();
+    } else {
+      this.loggedOutHTML();
+    }
+    //탑헤더를 화면에 렌더링
+
+    //로고를 클릭했을 때 메인화면으로 이동
+    const logo = document.querySelector('#main-logo');
+    logo?.addEventListener('click', () => {
+      // SPA 환경에서는 window.location.assign을 사용하면 안전
+      window.location.assign('/');
+    });
   }
 
   // 세션스토리지에서 현재 로그인 정보 읽기
@@ -426,8 +451,6 @@ class TopComponent extends HTMLElement {
 
   // UI를 렌더링
   render() {
-    const user = this.getUser();
-    //console.log(user);
     this.innerHTML = `
         <div class="sticky top-0 bg-white flex items-center justify-between px-[24px] py-4 min-w-[360px]">
       <!-- 왼쪽: brunchstory -->
@@ -439,22 +462,14 @@ class TopComponent extends HTMLElement {
       <div id="menu-items" class="flex items-center space-x-4">
         
         <!-- 검색 아이콘 -->
-        <button class="text-br-start hover:text-[var(--start)] cursor-pointer">
+        <button 
+          onclick="location.href='/src/pages/search/Search.html'"
+          class="text-br-start hover:text-[var(--start)] cursor-pointer">
           <img src="/icon/SearchVector.svg" alt="검색 아이콘" />
         </button>
       </div>
     </div>
     `;
-    // 로그인 성공시 아바타 버튼 추가
-    if (user) {
-      this.loggedInHTML();
-    } else {
-      this.loggedOutHTML();
-    }
-    //로고를 클릭했을 때 메인화면으로 이동
-    document.getElementById('main-logo')?.addEventListener('click', () => {
-      window.location.href = '/';
-    });
   }
 
   private appendAvatarBtn() {
@@ -465,7 +480,7 @@ class TopComponent extends HTMLElement {
 
     const img = document.createElement('img');
     img.src = '/icon/Face.svg';
-    img.alt = '검색 아이콘';
+    img.alt = '아바타 아이콘';
 
     avatarBtn.appendChild(img);
 
@@ -486,12 +501,12 @@ class TopComponent extends HTMLElement {
     parentDiv?.prepend(alertBtn);
   }
   private appendStartBtn() {
-    const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
+    const parentDiv = document.getElementById('menu-items');
 
     const startBtn = document.createElement('button');
     startBtn.id = 'start-button';
     startBtn.addEventListener('click', () => {
-      window.location.href = './src/pages/login/SignIn.html';
+      window.location.href = '/src/pages/login/SignIn.html';
     });
     startBtn.className = 'bg-black text-white rounded-full px-6 py-2 text-sm hover:bg-gray-800 transition cursor-pointer';
     startBtn.textContent = '시작하기';
@@ -499,6 +514,7 @@ class TopComponent extends HTMLElement {
   }
 
   private loggedOutHTML() {
+    console.log('호출됨');
     this.appendStartBtn();
   }
 
@@ -566,11 +582,9 @@ export async function loginUser(email: string, password: string): Promise<LoginR
       localStorage.setItem('accessToken', result.item.token.accessToken);
       localStorage.setItem('refreshToken', result.item.token.refreshToken);
       localStorage.setItem('userName', result.item.name);
-
     }
   } catch (e) {
     console.error(e);
   }
-  
 })();
 */

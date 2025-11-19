@@ -74,9 +74,9 @@ export interface UserInfo {
     biography: string;
     keyword: string[];
   };
-  bookmark: {
-    users: number;
-    posts: number;
+  bookmark: {      
+      users: number;
+      posts: number;
   };
   createdAt: string;
   updatedAt: string;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { PostItem, PostsResponse, UsersResponse, UserInfo } from '../../utils/types';
+import type { PostItem, PostListResponse, UserListResponse, UserInfo } from '../../utils/types';
 
 function removeImgTags(html: string): string {
   return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
@@ -18,7 +18,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   const wrapper: HTMLDivElement = document.createElement('div');
   wrapper.className = 'flex items-start gap-5 cursor-pointer min-w-[360px]';
   wrapper.addEventListener('click', () => {
-    window.location.href = `./src/pages/details/DetailsPage.html?id=${post._id}`;
+    window.location.href = `./src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
 
   // 이미지 있는 경우
@@ -70,18 +70,23 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
 //구독자 급등 작가
 function createWriterCard(post: any): HTMLElement {
   const card = document.createElement('div');
-  card.className = 'text-center p-[30px_20px] border-r border-b border-[#eee]';
+  card.addEventListener('click', () => {
+    window.location.href = `./src/pages/author/AuthorPage.html?_id=${post._id}`;
+  });
+  card.className = 'cursor-pointer text-center p-[30px_20px] border-r border-b border-[#eee]';
   /* 현재 db에 이미지 경로가 없음. 임시 이미지 사용
    * 회원가입 처리 후 db에 데이터가 들어가면 ${post.image}로 대체
    */
   const srcImg = getValidImageUrl(post.image);
-  card.innerHTML = `
+  card.innerHTML = `    
+      <a href="./src/pages/author/AuthorPage.html?_id=${post._id}">
       <img 
         src="${srcImg}"
         onerror="this.onerror=null; this.src='/img/NoFaceImage.png';" 
         alt="${post.name || '작가'}" 
-        class="w-[90px] h-[90px] rounded-full object-cover mb-[15px] inline-block"
+        class="w-[90px] h-[90px] rounded-full object-cover mb-[15px] inline-block cursor-pointer"
       />
+      </a>
 
       <h3 class="text-[17px] font-semibold mt-[5px] mb-[3px]">
         ${post.name || '이름 없음'}
@@ -93,49 +98,51 @@ function createWriterCard(post: any): HTMLElement {
 
       <p class="text-[14px] text-[#444] leading-[1.4] max-w-[200px] mx-auto overflow-hidden  whitespace-nowrap">
         ${post.extra?.biography || '소개글이 없습니다.'}
-      </p>
+      </p>      
   `;
 
   return card;
 }
 
 //오늘의 작가 dom 구현
-export async function fetchAuthorPosts(authorId: number): Promise<PostsResponse> {
-  const url = `https://fesp-api.koyeb.app/market/posts?type=brunch&id=${authorId}`;
+export async function fetchAuthorPosts(authorId: number): Promise<PostListResponse | undefined> {
+  const url = `https://fesp-api.koyeb.app/market/posts?type=brunch&_id=${authorId}`;
 
   try {
-    const response = await axios.get<PostsResponse>(url, {
+    const response = await axios.get<PostListResponse>(url, {
       headers: {
         'Content-Type': 'application/json',
         'client-id': 'febc15-vanilla02-ecad',
       },
     });
+    if (response.data.ok === 1) {
+      const data: PostListResponse = response.data;
 
-    const data: PostsResponse = response.data;
+      // user._id가 authorId와 일치하는 게시물만 필터링
+      const filteredItems = data.item.filter((post) => post.user._id === authorId);
 
-    // user._id가 authorId와 일치하는 게시물만 필터링
-    const filteredItems = data.item.filter((post) => post.user._id === authorId);
+      // bookData 생성
+      const bookData: PostListResponse = {
+        ok: data.ok,
+        item: filteredItems,
+        pagination: {
+          page: 1,
+          limit: filteredItems.length,
+          total: filteredItems.length,
+          totalPages: 1,
+        },
+      };
 
-    // bookData 생성
-    const bookData: PostsResponse = {
-      ok: data.ok,
-      item: filteredItems,
-      pagination: {
-        page: 1,
-        limit: filteredItems.length,
-        total: filteredItems.length,
-        totalPages: 1,
-      },
-    };
-    console.log(JSON.stringify(bookData.item[0], null, 2));
-    return bookData;
+      console.log(JSON.stringify(bookData.item[0], null, 2));
+
+      return bookData;
+    }
   } catch (err: any) {
     console.error('작가 작품 가져오기 실패:', err);
 
     return {
       ok: 0,
-      item: [],
-      pagination: { page: 1, limit: 0, total: 0, totalPages: 0 },
+      message: '',
     };
   }
 }
@@ -179,7 +186,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
 
       <div class="flex justify-between items-start mb-[3px]">
         <h1 class="text-[32px] font-bold text-[#333] leading-[1.2]">${post?.name || '익명'}</h1>
-        <a href="./src/pages/author/AuthorPage.html?id=${post._id}"><img class="w-[65px] h-[65px] rounded-full object-cover ml-[20px]" 
+        <a href="./src/pages/author/AuthorPage.html?_id=${post._id}"><img class="w-[65px] h-[65px] rounded-full object-cover ml-[20px]" 
           src="${srcImg}"           
           alt="프로필 사진" />
         </a>
@@ -197,18 +204,17 @@ async function renderTodayAuthorSection(post: UserInfo) {
   if (!worksArea) return;
 
   // 작가 작품 가져오기
-  const authorPosts = await fetchAuthorPosts(post._id || 0);
-  if (authorPosts.ok === 1) {
+  const authorPosts: PostListResponse | undefined = await fetchAuthorPosts(post._id || 0);
+  if (authorPosts?.ok === 1) {
     authorPosts.item.forEach((p, idx) => {
       if (idx >= 2) return;
       const card = document.createElement('div');
       card.addEventListener('click', () => {
-        // window.location.href 쓸 경우 배포 되는지 확인 필요
-        window.location.href = `./src/pages/author/AuthorPage.html?id=${post._id}`;
+        window.location.href = `./src/pages/details/detailspage?_id=${post._id}`;
       });
       card.className = 'flex py-[15px] border-b border-[#eee] bg-[#f8f8f8] cursor-pointer';
 
-      const imgUrl = p.product?.image?.url || '/img/NoBookImage.png';
+      const imgUrl = p.image || '/img/NoBookImage.png';
 
       card.innerHTML = `
         <div class="relative flex-shrink-0 w-[80px] h-[110px] mr-[20px] shadow-md">
@@ -238,7 +244,7 @@ export async function retrieveAPI(url: string): Promise<any> {
     });
 
     // Axios는 자동으로 JSON 변환을 해줌
-    const data: PostsResponse = response.data;
+    const data: PostListResponse = response.data;
     return data;
   } catch (error: any) {
     console.error('POST 목록 가져오기 실패:', error);
@@ -259,16 +265,15 @@ export async function retrieveAPI(url: string): Promise<any> {
 // -------------------------------------------
 
 (async () => {
-  let postRes: PostsResponse;
-  let userRes: UsersResponse;
+  let postRes: PostListResponse;
+  let userRes: UserListResponse;
 
   //요즘 뜨는 브런치
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
   postRes = await retrieveAPI(url);
-  //console.log(res.item);
-  console.log(JSON.stringify(postRes.item[3]));
-  console.log(JSON.stringify(postRes.item[4]));
   if (postRes.ok === 1) {
+    //console.log(JSON.stringify(postRes.item[3]));
+    //console.log(JSON.stringify(postRes.item[4]));
     const container = document.querySelector('.brunch-container');
     if (!container) return;
 
@@ -300,7 +305,7 @@ export async function retrieveAPI(url: string): Promise<any> {
   //오늘의 작가
   // 오늘 날짜와 회원번호를 매핑
   url = 'https://fesp-api.koyeb.app/market/users?sort={"bookmarkedBy.users": -1}';
-  userRes = (await retrieveAPI(url)) as UsersResponse;
+  userRes = (await retrieveAPI(url)) as UserListResponse;
   if (userRes.ok === 1) {
     const date: Date = new Date();
     const day: string = String(date.getDate()).padStart(2, '0');

@@ -168,6 +168,7 @@ signupForm.addEventListener('submit', async (event) => {
     name: cleanNickname,
     password: signupPassword.value,
     type: 'user',
+    image: 'https://res.cloudinary.com/ddedslqvv/image/upload/v1762361889/openmarket/bK6Io05NOx1.png',
   };
 
   try {
