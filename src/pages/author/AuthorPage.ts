@@ -1,6 +1,6 @@
 // src/api/user.ts
 import { getAxios } from '../../utils/axios';
-import type { UserProfileRes, UserPostList } from '../../utils/types';
+import type { UserProfileRes, PostsResponse } from '../../utils/types';
 
 const axios = getAxios();
 
@@ -16,7 +16,7 @@ export const getUserProfile = async (userId: number) => {
  * 사용자가 작성한 글 목록 조회
  */
 export const getUserPosts = async (userId: number, page: number = 1, limit: number = 10) => {
-  const response = await axios.get<UserPostList>(`posts/users/${userId}/`, {
+  const response = await axios.get<PostsResponse>(`posts/users/${userId}/`, {
     params: {
       type: 'brunch',
       page,
@@ -81,11 +81,12 @@ async function loadUserPosts() {
 
       const article = `          
         <article class="border-b border-br-line py-4">
-          <a href="/">
+          <a href="/src/pages/details/DetailsPage.html">
             <div class="underline decoration text-[13px] text-br-primary pb-[10px]">${post.extra.subTitle}</div>
             <h3 class="text-[17px] mt-[14px]">${post.title}</h3>
-            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden">${post.content}</p>
-          
+            
+            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden ">${post.content}</p>
+
             <div class="flex items-center gap-2 mt-[8px]">
               <p class="text-[12px] text-br-detailsSubtitle">댓글 ${post.repliesCount}</p>
               <span class="text-[12px] text-br-contentSecondary">${post.updatedAt}</span>

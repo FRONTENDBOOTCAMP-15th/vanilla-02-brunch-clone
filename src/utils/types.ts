@@ -78,6 +78,9 @@ export interface PostItem {
   seller_id: number;
   user: UserInfo;
   title: string;
+  extra: {
+    subTitle: string;
+  };
   content: string;
   image: string;
   createdAt: string;
@@ -188,40 +191,6 @@ export interface UsersResponse {
   ok: number;
   item: UserInfo[];
   pagination: Pagination;
-}
-
-// 요청 타입 정의
-
-export interface UserPostList {
-  ok: number;
-  item: UserPost[];
-  pagination: Pagination;
-}
-
-export interface UserPost {
-  _id: number;
-  // user: {
-  //   _id: number;
-  //   name: string;
-  // };
-  title: string;
-  content: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-  extra: {
-    subTitle: string;
-  };
-  bookmarks: number;
-  myBookmarkId: number | null;
-  repliesCount: number;
-}
-
-export interface Pagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
 }
 
 export interface UserProfileRes {
