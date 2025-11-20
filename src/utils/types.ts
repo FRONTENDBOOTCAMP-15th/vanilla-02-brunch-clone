@@ -59,7 +59,7 @@ export interface UserInfo {
   loginType: string;
   image: string;
 
-  extra: {
+  extra?: {
     job?: string;
     biography?: string;
     keyword: string[];
