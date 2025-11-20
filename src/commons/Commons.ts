@@ -590,26 +590,24 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 }
 
 // 로그인 함수 호출
-/*
-(async () => {
-  try {
-    const result = await loginUser('w1@market.com', '11111111');
-    if (result.ok == 1) {
-      console.log('로그인 성공:', result.item.name);
-      console.log('액세스 토큰:', result.item.token.accessToken);
 
-      // 세션스토리지에 토큰 저장
-      sessionStorage.setItem('accessToken', result.item.token.accessToken);
-      sessionStorage.setItem('refreshToken', result.item.token.refreshToken);
-      sessionStorage.setItem('userName', result.item.name);
-      sessionStorage.setItem('userId', result.item._id.toString());
-      // 로컬스토리지에도 동일한 토큰 저장
-      localStorage.setItem('accessToken', result.item.token.accessToken);
-      localStorage.setItem('refreshToken', result.item.token.refreshToken);
-      localStorage.setItem('userName', result.item.name);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-})();
-*/
+// (async () => {
+//   try {
+//     const result = await loginUser('w1@market.com', '11111111');
+//     if (result.ok == 1) {
+//       console.log('로그인 성공:', result.item.name);
+//       console.log('액세스 토큰:', result.item.token.accessToken);
+
+//       // 세션스토리지에 토큰 저장
+//       sessionStorage.setItem('accessToken', result.item.token.accessToken);
+//       sessionStorage.setItem('refreshToken', result.item.token.refreshToken);
+//       sessionStorage.setItem('userName', result.item.name);
+//       // 로컬스토리지에도 동일한 토큰 저장
+//       localStorage.setItem('accessToken', result.item.token.accessToken);
+//       localStorage.setItem('refreshToken', result.item.token.refreshToken);
+//       localStorage.setItem('userName', result.item.name);
+//     }
+//   } catch (e) {
+//     console.error(e);
+//   }
+// })();
