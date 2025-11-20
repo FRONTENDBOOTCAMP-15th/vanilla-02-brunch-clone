@@ -195,10 +195,11 @@ async function renderTodayAuthorSection(post: UserInfo) {
   </div>
   
   <div class="flex-shrink-0 ml-4 h-full">
+  <a href="/src/pages/author/AuthorPage.html?_id=${post._id}">
    <img class="rounded-full object-cover mr-8 h-full" 
           src="${srcImg}"           
           alt="프로필 사진" />
-        </a>
+    </a>
   </div>
 </div>
     <p class="text-[15px] leading-[1.6] text-[#555] mt-2 mb-[30px]">${post.extra?.biography || '소개글이 없습니다'}</p>
