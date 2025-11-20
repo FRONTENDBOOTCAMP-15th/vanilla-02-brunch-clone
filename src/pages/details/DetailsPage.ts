@@ -1,5 +1,5 @@
 import { getAxios } from '../../utils/axios';
-import type { PostResponse, UserResponse } from '../../utils/types';
+import type { BookmarkCreateRes, BookmarkDeleteRes, BookmarkLikeReq, BookmarkType, PostItem, PostResponse, RecentPost, UserBookmarkListRes, UserResponse } from '../../utils/types';
 
 const mainContents = document.querySelector('.details-maincontents') as HTMLElement;
 const titleContents = document.querySelector('.details-title') as HTMLParagraphElement;
@@ -15,7 +15,8 @@ const writerName = document.querySelector('.details-writer-name') as HTMLParagra
 const writerJob = document.querySelector('.details-writer-job') as HTMLAnchorElement;
 const writerImg = document.querySelector('.details-writer-img img') as HTMLImageElement;
 const writerExplain = document.querySelector('.details-explain') as HTMLAnchorElement;
-//const subscribeCount = document.querySelector('.details-subscribe-count') as HTMLAnchorElement;
+const subscribeCount = document.querySelector('.details-subscribe-count') as HTMLAnchorElement;
+const subscribeButtonEl = document.querySelector('subscribe-button') as HTMLElement;
 
 // 좋아요 버튼
 
@@ -52,6 +53,8 @@ if (!postId) {
 } else {
   loadPost(postId);
 }
+
+let currentAuthorId: number;
 
 async function loadPost(id: string) {
   const axios = getAxios();
@@ -98,8 +101,11 @@ async function loadPost(id: string) {
       }
 
       //썸네일
-      if (post.image) {
+      if (post.image && post.image.length > 0 && post.image[0]) {
         thumbnailImg.src = post.image[0];
+      } else {
+        // 글에 이미지가 없을 때 → 기본 썸네일 사용
+        thumbnailImg.src = '/img/sky.jpg';
       }
 
       // 메인 컨텐츠
@@ -111,7 +117,11 @@ async function loadPost(id: string) {
         mainContents.textContent = post.content;
         mainContents.style.whiteSpace = 'pre-line';
       }
-      lookUpAuthor(post.user._id);
+      currentAuthorId = post.user._id;
+      lookUpAuthor(currentAuthorId); // 게시글 작성자의 id
+      checkSubscribe(currentAuthorId); // 로그인 되어 있다면, 내가 이 작가를 구독했는지 확인
+      // 최근 본 글로 저장
+      saveRecentPost(post);
     }
   } catch (err) {
     console.error(err);
@@ -138,7 +148,11 @@ async function lookUpAuthor(authorId: number) {
 
       // 직업
       if (writerJob) {
-        writerJob.textContent = author.extra.job;
+        const job = author.extra?.job?.trim?.();
+
+        if (job) {
+          writerJob.textContent = job;
+        }
       }
 
       // 프로필 이미지
@@ -148,10 +162,139 @@ async function lookUpAuthor(authorId: number) {
 
       // 작가 설명
       if (writerExplain) {
-        writerExplain.textContent = author.extra.biography;
+        const biography = author.extra?.biography?.trim?.();
+
+        if (biography) {
+          writerExplain.textContent = biography;
+        }
+      }
+
+      // 좋아요 수
+      const authorLikes = author.likedBy.users;
+      likeCount = authorLikes;
+      likeCountEl.textContent = String(authorLikes);
+
+      // 구독자 수
+      const authorBookmarked = author.bookmarkedBy.users;
+      subscribeCount.textContent = String(authorBookmarked);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// 로컬 스토리지에 저장
+function saveRecentPost(post: PostItem) {
+  const STORAGE_KEY = 'recentPosts';
+
+  // 1) 썸네일 결정
+  const thumbnail = post.image && post.image.length > 0 && post.image[0] ? post.image[0] : '/img/sky.jpg';
+
+  // 2) 이번에 저장할 아이템
+  const newItem: RecentPost = {
+    id: post._id,
+    title: post.title,
+    thumbnail,
+    authorId: post.user._id,
+  };
+
+  // 3) 기존 목록 불러오기
+  let list: RecentPost[] = [];
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      list = JSON.parse(raw) as RecentPost[];
+    }
+  } catch (e) {
+    console.error('recentPosts 파싱 에러:', e);
+    list = [];
+  }
+
+  // 4) 이미 같은 글이 있으면 제거 (중복 방지)
+  list = list.filter((item) => item.id !== newItem.id);
+
+  // 5) 맨 앞에 이번 글 추가
+  list.unshift(newItem);
+
+  // 6) 최대 10개까지만 유지 (원하는 개수로 바꿔도 됨)
+  const MAX = 10;
+  if (list.length > MAX) {
+    list = list.slice(0, MAX);
+  }
+
+  // 7) 다시 localStorage에 저장
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+// 구독 상태 조회
+let subscribed = false;
+
+async function checkSubscribe(authorId: number) {
+  const axios = getAxios();
+  const type: BookmarkType = 'user';
+
+  try {
+    const { data } = await axios.get<UserBookmarkListRes>(`bookmarks/${type}`);
+    console.log('내가 구독한 구독 목록:', data);
+    if (data.ok === 1) {
+      const userBookmarkList = data.item;
+
+      const find = userBookmarkList.find((item) => item.user._id === authorId); // 내가 구독한 목록 중에서 해당 게시글 작성자의 아이디가 있으면 그 객체 자체를 반환
+
+      if (find) {
+        subscribed = true;
+
+        // 버튼 눌린 상태가 되어 있어야 함.
       }
     }
   } catch (err) {
     console.error(err);
   }
 }
+
+// 구독 버튼 토글
+subscribeButtonEl.addEventListener('click', () => {
+  console.log('구독 버튼 클릭됨!');
+
+  // 이미 구독 중인 상태라면
+  if (subscribed) {
+    alert('이미 구독 중입니다!');
+    // 구독 취소가 되어야 함(취소 함수를 적을 것!)
+  }
+  // 구독하지 않았으면 구독 목록에 추가됨
+  else {
+    // 현재 게시글 작성자의 아이디를 매개변수로 해서 구독 목록에 추가되는 함수 작성
+    subscribeAuthor(currentAuthorId);
+  }
+});
+
+// 구독 추가
+async function subscribeAuthor(authorId: number) {
+  const axios = getAxios();
+  const type: BookmarkType = 'user';
+
+  const body: BookmarkLikeReq = {
+    target_id: authorId, // 구독하는 작가 즉, 현재 게시글의 작가의 id를 target_id로 넘겨줌
+  };
+
+  try {
+    console.log('구독 추가 보냄:', authorId);
+    const { data } = await axios.post<BookmarkCreateRes>(`/bookmarks/${type}`, body);
+    console.log('구독 응답:', data);
+    if (data.ok === 1) {
+      // 구독 상태 구독 중으로 바뀜
+      subscribed = true;
+
+      const current = data.item.user.bookmarkedBy.users;
+      subscribeCount.textContent = String(current + 1);
+      subscribeButtonEl?.setAttribute('aria-pressed', 'true');
+    } else {
+      console.error('구독 실패 응답ㅜ', data);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// 구독 취소
