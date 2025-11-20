@@ -198,3 +198,22 @@ export interface RecentPost {
   thumbnail: string; // 썸네일 이미지 url
   authorId: number; // 작성자 id
 }
+
+//로그인 유저 타입
+export interface LoginUser {
+  _id: number;
+  email: string;
+  name: string;
+  token: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
+
+//북마크
+export interface Bookmark {
+  _id: number;
+  user_id: number;
+  user?: UserInfo;
+  post?: PostItem;
+}

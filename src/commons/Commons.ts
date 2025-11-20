@@ -470,7 +470,7 @@ class TopComponent extends HTMLElement {
     img.src = '/icon/Face.svg';
     img.alt = '아바타 아이콘';
     img.addEventListener('click', () => {
-      window.location.href = `/src/pages/author/AuthorPage.html?id=`;
+      window.location.href = `/src/pages/mypage/MyPage.html?id=_id`;
     });
 
     avatarBtn.appendChild(img);

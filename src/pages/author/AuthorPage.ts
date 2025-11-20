@@ -46,7 +46,7 @@ async function loadUserProfile() {
       name.textContent = data.item.name;
 
       const job = document.querySelector('#job')!;
-      job.textContent = data.item.extra.job;
+      job.textContent = String(data.item.extra?.job || '');
 
       const image = document.querySelector('#image') as HTMLImageElement;
       image.src = data.item.image;

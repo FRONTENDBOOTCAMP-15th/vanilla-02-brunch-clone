@@ -1,5 +1,5 @@
 import { getAxios } from '../../utils/axios';
-import type { BookmarkCreateRes, BookmarkDeleteRes, BookmarkLikeReq, BookmarkType, PostItem, PostResponse, RecentPost, UserBookmarkListRes, UserResponse } from '../../utils/types';
+import type { BookmarkCreateRes, BookmarkLikeReq, BookmarkType, PostItem, PostResponse, RecentPost, UserBookmarkListRes, UserResponse } from '../../utils/types';
 
 const mainContents = document.querySelector('.details-maincontents') as HTMLElement;
 const titleContents = document.querySelector('.details-title') as HTMLParagraphElement;
