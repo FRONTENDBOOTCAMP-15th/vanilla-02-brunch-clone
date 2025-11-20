@@ -84,7 +84,7 @@ async function loadUserPosts() {
 
         const article = `          
         <article class="border-b border-br-line py-4">
-          <a href="../src/pages/details/DetailsPage.html">
+          <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
             <div class="underline decoration text-[13px] text-br-primary pb-[10px]">${post.extra.subTitle}</div>
             <h3 class="text-[17px] mt-[14px]">${post.title}</h3>          
             <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden ">${post.content}</p>
