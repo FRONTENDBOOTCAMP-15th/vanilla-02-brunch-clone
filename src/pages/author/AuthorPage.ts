@@ -35,20 +35,24 @@ async function loadUserProfile() {
     const data = await getUserProfile(parseInt(authorId)); // 사용자 ID
 
     if (data.ok) {
-      console.log('사용자 이름:', data.item.name);
-      console.log('직업:', data.item.extra.job);
-      console.log('작성한 글 수:', data.item.posts);
-      console.log('이미지:', data.item.image);
-      console.log('구독자수:', data.item.bookmarkedBy.users);
-      console.log('관심작가 수:', data.item.bookmark.users);
-
       const name = document.querySelector('#name')!;
       name.textContent = data.item.name;
 
-      const job = document.querySelector('#job')!;
-      job.textContent = String(data.item.extra?.job || '');
+      const job = document.querySelector<HTMLElement>('#job')!;
+      //job.textContent = String(data.item.extra?.job || '');
+      /*
+      if (job) {
+        job.textContent = data?.item?.extra?.job ?? '';
+      }
+        */
+if (job) {
+  job.textContent = data?.item?.extra?.job ?? '';
+} else {
+  console.error("#job 요소를 찾을 수 없습니다.");
+}
 
       const image = document.querySelector('#image') as HTMLImageElement;
+      console.log(data.item.image);
       image.src = data.item.image;
       image.width = 80;
       image.height = 80;
