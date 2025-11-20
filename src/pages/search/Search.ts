@@ -6,48 +6,7 @@ const axios = getAxios();
 
 function onSearch() {
   const tabNav = document.querySelector('#tabNav') as HTMLElement;
-  tabNav.classList.remove('hidden');
-}
-
-onSearch();
-
-async function loadUserPosts() {
-  try {
-    const authorId = new URLSearchParams(window.location.search).get('_id')!;
-    const data = await getUserPosts(parseInt(authorId), 1); // ID: 3, 1페이지
-
-    if (data.ok) {
-      console.log('글 목록:', data.item);
-
-      const articleList = document.querySelector('#article-list')!;
-
-      data.item.forEach((post) => {
-        console.log(`제목: ${post.title}, 작성일: ${post.createdAt}`);
-        console.log(`내용: ${post.content}`);
-        console.log('날짜', post.updatedAt);
-
-        const article = `          
-        <article class="border-b border-br-line py-4">
-          <a href="/src/pages/details/DetailsPage.html">
-          
-            <h3 class="text-[17px] mt-[14px]">${post.title}</h3>            
-            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden ">${post.content}</p>
-
-            <div class="flex items-center gap-2 mt-[8px]">
-              <span class="text-[12px] text-br-contentSecondary">${post.updatedAt}</span>
-              <img src="${post.image}" alt="">
-            </div>
-          </a>
-        </article>       
-        
-      `;
-
-        articleList.innerHTML += article;
-      });
-    }
-  } catch (error) {
-    console.error('글 목록 조회 실패:', error);
-  }
+  tabNav.removeAttribute('hidden');
 }
 
 /**
@@ -98,6 +57,7 @@ async function loadSearchResults(keyword: string) {
         articleList.innerHTML += article;
       });
     }
+    onSearch();
   } catch (error) {
     if (error instanceof AxiosError) {
       alert(JSON.stringify(error.response?.data, null, 2));
@@ -106,13 +66,19 @@ async function loadSearchResults(keyword: string) {
 }
 
 function initSearchEvent() {
+  // 아이디가 search-input인 선택자를 이용해서 요소를 찾아라
   const searchInput = document.querySelector<HTMLInputElement>('#search-input')!;
 
+  // 검색어 입력요소에 키보드 입력 이벤트를 등록
   searchInput.addEventListener('keydown', (e) => {
+    // 엔터쳤을때
     if (e.key === 'Enter') {
+      // 검색어 앞뒤공백을 제거한 값을 꺼냄
       const keyword = searchInput.value.trim();
+      // 검색어를 입력하지 않았을때 실행하지 마
       if (keyword.length === 0) return;
 
+      // 검색어를 loadSearchResults 함수로 전달해서 호출
       loadSearchResults(keyword);
     }
   });
