@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/style.css" />
     <script type="module" src="../../commons/Commons.ts"></script>
-    <script type="module" src="../../pages/search/SearchPage.ts"></script>
+    <script type="module" src="../../pages/search/Search.ts"></script>
     <script type="module" src="/src/main.ts"></script>
     <title>Document</title>
   </head>
@@ -20,12 +20,13 @@
 
         <nav id="tabNav" aria-label="탭 내비게이션" hidden>
           <ul class="flex relative">
-            <li class="flex-1 text-center pb-3 relative">
-              <button id="text-button" class="text-[14px] text-br-primary w-full" aria-current="true">글</button>
+            <li class="flex-1 text-center pb-2">
+              <a href="/" class="text-[14px] text-br-primary w-full" aria-current="false">글</a>
+              <span class="absolute left-0 right-0 bottom-0 mx-auto w-full border-b-2 border-br-primary"></span>
             </li>
 
             <li class="flex-1 text-center pb-2 relative">
-              <button class="text-[14px] text-br-contentSecondary w-full" aria-current="false">작가</button>
+              <a href="/" class="text-[14px] text-br-contentSecondary font-medium w-full" aria-current="true">작가</a>
             </li>
           </ul>
         </nav>
