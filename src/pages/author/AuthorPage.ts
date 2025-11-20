@@ -49,6 +49,7 @@ async function loadUserProfile() {
       job.textContent = String(data.item.extra?.job ?? '');
 
       const image = document.querySelector('#image') as HTMLImageElement;
+      console.log(data.item.image);
       image.src = data.item.image;
       image.width = 80;
       image.height = 80;

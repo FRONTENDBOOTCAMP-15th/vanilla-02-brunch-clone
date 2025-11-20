@@ -88,9 +88,8 @@ class NavigateComponent extends HTMLElement {
 
   // UI를 렌더링
   render() {
+    const userId: number = parseInt(sessionStorage.getItem('userid') || '0');
     // 로그인이 되었을 때
-    const userId: number = parseInt(sessionStorage.getItem('userId') || '0');
-
     if (userId != 0) {
       this.innerHTML = `      
       <div class="bg-white w-full overflow-x-auto">
@@ -401,15 +400,18 @@ class TopComponent extends HTMLElement {
     // appendChild 를 사용하므로 먼저 html이 렌더 되어야 함
     this.render();
 
-    //로그인된 사용자 정보를 가져옴
-    const user: User | null = await this.getUser();
-    console.log(user?.name, user?.avatarUrl);
-    // 로그인 성공시 아바타 버튼 추가
-    if (user != null) {
-      this.loggedInHTML(user);
+    //로그인 되어 있는지 체크
+    if (sessionStorage.getItem('userid')) {
+      const user: User | null = await this.getUser();
+      console.log(user?.name, user?.avatarUrl);
+      if (user) {
+        this.loggedInHTML(user);
+      }
     } else {
+      // 로그인 되어 있지 않을 때
       this.loggedOutHTML();
     }
+
     //탑헤더를 화면에 렌더링
 
     //로고를 클릭했을 때 메인화면으로 이동
@@ -421,9 +423,8 @@ class TopComponent extends HTMLElement {
   }
   // axios 이용 API 가져오기 함수 ------------------------------------------------
   private async retrieveAPI(userId: number): Promise<UserResponse | null> {
+    //alert(userId);
     const url = `https://fesp-api.koyeb.app/market/users/${userId}`;
-    //const url = `https://fesp-api.koyeb.app/market/users/8`;
-
     try {
       const response = await axios.get<UserResponse>(url, {
         headers: {
@@ -448,7 +449,7 @@ class TopComponent extends HTMLElement {
   // 세션스토리지에서 현재 로그인 정보 읽기
   //로컬세션 확인
   private async getUser(): Promise<User | null> {
-    const userId: number = parseInt(sessionStorage.getItem('userId') || '0');
+    const userId: number = parseInt(sessionStorage.getItem('userid') || '0');
     //API 함수 호출
     //console.log('userId: ', userId);
     const data = await this.retrieveAPI(userId);

@@ -222,7 +222,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
       });
       card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer';
 
-      const imgUrl = p.image[0] || '/img/NoBookImage.png';
+      const imgUrl = p?.image?.[0] || '/img/NoBookImage.png';
 
       card.innerHTML = `
         <div class="relative flex-shrink-0 px-4 h-[110px]">
