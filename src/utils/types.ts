@@ -139,14 +139,6 @@ export type UserResponse =
     }
   | APIError;
 
-// 응답 타입 정의
-export type LoginResponse =
-  | {
-      ok: 1;
-      item: LoginUser;
-    }
-  | APIError;
-
 // 좋아요/구독 추가
 
 export type BookmarkType = 'user' | 'post';
@@ -200,6 +192,13 @@ export interface RecentPost {
   authorId: number; // 작성자 id
   username: string; // 작성자 이름
 }
+
+export type LoginResponse =
+  | {
+      ok: 1;
+      item: LoginUser;
+    }
+  | APIError;
 
 //로그인 유저 타입
 export interface LoginUser {

@@ -135,7 +135,7 @@ export async function fetchAuthorPosts(authorId: number): Promise<PostListRespon
         },
       };
 
-      console.log(JSON.stringify(bookData.item[0], null, 2));
+      //console.log(JSON.stringify(bookData.item[0], null, 2));
 
       return bookData;
     }
@@ -172,7 +172,6 @@ function getValidImageUrl(imageUrl: any): string {
 
 // 단일 PostItem을 받아서 오늘의 작가 섹션 + 작품 목록 생성
 async function renderTodayAuthorSection(post: UserInfo) {
-  console.log(JSON.stringify(post));
   const container = document.querySelector('.today-author-container');
   if (!container) return;
 
@@ -196,10 +195,11 @@ async function renderTodayAuthorSection(post: UserInfo) {
   </div>
   
   <div class="flex-shrink-0 ml-4 h-full">
+  <a href="/src/pages/author/AuthorPage.html?_id=${post._id}">
    <img class="rounded-full object-cover mr-8 h-full" 
           src="${srcImg}"           
           alt="프로필 사진" />
-        </a>
+    </a>
   </div>
 </div>
     <p class="text-[15px] leading-[1.6] text-[#555] mt-2 mb-[30px]">${post.extra?.biography || '소개글이 없습니다'}</p>
@@ -289,8 +289,6 @@ export async function retrieveAPI(url: string): Promise<any> {
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
   postRes = await retrieveAPI(url);
   if (postRes.ok === 1) {
-    //console.log(JSON.stringify(postRes.item[3]));
-    //console.log(JSON.stringify(postRes.item[4]));
     const container = document.querySelector('.brunch-container');
     if (!container) return;
 
@@ -323,7 +321,7 @@ export async function retrieveAPI(url: string): Promise<any> {
   // 오늘 날짜와 회원번호를 매핑
   url = 'https://fesp-api.koyeb.app/market/users?sort={"bookmarkedBy.users": -1}';
   userRes = (await retrieveAPI(url)) as UserListResponse;
-  console.log(userRes);
+  //console.log(userRes);
   if (userRes.ok === 1) {
     const date: Date = new Date();
     const day: string = String(date.getDate()).padStart(2, '0');
@@ -333,7 +331,7 @@ export async function retrieveAPI(url: string): Promise<any> {
       // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리 같은 회원
       // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
       if (userRes.item[i]._id == dayToNum) {
-        console.log(JSON.stringify(userRes.item[i], null, 2));
+        //console.log(JSON.stringify(userRes.item[i], null, 2));
         renderTodayAuthorSection(userRes.item[i]);
         break;
       } else renderTodayAuthorSection(userRes.item[0]);
