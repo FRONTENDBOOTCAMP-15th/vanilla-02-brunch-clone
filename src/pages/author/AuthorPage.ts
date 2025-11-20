@@ -36,7 +36,7 @@ async function loadUserProfile() {
 
     if (data.ok) {
       console.log('사용자 이름:', data.item.name);
-      console.log('직업:', data.item.extra.job);
+      console.log('직업:', data.item.extra?.job);
       console.log('작성한 글 수:', data.item.posts);
       console.log('이미지:', data.item.image);
       console.log('구독자수:', data.item.bookmarkedBy.users);
@@ -46,7 +46,7 @@ async function loadUserProfile() {
       name.textContent = data.item.name;
 
       const job = document.querySelector('#job')!;
-      job.textContent = String(data.item.extra?.job || '');
+      job.textContent = String(data.item.extra?.job ?? '');
 
       const image = document.querySelector('#image') as HTMLImageElement;
       image.src = data.item.image;
@@ -57,7 +57,9 @@ async function loadUserProfile() {
       subCount.textContent = data.item.bookmarkedBy.users.toString();
 
       const followCount = document.querySelector('#followCount')!;
-      followCount.textContent = data.item.bookmark.toString();
+      const count = data.item.bookmark?.users || 0;
+
+      followCount.textContent = count.toString();
     }
   } catch (error) {
     console.error('회원 정보 조회 실패:', error);
