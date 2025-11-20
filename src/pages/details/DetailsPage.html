@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../../styles/style.css" />
     <script type="module" src="../../main.ts"></script>
     <script type="module" src="../../commons/Commons.ts"></script>
+    <script type="module" src="../../commons/SubscribesButton.ts"></script>
     <script type="module" src="../../pages/details/DetailsPage.ts"></script>
 
     <title>상세 페이지</title>
@@ -25,7 +26,7 @@
           <div class="details-info inline-flex gap-2.5 items-center mt-8">
             <p class="details-author">
               <i class="text-br-contentSecondary">by</i>
-              <a href="/" class="text-br-detailsSubtitle">Sunny</a>
+              <a href="/" class="details-authorname text-br-detailsSubtitle">Sunny</a>
             </p>
             <span class="text-br-contentSecondary">&#183;</span>
             <span class="details-time text-br-contentSecondary">Jul 23.2024</span>
@@ -54,7 +55,11 @@
             <a href="/" class="text-[14px] text-br-contentSecondary">구독자</a>
             <a href="/" class="details-subscribe-count text-[14px] text-br-detailsSubtitle">0</a>
           </div>
-          <subscribe-button></subscribe-button>
+          <button type="button" aria-pressed="false" class="subscribe-button inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
+            <img src="/icon/IconPlus.svg" alt="구독 플러스" class="icon-plus w-[17px] h-[17px]" />
+            <img src="/icon/IconSubscribeCheck.svg" alt="구독 중 체크" class="icon-check hidden w-[17px] h-[17px]" />
+            <span>구독</span>
+          </button>
         </div>
       </section>
 
