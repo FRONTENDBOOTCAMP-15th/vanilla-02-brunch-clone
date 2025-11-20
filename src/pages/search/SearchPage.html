@@ -17,12 +17,24 @@
           <label for="search-input" class="sr-only">검색어 입력</label>
           <input id="search-input" type="search" placeholder="검색어 입력" aria-label="검색어 입력" class="w-full h-[111px] text-center text-[24px] text-br-detailsTitle placeholder-br-contentTertiary focus:outline-none" />
         </div>
+
+        <nav id="tabNav" aria-label="탭 내비게이션" hidden>
+          <ul class="flex relative">
+            <li class="flex-1 text-center pb-3 relative">
+              <button id="text-button" class="text-[14px] text-br-primary w-full" aria-current="true">글</button>
+            </li>
+
+            <li class="flex-1 text-center pb-2 relative">
+              <button class="text-[14px] text-br-contentSecondary w-full" aria-current="false">작가</button>
+            </li>
+          </ul>
+        </nav>
       </header>
 
       <!-- 콘텐츠 영역 -->
       <main class="mx-auto px-4">
         <!-- 추천 인기 키워드 -->
-        <section aria-labelledby="popular-keywords-title">
+        <section id="title" aria-labelledby="popular-keywords-title">
           <h2 id="popular-keywords-title" class="text-[12px] text-br-contentTertiary mt-7">추천 작가 키워드</h2>
           <p class="mt-[15px] text-[20px] text-br-contentPrimary">
             일상의 따뜻한 위로,

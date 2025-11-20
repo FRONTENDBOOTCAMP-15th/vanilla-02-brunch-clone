@@ -5,14 +5,6 @@ import type { PostListResponse } from '../../utils/types';
 const axios = getAxios();
 
 /**
- * 회원 정보 조회
- */
-// export const getUserProfile = async (userId: number) => {
-//   const response = await axios.get<UsersResponse>(`/users/${userId}`);
-//   return response.data;
-// };
-
-/**
  * 사용자가 작성한 글 목록 조회
  */
 export const getUserPosts = async (userId: number, page: number = 1, limit: number = 10) => {
@@ -111,6 +103,27 @@ async function SearchResults() {
 }
 SearchResults();
 
+const searchInput = document.getElementById('search-input') as HTMLInputElement;
+const titleSection = document.getElementById('title') as HTMLElement;
+const tabNav = document.getElementById('tabNav') as HTMLElement;
+
+if (searchInput && titleSection && tabNav) {
+  searchInput.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement;
+    const hasValue = target.value.trim().length > 0;
+
+    if (hasValue) {
+      // 검색어가 있으면 타이틀 섹션 숨기고 탭 네비게이션 표시
+      titleSection.hidden = true;
+      tabNav.hidden = false;
+    } else {
+      // 검색어가 없으면 타이틀 섹션 표시하고 탭 네비게이션 숨김
+      titleSection.hidden = false;
+      tabNav.hidden = true;
+    }
+  });
+}
+
 /**
  * 검색 요청
  */
@@ -179,3 +192,50 @@ function initSearchEvent() {
 
 // // 실행
 initSearchEvent();
+
+// 4. 회원 정보 조회
+async function loadUserProfile() {
+  try {
+    const authorId = new URLSearchParams(window.location.search).get('_id')!;
+    const data = await getUserProfile(parseInt(authorId)); // 사용자 ID
+
+    if (data.ok) {
+      console.log('사용자 이름:', data.item.name);
+      console.log('직업:', data.item.extra.job);
+      console.log('작성한 글 수:', data.item.posts);
+      console.log('이미지:', data.item.image);
+      console.log('구독자수:', data.item.bookmarkedBy.users);
+      console.log('관심작가 수:', data.item.bookmark.users);
+
+      const name = document.querySelector('#name')!;
+      name.textContent = data.item.name;
+
+      const job = document.querySelector('#job')!;
+      job.textContent = String(data.item.extra?.job || '');
+
+      const image = document.querySelector('#image') as HTMLImageElement;
+      image.src = data.item.image;
+      image.width = 80;
+      image.height = 80;
+
+      const subCount = document.querySelector('#subCount')!;
+      subCount.textContent = data.item.bookmarkedBy.users.toString();
+
+      const followCount = document.querySelector('#followCount')!;
+      followCount.textContent = data.item.bookmark.toString();
+    }
+  } catch (error) {
+    console.error('회원 정보 조회 실패:', error);
+  }
+}
+loadUserProfile();
+
+// 검색 실행 코드
+function onSearch() {
+  // 검색 결과가 존재하면 탭 보여주기
+  const tabNav = document.querySelector('#tabNav');
+  tabNav.hidden = false; // hidden 제거
+  tabNav.classList.remove('hidden'); // hidden 클래스 제거
+}
+
+onSearch();
