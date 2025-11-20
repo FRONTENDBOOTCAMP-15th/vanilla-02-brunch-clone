@@ -9,8 +9,8 @@
     <script type="module" src="./src/main.ts"></script>
     <script type="module" src="./src/pages/home/Home.ts"></script>
   </head>
-  <body class="font-Pretendard">
-    <!-- <h1 class="text-3xl text-blue-500 font-bold underline">Vite + Tailwind CSS</h1>
+  <body class="font-Pretendard min-w-[360px]">
+    <!-- <h1 class="text-3xl text-blue-500 font-normal underline">Vite + Tailwind CSS</h1>
     <div id="app"></div>
     
     <a href="./src/commons/CircleContents.html">원 컴포넌트</a>
@@ -22,35 +22,56 @@
 
     <!-- 공통 컴포넌트 불러오기-->
     <top-header></top-header>
-    <section id="ad-div" class="flex justify-center w-full">
-      <img class="w-[360px]" src="/img/Adver.svg">
-    </section>
-    <section class="p-5">
-      <p class="text-sm text-[#666] mb-1 italic">Today's Pick</p>
-      <h1 class="text-2xl font-bold mb-6">요즘 뜨는 브런치</h1>
 
-      <div class="brunch-container flex flex-col gap-6"></div>
+    <section class="p-4 min-w-[360px]">
+      <p class="text-sm text-br-contentSecondary mb-1 italic">Today's Pick</p>
+      <h1 class="text-2xl font-normal mb-6">요즘 뜨는 브런치</h1>
+
+      <ul class="brunch-container flex flex-col gap-6 min-w-[360px]"></ul>
     </section>
+
+    <hr class="h-px my-8 border-br-contentTertiary w-full" />
+
+    <!-- 오늘의 작가 -->
+
+    <div class="today-author-container p-0">
+      <div class="today-author-works flex flex-col gap-[15px]"></div>
+    </div>
 
     <!-- 구독자(TOP) 급등 작가 -->
     <section>
-      <h2 class="p-5 text-[22px] font-bold mb-[30px]">구독자 급등 작가</h2>
+      <h2 class="p-5 text-[22px] font-normal mb-[30px]">구독자 급등 작가</h2>
 
-      <div class="top-author-container grid grid-cols-2 border-t border-l border-[#eee]">
-        <!-- 여기에 카드들이 appendChild 됩니다 -->
-      </div>
+      <div class="top-author-container grid grid-cols-2 border-0"></div>
     </section>
 
-    <!-- 오늘의 작가 -->
-    <div class="today-author-container p-5 bg-white">
-      <!-- 작품 목록 -->
-      <div class="today-author-works flex flex-col gap-[15px]"></div>
-    </div>
     <!--
     <circle-component></circle-component>
     <input-component></input-component>
     <subscribe-button></subscribe-button>
   -->
+    <!--
+    <navigate-component></navigate-component>
+  -->
+    <footer class="bg-[#333333] py-16 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto text-center">
+        <div class="flex flex-wrap justify-center space-x-4 sm:space-x-6 text-gray-400 text-sm mb-2">
+          <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap">이용약관</a>
+          <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap">이전 이용약관</a>
+          <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap">카카오 유료서비스 이용약관</a>
+        </div>
+
+        <div class="flex flex-wrap justify-center space-x-4 sm:space-x-6 text-gray-400 text-sm mb-16">
+          <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap font-bold">카카오 개인정보 처리방침</a>
+          <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap">청소년 보호정책</a>
+          <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap">운영정책</a>
+        </div>
+
+        <div class="mb-4">
+          <a href="#"><img class="block mx-auto" src="/icon/Logo_w.svg" /></a>
+        </div>
+      </div>
+    </footer>
     <navigate-component></navigate-component>
   </body>
 </html>
