@@ -6,20 +6,20 @@
     <link rel="stylesheet" href="../../styles/style.css" />
     <script type="module" src="../../main.ts"></script>
     <script type="module" src="../../commons/Commons.ts"></script>
-    <!--
     <script type="module" src="../../pages/details/DetailsPage.ts"></script>
-  -->
+
     <title>상세 페이지</title>
   </head>
   <!-- 폰트 수정하기 -->
   <body class="font-Pretendard">
-        <!-- 컴포넌트 자리 -->
+    <!-- 컴포넌트 자리 -->
     <top-header></top-header>
     <main class="details-contents">
-      <section class="relative details-header h-[239px]">
-        <img src="../../assets/img/Background.svg" alt="게시글 썸네일" class="absolute w-full h-full inset-0" />
+      <section class="relative details-header h-[239px] -z-10">
+        <!-- 이미지 좀 투명하게 할 것 -->
+        <img src="/img/sky.jpg" alt="게시글 썸네일" class="details-thumbnail absolute w-full h-full inset-0 opacity-80" />
         <!-- 게시글 헤더 텍스트 -->
-        <div class="detail-textcontent relative z-10 flex flex-col">
+        <div class="detail-textcontent relative z-10 flex flex-col ml-5">
           <p class="details-title text-[28px] mt-[79px]">우여곡절 끝에 도착한 첫 번째 목적지</p>
           <p class="details-subtitle text-[16px] mt-[3px]">Val carlos</p>
           <div class="details-info inline-flex gap-2.5 items-center mt-8">
@@ -54,17 +54,17 @@
             <a href="/" class="text-[14px] text-br-contentSecondary">구독자</a>
             <a href="/" class="details-subscribe-count text-[14px] text-br-detailsSubtitle">108</a>
           </div>
-          <button class="">구독 버튼</button>
+          <subscribe-button></subscribe-button>
         </div>
       </section>
 
       <!-- 좋아요 버튼 -->
-      <section class="details-like-btn border-t border-t-br-line h-[52px] flex flex-row gap-[3px]">
-        <img src="/icon/IconLike.svg" alt="좋아요 버튼" aria-pressed="false" class="w-[21px] h-[21px]" />
-        <p class="details-like-count">81</p>
+      <section class="border-t border-t-br-line h-[52px] flex flex-row gap-[3px]">
+        <button type="button" class="details-like-button cursor-pointer inline-flex items-center justify-center w-[21px] h-[21px] ml-5" aria-pressed="false"><img src="../../assets/icon/IconLike.svg" alt="좋아요 버튼" class="w-[21px] h-[21px]" /></button>
+        <p class="details-like-count mt-1">81</p>
       </section>
     </main>
-        <!-- 하단 바 -->
+    <!-- 하단 바 -->
     <navigate-component></navigate-component>
   </body>
 </html>

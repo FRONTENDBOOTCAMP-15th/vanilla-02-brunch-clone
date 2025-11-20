@@ -146,6 +146,7 @@ export type LoginResponse =
   | APIError;
 
 //
+
 //로그인 유저 타입
 export interface LoginUser {
   _id: number;
