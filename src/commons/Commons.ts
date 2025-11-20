@@ -89,7 +89,7 @@ class NavigateComponent extends HTMLElement {
   // UI를 렌더링
   render() {
     // 로그인이 되었을 때
-    const userId: number = parseInt(sessionStorage.getItem('userId') || '0');
+    const userId: number = parseInt(sessionStorage.getItem('userid') || '0');
 
     if (userId != 0) {
       this.innerHTML = `      
@@ -421,9 +421,8 @@ class TopComponent extends HTMLElement {
   }
   // axios 이용 API 가져오기 함수 ------------------------------------------------
   private async retrieveAPI(userId: number): Promise<UserResponse | null> {
+    //alert(userId);
     const url = `https://fesp-api.koyeb.app/market/users/${userId}`;
-    //const url = `https://fesp-api.koyeb.app/market/users/8`;
-
     try {
       const response = await axios.get<UserResponse>(url, {
         headers: {
@@ -448,7 +447,7 @@ class TopComponent extends HTMLElement {
   // 세션스토리지에서 현재 로그인 정보 읽기
   //로컬세션 확인
   private async getUser(): Promise<User | null> {
-    const userId: number = parseInt(sessionStorage.getItem('userId') || '0');
+    const userId: number = parseInt(sessionStorage.getItem('userid') || '0');
     //API 함수 호출
     //console.log('userId: ', userId);
     const data = await this.retrieveAPI(userId);
