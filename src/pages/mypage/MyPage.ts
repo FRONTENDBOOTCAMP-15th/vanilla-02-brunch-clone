@@ -150,8 +150,10 @@ const logout = document.getElementById('logout');
 logout?.addEventListener('click', () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('userName');
+  localStorage.removeItem('userid');
   sessionStorage.removeItem('accessToken');
   sessionStorage.removeItem('userName');
+  sessionStorage.removeItem('userid');
   alert('로그아웃 성공! 홈으로 이동합니다');
   location.href = '/index.html';
 });
