@@ -1,5 +1,5 @@
 import { getAxios } from '../../utils/axios';
-import type { BookmarkCreateRes, BookmarkLikeReq, BookmarkType, PostItem, PostResponse, RecentPost, UserBookmarkListRes, UserResponse } from '../../utils/types';
+import type { BookmarkCreateRes, BookmarkDeleteRes, BookmarkLikeReq, BookmarkType, PostItem, PostResponse, RecentPost, UserBookmarkListRes, UserResponse } from '../../utils/types';
 
 const mainContents = document.querySelector('.details-maincontents') as HTMLElement;
 const titleContents = document.querySelector('.details-title') as HTMLParagraphElement;
@@ -22,6 +22,8 @@ const subscribeButtonEl = document.querySelector('.subscribe-button') as HTMLBut
 
 // 구독 상태 조회
 let subscribed = false;
+
+let currentBookmarkId: number | null = null;
 
 // 1. 로그인 여부 확인 함수 (세션 스토리지에 accessToken 기준)
 function isLoggedIn() {
@@ -287,10 +289,11 @@ async function checkSubscribe(authorId: number) {
     if (data.ok === 1) {
       const userBookmarkList = data.item;
 
-      const find = userBookmarkList.some((item) => item.user._id === authorId); // 내가 구독한 목록 중에서 해당 게시글 작성자의 아이디가 있으면 그 객체 자체를 반환
+      const find = userBookmarkList.find((item) => item.user._id === authorId); // 내가 구독한 목록 중에서 해당 게시글 작성자의 아이디가 있으면 그 객체 자체를 반환
 
       if (find) {
         subscribed = true;
+        currentBookmarkId = find._id;
         // 이미 구독 중인 작가면 체크 되어 있게 표시
         updateSubscribeButtonUI();
       }
@@ -312,6 +315,11 @@ subscribeButtonEl.addEventListener('click', () => {
   // 이미 구독 중인 상태라면
   if (subscribed) {
     // 구독 취소가 되어야 함(취소 함수를 적을 것!)
+    if (currentBookmarkId != null) {
+      cancelSubscribe(currentBookmarkId);
+    } else {
+      alert('북마크 id가 없습니다.');
+    }
   }
   // 구독하지 않았으면 구독 목록에 추가됨
   else {
@@ -336,6 +344,7 @@ async function subscribeAuthor(authorId: number) {
     if (data.ok === 1) {
       // 구독 상태 구독 중으로 바뀜
       subscribed = true;
+      currentBookmarkId = data.item._id;
       // 구독하면 구독 버튼 체크 표시로 바뀌도록 함
       updateSubscribeButtonUI();
       const current = Number(subscribeCount.textContent) || 0;
@@ -350,20 +359,21 @@ async function subscribeAuthor(authorId: number) {
 
 // 구독 취소
 
-// async function cancelSubscribe(bookmarkId: number) {
-//   const axios = getAxios();
+async function cancelSubscribe(bookmarkId: number) {
+  const axios = getAxios();
 
-//   try {
-//     const { data } = await axios.delete<BookmarkDeleteRes>(`/bookmarks/${bookmarkId}`);
-//     console.log('구독 취소 응답:', data);
+  try {
+    const { data } = await axios.delete<BookmarkDeleteRes>(`/bookmarks/${bookmarkId}`);
+    console.log('구독 취소 응답:', data);
 
-//     if (data.ok === 1) {
-//       subscribed = false;
-//       updateSubscribeButtonUI();
-//       const current = Number(subscribeCount.textContent) || 0;
-//       subscribeCount.textContent = String(current - 1);
-//     }
-//   } catch (err) {
-//     console.error('구독 취소 에러:', err);
-//   }
-// }
+    if (data.ok === 1) {
+      subscribed = false;
+      currentBookmarkId = null;
+      updateSubscribeButtonUI();
+      const current = Number(subscribeCount.textContent) || 0;
+      subscribeCount.textContent = String(current - 1);
+    }
+  } catch (err) {
+    console.error('구독 취소 에러:', err);
+  }
+}
