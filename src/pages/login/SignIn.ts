@@ -50,6 +50,9 @@ LoginForm.addEventListener('submit', async (event) => {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('userName', userName);
       localStorage.setItem('userid', String(userid));
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('userName');
+      sessionStorage.removeItem('userid');
     } else {
       const { data } = await axios.post<DetailRes<LoginUser>>('/users/login', login);
       const accessToken = data.item.token.accessToken;
@@ -58,6 +61,9 @@ LoginForm.addEventListener('submit', async (event) => {
       sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('userName', userName);
       sessionStorage.setItem('userid', String(userid));
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userid');
     }
 
     alert('로그인 성공했습니다');
