@@ -157,3 +157,10 @@ export interface LoginUser {
     refreshToken: string;
   };
 }
+// 북마크
+export interface Bookmark {
+  _id: number;
+  user_id: number;
+  user?: UserInfo;
+  post?: PostItem;
+}

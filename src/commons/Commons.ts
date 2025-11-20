@@ -64,8 +64,8 @@ class NavigateComponent extends HTMLElement {
   }
   // 세션스토리지에서 현재 로그인 정보 읽기
   private getUser(): User | null {
-    const name = sessionStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken');
+    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
+    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
 
     if (!name || !token) return null;
 
@@ -81,224 +81,211 @@ class NavigateComponent extends HTMLElement {
     const user: User | null = this.getUser();
     if (user) {
       this.innerHTML = `      
-  <div class="bg-white w-full overflow-x-auto">
-  <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
-    <!-- 홈 -->
-    <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
-        <!-- 체크박스 숨김 -->
-      <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-       <a href='/index.html'>
-      <!-- 기본 아이콘 (체크 전) -->
-      <img
-        src="/icon/Home.svg"
-        alt="홈 아이콘 기본"
-        class="peer-checked:hidden"
-      />
-      </a>
-        <!-- 체크 아이콘 (체크 후) -->
-      <img
-        src="/icon/HomeActive.svg"
-        alt="홈 아이콘 채움"
-        class="hidden peer-checked:block"
-      />
-        </label>
-        <span class="text-center">홈</span>
-      </div>
-
-    <!-- 발견 -->
-    <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
-       <!-- 체크박스 숨김 -->
-    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-      <!-- 기본 아이콘 (체크 전) -->
-       <a href='/src/pages/author/AuthorPage.html'>
-      <img
-        src="/icon/Search.svg"
-        alt="발견 아이콘 기본"
-        class="peer-checked:hidden"
-      />
-      </a>
-        <!-- 체크 아이콘 (체크 후) -->
-      <img
-        src="/icon/SearchActive.svg"
-        alt="발견 아이콘 채움"
-        class="hidden peer-checked:block"
-      />
-      </label>
-      <span class="text-center">발견</span>
-    </div>
-
-    <!-- 글쓰기 -->
-    <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
-      <!-- 체크박스 숨김 -->
-    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-    <!-- 기본 아이콘 (체크 전) -->
-    <a href='/src/pages/write/WritingPage.html'>
-    <img
-      src="/icon/EditSquare.svg"
-      alt="글쓰기 아이콘 기본"
-      class="peer-checked:hidden"
-    />
-    </a>
+      <div class="bg-white w-full overflow-x-auto">
+      <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
+        <!-- 홈 -->
+        <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+          <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+            <!-- 체크박스 숨김 -->
+          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+          <a href='/index.html'>
+          <!-- 기본 아이콘 (체크 전) -->
+          <img
+            src="/icon/Home.svg"
+            alt="홈 아이콘 기본"
+            class="peer-checked:hidden"
+          />
+          </a>
             <!-- 체크 아이콘 (체크 후) -->
-    <img
-       src="/icon/EditSquareActive.svg"
-      alt="글쓰기 아이콘 채움"
-      class="hidden peer-checked:block"
-    />
-      </label>
-      <span class="text-center">글쓰기</span>
-    </div>
+          <img
+            src="/icon/HomeActive.svg"
+            alt="홈 아이콘 채움"
+            class="hidden peer-checked:block"
+          />
+            </label>
+            <span class="text-center">홈</span>
+          </div>
+        <!-- 발견 -->
+        <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+          <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+          <!-- 체크박스 숨김 -->
+        <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+          <!-- 기본 아이콘 (체크 전) -->
+          <a href='/src/pages/search/Search.html'>
+          <img
+            src="/icon/Search.svg"
+            alt="발견 아이콘 기본"
+            class="peer-checked:hidden"
+          />
+          </a>
+            <!-- 체크 아이콘 (체크 후) -->
+          <img
+            src="/icon/SearchActive.svg"
+            alt="발견 아이콘 채움"
+            class="hidden peer-checked:block"
+          />
+          </label>
+          <span class="text-center">발견</span>
+        </div>
+        <!-- 글쓰기 -->
+        <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+          <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+          <!-- 체크박스 숨김 -->
+        <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+        <!-- 기본 아이콘 (체크 전) -->
+        <a href='/src/pages/write/WritingPage.html'>
+        <img
+          src="/icon/EditSquare.svg"
+          alt="글쓰기 아이콘 기본"
+          class="peer-checked:hidden"
+        />
+        </a>
+                <!-- 체크 아이콘 (체크 후) -->
+        <img
+          src="/icon/EditSquareActive.svg"
+          alt="글쓰기 아이콘 채움"
+          class="hidden peer-checked:block"
+        />
+          </label>
+          <span class="text-center">글쓰기</span>
+        </div>
 
-    <!-- 내 서랍 -->
-    <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
-       <!-- 체크박스 숨김 -->
-    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-      <!-- 기본 아이콘 (체크 전) -->
-       <a href='/src/pages/mypage/MyPage.html'>
-      <img
-        src="/icon/Inventory.svg"
-        alt="내서랍 아이콘 기본"
-        class="peer-checked:hidden"
-      />
-      </a>
-        <!-- 체크 아이콘 (체크 후) -->
-      <img
-        src="/icon/InventoryActive.svg"
-        alt="내서랍 아이콘 채움"
-        class="hidden peer-checked:block"
-      />
+        <!-- 내 서랍 -->
+        <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+          <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
+          <!-- 체크박스 숨김 -->
+        <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+          <!-- 기본 아이콘 (체크 전) -->
+          <a href='/src/pages/mypage/MyPage.html'>
+          <img
+            src="/icon/Inventory.svg"
+            alt="내서랍 아이콘 기본"
+            class="peer-checked:hidden"
+          />
+          </a>
+            <!-- 체크 아이콘 (체크 후) -->
+          <img
+            src="/icon/InventoryActive.svg"
+            alt="내서랍 아이콘 채움"
+            class="hidden peer-checked:block"
+          />
 
-      </label>
-      <span class="text-center">내 서랍</span>
+          </label>
+          <span class="text-center">내 서랍</span>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-    <script>
-    const checkboxes = document.querySelectorAll('input[name="navi-checkbox"]');
-    // 클릭한 것 제외하고 나머지 체크 해제
-    
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener('click', () => {
-      if (checkbox.checked) {
+        <script>
+        const checkboxes = document.querySelectorAll('input[name="navi-checkbox"]');
         // 클릭한 것 제외하고 나머지 체크 해제
-        checkboxes.forEach((cb) => {
-          if (cb !== checkbox) cb.checked = false;
+        
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('click', () => {
+          if (checkbox.checked) {
+            // 클릭한 것 제외하고 나머지 체크 해제
+            checkboxes.forEach((cb) => {
+              if (cb !== checkbox) cb.checked = false;
+            });
+          }
         });
-      }
-    });
-  });
-  </script>
+      });
+      </script>
     `;
     } else {
       /* 로그인이 안 되었을 때 */
-      this.innerHTML = `
-       
-  <div class="bg-white w-full overflow-x-auto">
-  <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
-    <!-- 홈 -->
-    <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center ">
-        <!-- 체크박스 숨김 -->
-      <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-       
-      <!-- 기본 아이콘 (체크 전) -->
-      <a href="/index.html">
-      <img
-        src="/icon/Home.svg"
-        alt="홈 아이콘 기본"
-        class="peer-checked:hidden"
-      />
-      </a>
-      
-        <!-- 체크 아이콘 (체크 후) -->
-      <img
-        src="/icon/HomeActive.svg"
-        alt="홈 아이콘 채움"
-        class="hidden peer-checked:block"
-      />
-        </label>
-        <span class="text-center">홈</span>
+      this.innerHTML = `       
+        <div class="bg-white w-full overflow-x-auto">
+        <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
+          <!-- 홈 -->
+          <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+            <label class="w-8 h-8 flex items-center justify-center ">
+            <!-- 체크박스 숨김 -->
+            <input name="navi-checkbox" type="checkbox" class="sr-only peer" />            
+            <!-- 기본 아이콘 (체크 전) -->
+            <a href="/index.html">
+            <img
+              src="/icon/Home.svg"
+              alt="홈 아이콘 기본"
+              class="peer-checked:hidden"
+            />
+            </a>            
+              <!-- 체크 아이콘 (체크 후) -->
+            <img
+              src="/icon/HomeActive.svg"
+              alt="홈 아이콘 채움"
+              class="hidden peer-checked:block"
+            />
+              </label>
+              <span class="text-center">홈</span>
+            </div>
+          <!-- 발견 -->
+          <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+            <label class="w-8 h-8 flex items-center justify-center ">
+            <!-- 체크박스 숨김 -->
+          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+            <!-- 기본 아이콘 (체크 전) -->
+              <a href='/src/pages/search/Search.html'>
+            <img
+              src="/icon/Search.svg"
+              alt="발견 아이콘 기본"
+              class="peer-checked:hidden"
+            />
+            </a>            
+              <!-- 체크 아이콘 (체크 후) -->
+            <img
+              src="/icon/SearchActive.svg"
+              alt="발견 아이콘 채움"
+              class="hidden peer-checked:block"        
+            />
+            </label>
+            <span class="text-center">발견</span>
+          </div>
+          <!-- 글쓰기 -->
+          <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+            <label class="w-8 h-8 flex items-center justify-center ">
+            <!-- 체크박스 숨김 -->
+          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+          <!-- 기본 아이콘 (체크 전) -->          
+          <img
+            onClick="alert('로그인이 필요한 화면입니다')"
+            src="/icon/EditSquare.svg"
+            alt="글쓰기 아이콘 기본"
+            class="peer-checked:hidden"            
+          />          
+          <!-- 체크 아이콘 (체크 후) -->
+          <img
+            src="/icon/EditSquareActive.svg"
+            alt="글쓰기 아이콘 채움"
+            class="hidden peer-checked:block"
+          />
+            </label>
+            <span class="text-center">글쓰기</span>
+          </div>
+          <!-- 내 서랍 -->
+          <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
+            <label class="w-8 h-8 flex items-center justify-center ">
+            <!-- 체크박스 숨김 -->
+          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+            <!-- 기본 아이콘 (체크 전) -->
+          <a href='/src/pages/mypage/MyPage.html'>
+            <img
+              onClick="alert('로그인이 필요한 화면입니다')"
+              src="/icon/Inventory.svg"
+              alt="내서랍 아이콘 기본"
+              class="peer-checked:hidden"
+            />
+          </a>
+              <!-- 체크 아이콘 (체크 후) -->
+            <img
+              src="/icon/InventoryActive.svg"
+              alt="내서랍 아이콘 채움"
+              class="hidden peer-checked:block"
+            />
+            </label>
+            <span class="text-center">내 서랍</span>
+          </div>
+        </div>
       </div>
-
-    <!-- 발견 -->
-    <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center ">
-       <!-- 체크박스 숨김 -->
-    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-      <!-- 기본 아이콘 (체크 전) -->
-        <a href='/src/pages/search/Search.html'>
-      <img
-        src="/icon/Search.svg"
-        alt="발견 아이콘 기본"
-        class="peer-checked:hidden"
-      />
-      </a>
-      
-        <!-- 체크 아이콘 (체크 후) -->
-      <img
-        src="/icon/SearchActive.svg"
-        alt="발견 아이콘 채움"
-        class="hidden peer-checked:block"        
-      />
-      </label>
-      <span class="text-center">발견</span>
-    </div>
-
-    <!-- 글쓰기 -->
-    <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center ">
-      <!-- 체크박스 숨김 -->
-    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-    <!-- 기본 아이콘 (체크 전) -->
-    
-    <img
-      onClick="alert('로그인이 필요한 화면입니다')"
-      src="/icon/EditSquare.svg"
-      alt="글쓰기 아이콘 기본"
-      class="peer-checked:hidden"
-      
-    />
-    
-            <!-- 체크 아이콘 (체크 후) -->
-    <img
-       src="/icon/EditSquareActive.svg"
-      alt="글쓰기 아이콘 채움"
-      class="hidden peer-checked:block"
-    />
-      </label>
-      <span class="text-center">글쓰기</span>
-    </div>
-
-    <!-- 내 서랍 -->
-    <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
-      <label class="w-8 h-8 flex items-center justify-center ">
-       <!-- 체크박스 숨김 -->
-    <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-      <!-- 기본 아이콘 (체크 전) -->
-     <a href='/src/pages/mypage/MyPage.html'>
-      <img
-        onClick="alert('로그인이 필요한 화면입니다')"
-        src="/icon/Inventory.svg"
-        alt="내서랍 아이콘 기본"
-        class="peer-checked:hidden"
-      />
-    </a>
-        <!-- 체크 아이콘 (체크 후) -->
-      <img
-        src="/icon/InventoryActive.svg"
-        alt="내서랍 아이콘 채움"
-        class="hidden peer-checked:block"
-      />
-
-      </label>
-      <span class="text-center">내 서랍</span>
-    </div>
-  </div>
-</div>
        `;
     }
 
@@ -306,9 +293,8 @@ class NavigateComponent extends HTMLElement {
      *
      * 현재 클릭한 네비의 상태를 저장해야 함.
      * 어떻게????
-     *
-     * MPA 환경에서는 절대 경로 대신 HTML 기준 상대 경로를 사용하면 안전합니다.
-    
+     * url주소에서 파일명을 가져와서 switch case로 지정
+     * 
     document.getElementById('home-button')?.addEventListener('click', () => {
       window.location.href = '/index.html';
     });
@@ -438,9 +424,10 @@ class TopComponent extends HTMLElement {
   }
 
   // 세션스토리지에서 현재 로그인 정보 읽기
+  //로컬세션 확인
   private getUser() {
-    const name = sessionStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken');
+    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
+    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
     if (!name || !token) return null;
 
     return {
@@ -482,6 +469,9 @@ class TopComponent extends HTMLElement {
     const img = document.createElement('img');
     img.src = '/icon/Face.svg';
     img.alt = '아바타 아이콘';
+    img.addEventListener('click', () => {
+      window.location.href = `/src/pages/author/AuthorPage.html?id=`;
+    });
 
     avatarBtn.appendChild(img);
 
@@ -588,4 +578,3 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     console.error(e);
   }
 })();
-

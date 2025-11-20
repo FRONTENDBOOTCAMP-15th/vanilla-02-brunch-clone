@@ -45,11 +45,15 @@ LoginForm.addEventListener('submit', async (event) => {
     if (checkBox.checked) {
       const { data } = await axios.post<DetailRes<LoginUser>>('/users/login', login, { params: { expiresIn: '1d' } });
       const accessToken = data.item.token.accessToken;
+      const userName = data.item.name;
       localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('userName', userName);
     } else {
       const { data } = await axios.post<DetailRes<LoginUser>>('/users/login', login);
       const accessToken = data.item.token.accessToken;
+      const userName = data.item.name;
       sessionStorage.setItem('accessToken', accessToken);
+      sessionStorage.setItem('userName', userName);
     }
 
     alert('로그인 성공했습니다');
