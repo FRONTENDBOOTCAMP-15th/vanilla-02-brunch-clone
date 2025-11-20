@@ -16,7 +16,11 @@ const writerJob = document.querySelector('.details-writer-job') as HTMLAnchorEle
 const writerImg = document.querySelector('.details-writer-img img') as HTMLImageElement;
 const writerExplain = document.querySelector('.details-explain') as HTMLAnchorElement;
 const subscribeCount = document.querySelector('.details-subscribe-count') as HTMLAnchorElement;
-const subscribeButtonEl = document.querySelector('subscribe-button') as HTMLElement;
+const subscribeButtonEl = document.querySelector('.subscribe-button') as HTMLButtonElement;
+
+function hasAccessToken() {
+  return !!sessionStorage.getItem('accessToken');
+}
 
 // 좋아요 버튼
 
@@ -65,6 +69,8 @@ async function loadPost(id: string) {
 
     if (data.ok === 1) {
       const post = data.item;
+      console.log('post.user 실제 값:', post.user);
+      console.log('posts 응답 전체:', post);
       console.log(data.item);
       console.log('컨텐츠:', post.content);
 
@@ -119,7 +125,10 @@ async function loadPost(id: string) {
       }
       currentAuthorId = post.user._id;
       lookUpAuthor(currentAuthorId); // 게시글 작성자의 id
-      checkSubscribe(currentAuthorId); // 로그인 되어 있다면, 내가 이 작가를 구독했는지 확인
+      // 로그인 되어 있을 때만 구독 상태 조회
+      if (hasAccessToken()) {
+        checkSubscribe(currentAuthorId);
+      }
       // 최근 본 글로 저장
       saveRecentPost(post);
     }
@@ -196,6 +205,7 @@ function saveRecentPost(post: PostItem) {
     title: post.title,
     thumbnail,
     authorId: post.user._id,
+    username: post.user.name,
   };
 
   // 3) 기존 목록 불러오기

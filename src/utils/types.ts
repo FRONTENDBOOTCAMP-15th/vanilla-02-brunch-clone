@@ -199,6 +199,7 @@ export interface RecentPost {
   title: string; // 게시글 제목
   thumbnail: string; // 썸네일 이미지 url
   authorId: number; // 작성자 id
+  username: string; // 작성자 이름
 }
 
 //로그인 유저 타입
