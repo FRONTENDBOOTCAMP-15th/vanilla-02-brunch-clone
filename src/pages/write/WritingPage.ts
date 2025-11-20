@@ -170,7 +170,7 @@ async function uploadPost() {
     type: 'brunch',
     title: titleInput?.value,
     content: contentDiv?.innerHTML,
-    extra: { subtitle: subtitleInput?.value },
+    extra: { subTitle: subtitleInput?.value },
     image: uploadedImgs.map((item) => item.path),
   };
 
