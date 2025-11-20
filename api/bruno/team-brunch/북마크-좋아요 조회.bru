@@ -1,0 +1,16 @@
+meta {
+  name: 북마크/좋아요 조회
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{url}}/bookmarks/user
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

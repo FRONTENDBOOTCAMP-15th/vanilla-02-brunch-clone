@@ -160,12 +160,11 @@ export type BookmarkLikeReq = {
 export interface BaseBookmarkItem {
   _id: number; // 북마크 자체 id (삭제할 때 필요)
   user_id: number; // 북마크/좋아요를 한 사용자 id (= 로그인한 나)
-  createdAt: string;
 }
 
 // user 타입 북마크: 내가 북마크 한 "사용자" 목록
 export interface UserBookmarkItem extends BaseBookmarkItem {
-  user: UserInfo; // 북마크 대상 사용자(작가)
+  user: Pick<UserInfo, '_id' | 'image' | 'name'>; // 북마크 대상 사용자(작가)
 }
 
 // post 타입 좋아요: 내가 좋아요 한 "게시글" 목록
