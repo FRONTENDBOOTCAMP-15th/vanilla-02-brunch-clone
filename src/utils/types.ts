@@ -74,9 +74,9 @@ export interface UserInfo {
     biography: string;
     keyword: string[];
   };
-  bookmark: {      
-      users: number;
-      posts: number;
+  bookmark: {
+    users: number;
+    posts: number;
   };
   createdAt: string;
   updatedAt: string;
@@ -156,4 +156,10 @@ export type LoginResponse =
     }
   | APIError;
 
-//
+// 북마크
+export interface Bookmark {
+  _id: number;
+  user_id: number;
+  user?: UserInfo;
+  post?: PostItem;
+}
