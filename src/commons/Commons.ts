@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { LoginResponse, UserListResponse, UserResponse, UserInfo } from '../utils/types';
+import type { LoginResponse, UserResponse, UserInfo } from '../utils/types';
 
 type User = {
   id: number;
@@ -63,7 +63,6 @@ class NavigateComponent extends HTMLElement {
   connectedCallback() {
     this.render();
     //현재 페이지의 주소를 가져옴
-    alert(window.location.pathname);
     const path = window.location.pathname;
     let str: string | null = 'home';
     if (path.includes('index.html')) {
@@ -78,8 +77,7 @@ class NavigateComponent extends HTMLElement {
     const radios = document.getElementsByName('navi-checkbox') as NodeListOf<HTMLInputElement>;
     radios.forEach((radio) => {
       if (radio.value === str) {
-        radio.checked = true; // green 라디오 버튼 체크
-        alert(radio.value);
+        radio.checked = true;      
       } else {
         radio.checked = false; // 나머지는 체크 해제 (실제 radio는 자동 처리되지만 명시 가능)
       }
@@ -421,7 +419,6 @@ class TopComponent extends HTMLElement {
   }
   // axios 이용 API 가져오기 함수 ------------------------------------------------
   private async retrieveAPI(userId: number): Promise<UserResponse | null> {
-    //alert(userId);
     const url = `https://fesp-api.koyeb.app/market/users/${userId}`;
     //const url = `https://fesp-api.koyeb.app/market/users/8`;
 
@@ -449,8 +446,6 @@ class TopComponent extends HTMLElement {
   // 세션스토리지에서 현재 로그인 정보 읽기
   //로컬세션 확인
   private async getUser(): Promise<User | null> {
-    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
     const userId: number = parseInt(sessionStorage.getItem('userId') || '0');
     //API 함수 호출
     //console.log('userId: ', userId);
@@ -513,7 +508,7 @@ class TopComponent extends HTMLElement {
 
     parentDiv?.appendChild(avatarBtn);
   }
-  private appendAlertBtn(user: User) {
+  private appendAlertBtn() {
     const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
 
     const alertBtn = document.createElement('button');
@@ -546,7 +541,7 @@ class TopComponent extends HTMLElement {
   }
 
   private loggedInHTML(user: User) {
-    this.appendAlertBtn(user);
+    this.appendAlertBtn();
     this.appendAvatarBtn(user);
   }
 }
