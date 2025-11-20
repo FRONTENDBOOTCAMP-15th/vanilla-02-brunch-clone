@@ -18,7 +18,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   const wrapper: HTMLLIElement = document.createElement('li');
   wrapper.className = 'flex items-start gap-5 cursor-pointer min-w-[360px] border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
   wrapper.addEventListener('click', () => {
-    window.location.href = `./src/pages/details/DetailsPage.html?_id=${post._id}`;
+    window.location.href = `/src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
 
   // 이미지 있는 경우
@@ -218,7 +218,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
       if (idx >= 2) return;
       const card = document.createElement('div');
       card.addEventListener('click', () => {
-        window.location.href = `./src/pages/details/DetailsPage.html?_id=${p._id}`;
+        window.location.href = `/src/pages/details/DetailsPage.html?_id=${p._id}`;
       });
       card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer';
 
