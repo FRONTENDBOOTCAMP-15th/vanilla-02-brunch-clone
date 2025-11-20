@@ -557,7 +557,7 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 }
 
 // 로그인 함수 호출
-
+/*
 (async () => {
   try {
     const result = await loginUser('w1@market.com', '11111111');
@@ -578,3 +578,4 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     console.error(e);
   }
 })();
+*/
