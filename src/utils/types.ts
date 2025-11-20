@@ -3,17 +3,6 @@ export interface APIError {
   message: string;
 }
 
-//로그인 유저 타입
-export interface LoginUser {
-  _id: number;
-  email: string;
-  name: string;
-  token: {
-    accessToken: string;
-    refreshToken: string;
-  };
-}
-
 // 파일 업로드
 export interface uploadFileInfo {
   name: string;
@@ -74,9 +63,9 @@ export interface UserInfo {
     biography: string;
     keyword: string[];
   };
-  bookmark: {      
-      users: number;
-      posts: number;
+  bookmark: {
+    users: number;
+    posts: number;
   };
   createdAt: string;
   updatedAt: string;
@@ -152,8 +141,18 @@ export type UserResponse =
 export type LoginResponse =
   | {
       ok: 1;
-      item: UserInfo;
+      item: LoginUser;
     }
   | APIError;
 
 //
+//로그인 유저 타입
+export interface LoginUser {
+  _id: number;
+  email: string;
+  name: string;
+  token: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}

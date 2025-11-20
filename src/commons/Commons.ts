@@ -452,7 +452,8 @@ class TopComponent extends HTMLElement {
   // UI를 렌더링
   render() {
     this.innerHTML = `
-        <div class="sticky top-0 bg-white flex items-center justify-between px-[24px] py-4 min-w-[360px]">
+        <div class="left-0 w-full bg-white flex justify-between px-[24px] py-4 min-w-[360px] z-10">
+
       <!-- 왼쪽: brunchstory -->
       <div id="main-logo" class="flex items-center space-x-1 text-[var(--detailsTitle)] cursor-pointer">
         <img src="/icon/Logo.svg" alt="브런치스토리 로고" />
@@ -566,11 +567,11 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 }
 
 // 로그인 함수 호출
-/*
+
 (async () => {
   try {
     const result = await loginUser('w1@market.com', '11111111');
-    if (result) {
+    if (result.ok == 1) {
       console.log('로그인 성공:', result.item.name);
       console.log('액세스 토큰:', result.item.token.accessToken);
 
@@ -587,4 +588,4 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     console.error(e);
   }
 })();
-*/
+
