@@ -58,6 +58,7 @@ export interface UserInfo {
   type: string;
   loginType: string;
   image: string;
+
   extra: {
     job?: string;
     biography?: string;
@@ -70,6 +71,7 @@ export interface UserInfo {
   createdAt: string;
   updatedAt: string;
   posts: number; // 작성한 게시물 수
+  bookmarks: number;
   bookmarkedBy: {
     users: number; // 북마크한 사용자 수
   };
