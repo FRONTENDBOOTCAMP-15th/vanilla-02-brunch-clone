@@ -36,7 +36,7 @@ async function loadUserProfile() {
 
     if (data.ok) {
       console.log('사용자 이름:', data.item.name);
-      console.log('직업:', data.item.extra.job);
+      console.log('직업:', data.item.extra?.job);
       console.log('작성한 글 수:', data.item.posts);
       console.log('이미지:', data.item.image);
       console.log('구독자수:', data.item.bookmarkedBy.users);
@@ -46,9 +46,10 @@ async function loadUserProfile() {
       name.textContent = data.item.name;
 
       const job = document.querySelector('#job')!;
-      job.textContent = String(data.item.extra?.job || '');
+      job.textContent = String(data.item.extra?.job ?? '');
 
       const image = document.querySelector('#image') as HTMLImageElement;
+      console.log(data.item.image);
       image.src = data.item.image;
       image.width = 80;
       image.height = 80;
@@ -57,7 +58,9 @@ async function loadUserProfile() {
       subCount.textContent = data.item.bookmarkedBy.users.toString();
 
       const followCount = document.querySelector('#followCount')!;
-      followCount.textContent = data.item.bookmark.toString();
+      const count = data.item.bookmark?.users || 0;
+
+      followCount.textContent = count.toString();
     }
   } catch (error) {
     console.error('회원 정보 조회 실패:', error);
@@ -107,3 +110,81 @@ async function loadUserPosts() {
 // 실행
 loadUserProfile();
 loadUserPosts();
+
+//구독 버튼
+const subscribeButtonEl = document.querySelector('.subscribe-button') as HTMLButtonElement;
+
+// 구독 버튼 토글
+subscribeButtonEl.addEventListener('click', () => {
+  console.log('구독 버튼 클릭됨!');
+
+  if (!isLoggedIn()) {
+    alert('로그인이 필요한 서비스입니다.');
+    return;
+  }
+
+  // 이미 구독 중인 상태라면
+  if (subscribed) {
+    // 구독 취소가 되어야 함(취소 함수를 적을 것!)
+    if (currentBookmarkId != null) {
+      cancelSubscribe(currentBookmarkId);
+    } else {
+      alert('북마크 id가 없습니다.');
+    }
+  }
+  // 구독하지 않았으면 구독 목록에 추가됨
+  else {
+    // 현재 게시글 작성자의 아이디를 매개변수로 해서 구독 목록에 추가되는 함수 작성
+    subscribeAuthor(currentAuthorId);
+  }
+});
+
+// 구독 추가
+async function subscribeAuthor(authorId: number) {
+  const axios = getAxios();
+  const type: BookmarkType = 'user';
+
+  const body: BookmarkLikeReq = {
+    target_id: authorId, // 구독하는 작가 즉, 현재 게시글의 작가의 id를 target_id로 넘겨줌
+  };
+
+  try {
+    console.log('구독 추가 보냄:', authorId);
+    const { data } = await axios.post<BookmarkCreateRes>(`/bookmarks/${type}`, body);
+    console.log('구독 응답:', data);
+    if (data.ok === 1) {
+      // 구독 상태 구독 중으로 바뀜
+      subscribed = true;
+      currentBookmarkId = data.item._id;
+      // 구독하면 구독 버튼 체크 표시로 바뀌도록 함
+      updateSubscribeButtonUI();
+      const current = Number(subscribeCount.textContent) || 0;
+      subscribeCount.textContent = String(current + 1);
+    } else {
+      console.error('구독 실패 응답ㅜ', data);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// 구독 취소
+
+async function cancelSubscribe(bookmarkId: number) {
+  const axios = getAxios();
+
+  try {
+    const { data } = await axios.delete<BookmarkDeleteRes>(`/bookmarks/${bookmarkId}`);
+    console.log('구독 취소 응답:', data);
+
+    if (data.ok === 1) {
+      subscribed = false;
+      currentBookmarkId = null;
+      updateSubscribeButtonUI();
+      const current = Number(subscribeCount.textContent) || 0;
+      subscribeCount.textContent = String(current - 1);
+    }
+  } catch (err) {
+    console.error('구독 취소 에러:', err);
+  }
+}
