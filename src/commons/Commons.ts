@@ -64,7 +64,7 @@ class NavigateComponent extends HTMLElement {
     this.render();
     //현재 페이지의 주소를 가져옴
     const path = window.location.pathname;
-    let str: string | null = 'home';
+    let str: string | null = null;
     if (path.includes('index.html')) {
       str = 'home';
     } else if (path.includes('search')) {
@@ -75,9 +75,11 @@ class NavigateComponent extends HTMLElement {
       str = 'mypage';
     }
     const radios = document.getElementsByName('navi-checkbox') as NodeListOf<HTMLInputElement>;
+
     radios.forEach((radio) => {
       if (radio.value === str) {
-        radio.checked = true;      
+        radio.checked = true;
+        //alert(path);
       } else {
         radio.checked = false; // 나머지는 체크 해제 (실제 radio는 자동 처리되지만 명시 가능)
       }
