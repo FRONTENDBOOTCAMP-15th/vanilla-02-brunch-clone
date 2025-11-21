@@ -17,6 +17,10 @@ function checkImageUrl(url: string): Promise<boolean> {
     img.src = url;
   });
 }
+
+function removeImgTags(html: string): string {
+  return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
+}
 */
 
 function getValidImageUrl(imageUrl: any): string {
@@ -44,8 +48,8 @@ function getValidImageUrl(imageUrl: any): string {
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
 function createBrunchCard(post: PostItem, index: number): HTMLElement {
-  let postContent = removeTags(post.content).substring(0, 160);
-  console.log(postContent);
+  let postContent = removeTags(post.content).substring(0, 80);
+  //console.log(postContent);
 
   let srcImg: string = '';
 
@@ -123,7 +127,7 @@ function createWriterCard(post: any): HTMLElement {
         src="${srcImg}"
         onerror="this.onerror=null; this.src='/img/NoFaceImage.png';" 
         alt='회원 이미지'}" 
-        class="w-[90px] h-[90px] rounded-full object-cover mb-[15px] inline-block cursor-pointer"
+        class="w-[90px] h-[90px] rounded-full object-cover mb-[15px] inline-block cursor-pointer border border-gray-300"
       />
       </a>
 
@@ -135,7 +139,7 @@ function createWriterCard(post: any): HTMLElement {
         ${post.extra?.job || '작가'}
       </p>
 
-      <p class="text-[14px] text-[#444] leading-[1.4] max-w-[200px] mx-auto overflow-hidden  whitespace-nowrap">
+      <p class="text-[14px] text-bg-contentPrimary leading-[1.4] max-w-[200px] mx-auto overflow-hidden  whitespace-nowrap">
         ${post.extra?.biography || '소개글이 없습니다.'}
       </p>      
   `;
