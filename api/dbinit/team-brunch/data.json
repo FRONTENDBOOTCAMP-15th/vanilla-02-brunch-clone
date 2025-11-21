@@ -6,7 +6,7 @@
       "name": "무지",
       "type": "admin",
       "loginType": "email",
-      "image": "uploadFiles/profile3.webp",
+      "image": "uploadFiles/user-muzi.webp",
       "extra": {
         "job": "관리자"
       }
@@ -30,7 +30,7 @@
       "name": "자기반성",
       "type": "seller",
       "loginType": "email",
-      "image": "uploadFiles/profile.webp",
+      "image": "uploadFiles/user-jayg.webp",
       "extra": {
         "job": "자기탐구인문학 크리에이터",
         "biography": "공상가, AB형, ENFP 성향을 똑 닮은 딸을 키우고 있는 해외맘. 세상의 모든 할머니, 엄마와 딸을 응원합니다. 열심히 일하며 생명체를 키워나가고 있습니다. 자기 탐구 인문학자",
@@ -43,7 +43,7 @@
       "name": "AI러 이채문",
       "type": "seller",
       "loginType": "kakao",
-      "image": "uploadFiles/profile2.webp",
+      "image": "uploadFiles/user-neo.webp",
       "extra": {
         "job": "edifice 매니저",
         "biography": "프롬프트 기획 전문가 & GPT전문강사, 강연자",
@@ -220,6 +220,39 @@
       ]
     },
 
+    {
+      "type": "brunch",
+      "title": "집을 구한다",
+      "extra": {
+        "subTitle": "한남3구역 동갑내기 빌라에 사는 어느 셀프 인테리어 중독자의 고백"
+      },
+      "views": 65,
+      "user": {
+        "_id": 12,
+        "name": "드림핑",
+        "image": "uploadFiles/user-dreamping.webp"
+      },
+      "content": "<p>이주명령이 떨어지고 마음이 바빠진 나는 본격적으로 집을 알아보러 다니기            시작했다. 기한은 내년 5월까지로 아직 여유가 있었지만 그때 가서 허겁지겁 집을            구하다 보면 맘에 드는 집을 찾기가 어려울 테니까. 그리고 겨울이 오기 전에 이            집에서 도망쳐야 해.</p><p>조건은 전세대출이 가능한 집일 것, 베란다나 테라스가 있을 것, 반려동물이            가능해야 하고, 창문으로 보이는 옆 건물이 너무 가깝지 않을 것, 뷰가 있으면 더            좋고, 그리고 내가 가끔 집에서 노래를 부를 것이기 때문에 방음이 잘 되는            곳이거나 되도록 꼭대기 층일 것, 동네는 번화가보다는 산책로가 가까운 한적한            곳이면 좋겠다. 창문이 너무 작아도 안돼. 언덕이 너무 가팔라도 힘든데.</p><p>새 집에 대한 나의 욕망은 주제도 모르고 부풀어 올랐다. 밥 먹고, 일하고, 자는            시간을 제외하면 거의 대부분의 시간을 부동산 앱을 뒤지는 데 썼다. 아, 사실            일하면서도 몰래몰래 부동산 앱을 뒤져보고, 화장실에서 일보는 잠깐의 시간도            알뜰하게 사용했다. 집을 구하는 일은 번거롭지만 어느 정도 설레는 일이기도 하다.            그래서 나는 매일 우는 소리를 하면서도 집 보러 다니는 일을 은근히 즐기고            있었다.</p>",
+      "replies": [
+        {
+          "user": {
+            "_id": 3,
+            "name": "자기반성"
+          },
+          "content": "좋은 집 구하셨으면 좋겠습니다",
+          "like": 5
+        },
+        {
+          "user": {
+            "_id": 4,
+            "name": "AI러 이채문",
+            "image": "uploadFiles/user-apeach.webp"
+          },
+          "content": "한 수 배웁니다.",
+          "like": 7
+        }
+      ]
+    },
     {
       "type": "brunch",
       "title": "무사히 마흔살이 될 수 있을 까",
