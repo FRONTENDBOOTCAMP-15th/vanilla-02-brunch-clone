@@ -103,7 +103,7 @@ async function searchPosts() {
           <article class="border-b border-br-line py-4">
             <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
               <h3 class="text-[17px] mt-[14px]">${post.title ?? ''}</h3>
-              <p class="mt-10 text-[12px] text-br-contentSecondary line-clamp-3">
+              <p class="mt-10 text-[12px] text-br-contentSecondary line-clamp-3 leading-normal">
                 ${cleanedContent}
               </p>
               <div class="flex items-center gap-2 mt-[8px]">
@@ -149,8 +149,8 @@ async function searchAuthors() {
         const article = `
          
         <article class="flex items-start gap-3 py-3">
-          <a href="/src/pages/Author/AuthorPage.html?_id=${user._id}" class="flex items-start gap-3">
-            <img src="${user.image}" alt=" 프로필 이미지" class="w-12 h-12 rounded-full object-cover" />
+          <a href="/src/pages/Author/AuthorPage.html?_id=${user._id}" class="flex items-start gap-3 ">
+            <img src="${user.image}" alt=" 프로필 이미지" class="w-12 h-12 rounded-full object-cover  " />
             <div class="flex flex-col">
               <h2 id="name" class="text-[16px] text-br-detailsTitle mb-1">${user.name}</h2>
               <h3 id="job" class="text-[12px] text-br-contentSecondary mb-1 line-clamp-2">${user.extra?.job ?? ''}</h3>
