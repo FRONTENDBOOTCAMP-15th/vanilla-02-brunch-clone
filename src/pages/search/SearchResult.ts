@@ -164,16 +164,6 @@ async function searchAuthors() {
   }
 }
 
-function removeHtmlTags(html: string): string {
-  if (!html) return '';
-
-  // 1) 태그 전체 제거
-  const withoutTags = html.replace(/<[^>]*>/g, '');
-
-  // 2) 공백 정리
-  return withoutTags.trim();
-}
-
 // 탭 이벤트 추가
 function setTabEvent() {
   document.querySelector('#posts')?.addEventListener('click', () => {
