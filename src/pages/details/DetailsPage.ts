@@ -22,12 +22,12 @@ const subscribeButtonEl = document.querySelector('.subscribe-button') as HTMLBut
 
 // 구독 상태 조회
 let subscribed = false;
-
 let currentBookmarkId: number | null = null;
 
 // -------------------- 좋아요 상태 --------------------
 let liked = false; // 이 게시글을 내가 좋아요 했는지
 let currentLikeId: number | null = null; // 좋아요 row id (취소할 때 사용)
+let likeCount = Number(likeCountEl.textContent) || 0;
 
 // 1. 로그인 여부 확인 함수 (세션 스토리지에 accessToken 기준)
 function isLoggedIn() {
@@ -73,24 +73,15 @@ function updateLikeButtonUI() {
   if (!likeButton) return;
 
   likeButton.setAttribute('aria-pressed', String(liked));
+
+  if (liked) {
+    likeCountEl.classList.add('text-br-primary', 'font-semibold');
+    likeCountEl.classList.remove('text-br-contentSecondary');
+  } else {
+    likeCountEl.classList.remove('text-br-primary', 'font-semibold');
+    likeCountEl.classList.add('text-br-contentSecondary');
+  }
 }
-
-let likeCount = Number(likeCountEl.textContent) || 0;
-
-// likeButton.addEventListener('click', () => {
-//   liked = !liked;
-
-//   likeButton.setAttribute('aria-pressed', String(liked));
-
-//   if (liked) {
-//     likeCount += 1; // 좋아요 누름
-//   } else {
-//     likeCount -= 1; // 좋아요 취소
-//   }
-
-//   // 화면에 숫자 반영
-//   likeCountEl.textContent = String(likeCount);
-// });
 
 // url에서 id 값 꺼내기
 const params = new URLSearchParams(location.search);
@@ -298,8 +289,8 @@ async function checkSubscribe(authorId: number) {
   try {
     const { data } = await axios.get<UserBookmarkListRes>(`bookmarks/${type}`);
     console.log('내가 구독한 구독 목록:', data.item);
-    const myIdStr = sessionStorage.getItem('userid');
-    console.log('현재 로그인된 사용자의 id: ', myIdStr);
+    // const myIdStr = sessionStorage.getItem('userid');
+    // console.log('현재 로그인된 사용자의 id: ', myIdStr);
     if (data.ok === 1) {
       const userBookmarkList = data.item;
 
@@ -364,6 +355,8 @@ async function subscribeAuthor(authorId: number) {
       updateSubscribeButtonUI();
       const current = Number(subscribeCount.textContent) || 0;
       subscribeCount.textContent = String(current + 1);
+
+      alert('작성자를 구독합니다.');
     } else {
       console.error('구독 실패 응답ㅜ', data);
     }
@@ -387,6 +380,8 @@ async function cancelSubscribe(bookmarkId: number) {
       updateSubscribeButtonUI();
       const current = Number(subscribeCount.textContent) || 0;
       subscribeCount.textContent = String(current - 1);
+
+      alert('작성자 구독을 취소합니다.');
     }
   } catch (err) {
     console.error('구독 취소 에러:', err);
@@ -463,11 +458,17 @@ async function addLike(postId: number) {
 
     if (data.ok === 1) {
       liked = true;
+
+      const created = data.item;
+      currentLikeId = created._id;
+
       updateLikeButtonUI();
 
       // 화면 좋아요 수 +1
       likeCount += 1;
       likeCountEl.textContent = String(likeCount);
+
+      alert('해당 게시글에 좋아요를 눌렀습니다.');
     } else {
       console.error('좋아요 실패 응답ㅜ', data);
     }
@@ -491,6 +492,8 @@ async function cancelLike(likeId: number) {
       // 화면 좋아요 수 -1 (최소 0 보장)
       likeCount = Math.max(0, likeCount - 1);
       likeCountEl.textContent = String(likeCount);
+
+      alert('해당 게시글에 좋아요를 취소했습니다.');
     } else {
       console.error('좋아요 취소 실패 응답ㅜ', data);
     }
