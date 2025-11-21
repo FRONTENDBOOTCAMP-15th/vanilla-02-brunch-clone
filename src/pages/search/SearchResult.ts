@@ -87,6 +87,7 @@ async function searchPosts() {
       data.item.forEach((post) => {
         const article = `
           <article class="border-b border-br-line py-4">
+            <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
             <h3 class="text-[17px] mt-[14px]">${post.title ?? ''}</h3>
             <p class="mt-10 text-[12px] text-br-contentSecondary line-clamp-3">
               ${post.content ?? ''}
@@ -130,11 +131,16 @@ async function searchAuthors() {
       // 검색 결과 수 만큼 화면에 article 출력
       data.item.forEach((user) => {
         const article = `
-          <article>
-            <img id="image" src="${user.image}" alt=" 이미지" class="w-12 h-12 rounded-full object-cover" />
-            <h2 id="name" class="text-[16px] text-br-detailsTitle mb-3">${user.name}</h2>
-            <h3 id="job" class="text-[12px] text-br-contentSecondary mb-3">${user.extra.job}</h3>
-          </article>
+         
+        <article class="flex items-center gap-3">
+        <img id="image" src="${user.image}" alt=" 이미지" class="w-12 h-12 rounded-full object-cover" />
+
+        <div>
+          <h2 id="name" class="text-[16px] text-br-detailsTitle mb-1">${user.name}</h2>
+          <h3 id="job" class="text-[12px] text-br-contentSecondary mb-1">${user.extra.job}</h3>
+        </div>
+      </article>
+   
         `;
         articleList.innerHTML += article;
       });
