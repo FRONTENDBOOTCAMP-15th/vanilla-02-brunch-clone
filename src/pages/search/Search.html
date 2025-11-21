@@ -19,14 +19,13 @@
         </div>
 
         <nav id="tabNav" aria-label="탭 내비게이션" hidden>
-          <ul class="flex relative">
+          <ul class="flex relative border-b border-gray-200">
             <li class="flex-1 text-center pb-2">
-              <a href="/" class="text-[14px] text-br-primary w-full" aria-current="false">글</a>
-              <span class="absolute left-0 right-0 bottom-0 mx-auto w-full border-b-2 border-br-primary"></span>
+              <button data-tab="posts" class="tab-btn text-[14px] w-full py-2 text-br-primary active">글</button>
             </li>
 
-            <li class="flex-1 text-center pb-2 relative">
-              <a href="/" class="text-[14px] text-br-contentSecondary font-medium w-full" aria-current="true">작가</a>
+            <li class="flex-1 text-center pb-2">
+              <button data-tab="authors" class="tab-btn text-[14px] w-full py-2 text-br-contentSecondary">작가</button>
             </li>
           </ul>
         </nav>
@@ -35,6 +34,7 @@
       <!-- 콘텐츠 영역 -->
       <main class="mx-auto px-4">
         <!-- 추천 인기 키워드 -->
+
         <section id="title" aria-labelledby="popular-keywords-title">
           <h2 id="popular-keywords-title" class="text-[12px] text-br-contentTertiary mt-7">추천 작가 키워드</h2>
           <p class="mt-[15px] text-[20px] text-br-contentPrimary">
@@ -58,6 +58,24 @@
                 <button aria-label="글 검색어 삭제" class="text-br-loginLine">✕</button>
               </li>
             </ul>
+          </article> -->
+        </section>
+
+        <section id="author-list" aria-labelledby="author-list-title">
+          <div>
+            <img id="image" src="" alt=" 이미지" class="w-12 h-12 rounded-full object-cover" hidden />
+            <h2 id="name" class="text-[16px] text-br-detailsTitle mb-3"></h2>
+            <h3 id="job" class="text-[12px] text-br-contentSecondary mb-3"></h3>
+          </div>
+
+          <!-- <article class="p-5 flex items-start space-x-3 border-b border-br-line" role="listitem">
+            <div class="flex items-start space-x-3">
+              <img src="/src/assets/icon/universe.svg" alt="프로필 이미지" class="w-12 h-12 rounded-full object-cover" />
+              <div>
+                <h3 class="text-[16px] text-br-detailsTitle mb-3"><span class="text-br-primary">꿀</span>아빠</h3>
+                <p class="text-[12px] text-br-contentSecondary mb-3">두아이 아빠 기록남기기 좋아하는 아빠 고민하는 아빠입니다.</p>
+              </div>
+            </div>
           </article> -->
         </section>
       </main>

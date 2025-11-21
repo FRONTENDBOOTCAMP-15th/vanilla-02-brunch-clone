@@ -1,13 +1,35 @@
 import { AxiosError } from 'axios';
 import { getAxios } from '../../utils/axios';
-import type { PostListResponse } from '../../utils/types';
+import type { PostListResponse, UserListResponse } from '../../utils/types';
 
 const axios = getAxios();
 
+const tabNav = document.querySelector('#tabNav') as HTMLElement;
+const titleSection = document.querySelector('#title') as HTMLElement;
+const articleList = document.querySelector('#article-list') as HTMLElement;
+
 function onSearch() {
-  const tabNav = document.querySelector('#tabNav') as HTMLElement;
   tabNav.removeAttribute('hidden');
+  titleSection.style.display = 'none';
 }
+
+// // 작가 목록 API
+// export async function fetchAuthors(): Promise<UserInfo[]> {
+//   const res = await axios.get<UserListResponse>('/users', {
+//     params: {
+//       filter: '{"type":"seller"}',
+//       sort: '{"bookmarkedBy.users": -1}', // 인기순 정렬
+//     },
+//   });
+
+//   const data = res.data;
+
+//   if (!isUserListSuccess(data)) {
+//     throw new Error(data.message);
+//   }
+
+//   return data.item; // UserInfo[]
+// }
 
 /**
  * 검색 요청
@@ -99,3 +121,102 @@ function initTextTabButton() {
 // // 실행
 initSearchEvent();
 initTextTabButton();
+
+// 검색창 글자 입력시 보이기/숨기기
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const title = document.querySelector<HTMLElement>('#title');
+  const contents = document.querySelectorAll<HTMLElement>('[data-content]');
+  const searchInput = document.querySelector<HTMLInputElement>('#search-input');
+
+  // 검색어 입력시 section영역 숨김
+  if (searchInput && title) {
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.trim().length > 0) {
+        title.classList.add('hidden');
+      } else {
+        title.classList.remove('hidden');
+      }
+    });
+  }
+
+  // 버튼 클릭시 콘텐츠 전환
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.dataset.tab;
+      if (!targetTab) return;
+
+      // ---- active 클래스 토글 ----
+      buttons.forEach((b) => b.classList.remove('active')); // 모든 탭 버튼 active 제거
+      btn.classList.add('active');
+
+      // ---- 콘텐츠 토글 ----
+      contents.forEach((content) => {
+        const isTarget = content.dataset.content === targetTab;
+        content.hidden = !isTarget;
+      });
+    });
+  });
+});
+
+// 1. 작가 상세 API 호출
+async function getUserProfile(authorId: number) {
+  const api = getAxios(); // axios instance 생성
+  const res = await api.get(`/users/${authorId}`);
+  return res.data; // { ok, item } 반환
+}
+
+// 2. 상세 페이지 렌더링
+async function loadUserProfile() {
+  try {
+    const authorId = Number(new URLSearchParams(window.location.search).get('_id'));
+
+    if (!authorId) {
+      console.error('URL 에 _id 가 없습니다.');
+      return;
+    }
+
+    // 여기서 data 선언됨!!
+    const data = await getUserProfile(authorId);
+
+    if (!data.ok) {
+      console.error('API 응답 ok:false');
+      return;
+    }
+
+    // 사용자 정보 렌더링
+    document.querySelector('#name')!.textContent = data.item.name;
+    document.querySelector('#job')!.textContent = data.item.extra?.job ?? '';
+
+    const image = document.querySelector('#image') as HTMLImageElement;
+    image.src = data.item.image;
+
+    // 게시글 목록 렌더링
+    const articleList = document.querySelector('#article-list') as HTMLElement;
+
+    data.item.postList.forEach((post: any) => {
+      const article = `
+        <article class="border-b border-br-line py-4">
+          <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
+            <div class="underline decoration text-[13px] text-br-primary pb-[10px]">
+              ${post.extra?.subTitle ?? ''}
+            </div>
+            <h3 class="text-[17px] mt-[14px]">${post.title}</h3>
+            <p class="mt-10 text-[12px] text-br-contentSecondary line-clamp-3">
+              ${post.content}
+            </p>
+            <div class="flex items-center gap-2 mt-[8px]">
+              <span class="text-[12px] text-br-contentSecondary">${post.updatedAt}</span>
+            </div>
+          </a>
+        </article>
+      `;
+      articleList.innerHTML += article;
+    });
+  } catch (error) {
+    console.error('조회 실패:', error);
+  }
+}
+
+// 실행
+loadUserProfile();
