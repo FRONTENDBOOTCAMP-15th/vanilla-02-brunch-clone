@@ -1,5 +1,5 @@
 import { getAxios } from '../../utils/axios';
-import type { ListRes, Bookmark, PostItem } from '../../utils/types';
+import type { ListRes, Bookmark, PostItem, RecentPost } from '../../utils/types';
 
 //토큰이 있어야만 내 서랍 진입 가능 없으면 로그인페이지로 이동 //이건 home에서 처리해줄듯
 //관심작가 - /bookmarks/user // item.user.name, item.user.image
@@ -50,31 +50,35 @@ if (data?.ok) {
 }
 
 //최근 본
-// function RecenterPosts() {
-//   //1. 로컬 키 꺼내
-//   //2.데이터 없을 때
-//   //return
-//   // <a href="../details/DetailsPage.html" class="flex flex-col items-center shrink-0">
-//   //           <img src="/img/Background.svg" alt="표지" class="w-[123px] h-[172px] mb-4" />
-//   //           <p class="text-xs mb-0.5">책 이름</p>
-//   //           <div class="flex gap-1">
-//   //             <i class="text-[13px] text-br-contentTertiary">by</i>
-//   //             <span class="text-[13px] text-br-contentSecondary">글쓴이</span>
-//   //           </div>
-//   //         </a>
-//   // const RecentlyPost = document.querySelector('#recently');
-//   // if (RecentlyPost) {
-//   //   RecentlyPost.innerHTML = result.join('');
-//   // }
-//   // const recently = await RecenterPosts();
-//   // if (recently?.ok) {
-//   //   RecenterPosts(recently.item);
-//   // }
-// }
+
+function RecenterPosts() {
+  const recentPosts = localStorage.getItem('recentPosts');
+  const recentList: RecentPost[] = recentPosts ? JSON.parse(recentPosts) : [];
+  // 1. 로컬 키 꺼내
+  // 2.데이터 없을 때
+  const result = recentList.map((recent) => {
+    return `<a href="/src/pages/details/DetailsPage.html?_id=${recent.id}" >
+            <div class="flex flex-col items-center shrink-0 w-[123px]">
+              <img src="${recent.thumbnail}" alt="${recent.title}표지" class="w-[123px] h-[172px] mb-4 object-cover" />
+              <p class="text-xs mb-0.5 text-black text-center ">${recent.title}</p>
+              <div class="flex gap-1">
+                <i class="text-[13px] text-br-contentTertiary">by</i>
+                <span class="text-[13px] text-br-contentSecondary">${recent.username}</span>
+              </div>
+            </div>
+          </a>
+    `;
+  });
+  const container = document.querySelector('#recently');
+  if (container) {
+    container.innerHTML = result.join('');
+  }
+}
+RecenterPosts();
 //관심 글
 async function getBookmarkPost() {
   try {
-    const { data } = await axios.get<ListRes<Bookmark>>('/bookmarks/post');
+    const { data } = await axios.get<ListRes<Bookmark>>('/bookmarks/post', { params: { is_like: true } });
     return data;
   } catch (err) {
     console.log(err);
@@ -86,7 +90,7 @@ function renderBookmarkPost(posts: Bookmark[]) {
     return `
     <a href="/src/pages/details/DetailsPage.html?_id=${post.post?._id}" >
             <div class="flex flex-col items-center shrink-0 w-[123px]">
-              <img src="${post.post?.image}" alt="${post.post?.title}표지" class="w-[123px] h-[172px] mb-4 object-cover" />
+              <img src="${post.post?.image?.[0] || '/img/sky.jpg'}" alt="${post.post?.title}표지" class="w-[123px] h-[172px] mb-4 object-cover" />
               <p class="text-xs mb-0.5 text-black text-center ">${post.post?.title}</p>
               <div class="flex gap-1">
                 <i class="text-[13px] text-br-contentTertiary">by</i>
@@ -148,8 +152,10 @@ const logout = document.getElementById('logout');
 logout?.addEventListener('click', () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('userName');
+  localStorage.removeItem('userid');
   sessionStorage.removeItem('accessToken');
   sessionStorage.removeItem('userName');
+  sessionStorage.removeItem('userid');
   alert('로그아웃 성공! 홈으로 이동합니다');
   location.href = '/index.html';
 });

@@ -1,5 +1,11 @@
 import axios from 'axios';
-import type { LoginResponse } from '../utils/types';
+import type { LoginResponse, UserResponse, UserInfo } from '../utils/types';
+
+type User = {
+  id: number;
+  name: string | null;
+  avatarUrl: string;
+};
 
 //CircleContents
 class CircleContentsComponent extends HTMLElement {
@@ -50,36 +56,75 @@ class InputComponent extends HTMLElement {
   }
 }
 
-type User = {
-  name: string;
-  avatarUrl: string;
-};
-
 // Navigate
 class NavigateComponent extends HTMLElement {
+  private userId = 0;
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
-  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  //   // 컴포넌트 렌더링과 이벤트 초기화를 수행
+
   connectedCallback() {
     this.render();
-  }
-  // 세션스토리지에서 현재 로그인 정보 읽기
-  private getUser(): User | null {
-    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
+    //현재 페이지의 주소를 가져옴
+    const path = window.location.pathname;
+    let str: string | null = null;
+    if (path.match(/\/$/) || path.includes('index.html')) {
+      str = 'home';
+    } else if (path.includes('/search')) {
+      str = 'search';
+    } else if (path.includes('/write')) {
+      str = 'writepage';
+    } else if (path.includes('/mypage')) {
+      str = 'mypage';
+    }
 
-    if (!name || !token) return null;
+    const radios = document.getElementsByName('navi-checkbox') as NodeListOf<HTMLInputElement>;
 
-    return {
-      name,
-      avatarUrl: 'https://via.placeholder.com/50',
-    };
+    if (parseInt(sessionStorage.getItem('userid') || '0') != 0) {
+      this.userId = parseInt(sessionStorage.getItem('userid') || '0');
+    }
+    radios.forEach((radio) => {
+      if (radio.value === str) {
+        radio.checked = true;
+        //alert(path);
+      } else {
+        radio.checked = false; // 나머지는 체크 해제 (실제 radio는 자동 처리되지만 명시 가능)
+      }
+      // 이미지버튼에 링크를 추가
+      if (radio.value === 'search') {
+        radio.addEventListener('click', () => {
+          window.location.href = '/src/pages/search/Search.html';
+        });
+      } else if (radio.value === 'home') {
+        radio.addEventListener('click', () => {
+          window.location.href = '/';
+        });
+      } else if (radio.value === 'writepage') {
+        radio.addEventListener('click', () => {
+          if (this.userId > 0) {
+            window.location.href = '/src/pages/write/WritingPage.html';
+          } else {
+            alert('로그인이 필요한 화면입니다');
+            window.location.href = '/src/pages/login/SignIn.html';
+          }
+        });
+      } else if (radio.value === 'mypage') {
+        radio.addEventListener('click', () => {
+          if (this.userId > 0) {
+            window.location.href = `/src/pages/mypage/MyPage.html?_id=${this.userId}`;
+          } else {
+            alert('로그인이 필요한 화면입니다');
+            window.location.href = '/src/pages/login/SignIn.html';
+          }
+        });
+      }
+    });
   }
 
   // UI를 렌더링
   render() {
+    const userId: number = parseInt(sessionStorage.getItem('userid') || '0');
     // 로그인이 되었을 때
-    const user: User | null = this.getUser();
-    if (user) {
+    if (userId != 0) {
       this.innerHTML = `      
       <div class="bg-white w-full overflow-x-auto">
       <div class="flex flex-row items-stretch gap-2 py-2 min-w-[360px] h-[100px]">
@@ -87,15 +132,13 @@ class NavigateComponent extends HTMLElement {
         <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
           <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
             <!-- 체크박스 숨김 -->
-          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-          <a href='/index.html'>
+          <input name="navi-checkbox" type="radio" value="home" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->
           <img
             src="/icon/Home.svg"
             alt="홈 아이콘 기본"
             class="peer-checked:hidden"
           />
-          </a>
             <!-- 체크 아이콘 (체크 후) -->
           <img
             src="/icon/HomeActive.svg"
@@ -109,15 +152,13 @@ class NavigateComponent extends HTMLElement {
         <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
           <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
           <!-- 체크박스 숨김 -->
-        <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+        <input name="navi-checkbox" type="radio" value="search" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->
-          <a href='/src/pages/search/Search.html'>
           <img
             src="/icon/Search.svg"
             alt="발견 아이콘 기본"
             class="peer-checked:hidden"
           />
-          </a>
             <!-- 체크 아이콘 (체크 후) -->
           <img
             src="/icon/SearchActive.svg"
@@ -131,15 +172,13 @@ class NavigateComponent extends HTMLElement {
         <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
           <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
           <!-- 체크박스 숨김 -->
-        <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+        <input name="navi-checkbox" type="radio" value="writepage" class="sr-only peer" />
         <!-- 기본 아이콘 (체크 전) -->
-        <a href='/src/pages/write/WritingPage.html'>
         <img
           src="/icon/EditSquare.svg"
           alt="글쓰기 아이콘 기본"
           class="peer-checked:hidden"
         />
-        </a>
                 <!-- 체크 아이콘 (체크 후) -->
         <img
           src="/icon/EditSquareActive.svg"
@@ -154,15 +193,14 @@ class NavigateComponent extends HTMLElement {
         <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
           <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
           <!-- 체크박스 숨김 -->
-        <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+        <input name="navi-checkbox" type="radio" value="mypage" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->
-          <a href='/src/pages/mypage/MyPage.html'>
           <img
             src="/icon/Inventory.svg"
             alt="내서랍 아이콘 기본"
             class="peer-checked:hidden"
           />
-          </a>
+        
             <!-- 체크 아이콘 (체크 후) -->
           <img
             src="/icon/InventoryActive.svg"
@@ -174,22 +212,7 @@ class NavigateComponent extends HTMLElement {
           <span class="text-center">내 서랍</span>
         </div>
       </div>
-    </div>
-        <script>
-        const checkboxes = document.querySelectorAll('input[name="navi-checkbox"]');
-        // 클릭한 것 제외하고 나머지 체크 해제
-        
-      checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('click', () => {
-          if (checkbox.checked) {
-            // 클릭한 것 제외하고 나머지 체크 해제
-            checkboxes.forEach((cb) => {
-              if (cb !== checkbox) cb.checked = false;
-            });
-          }
-        });
-      });
-      </script>
+    </div>        
     `;
     } else {
       /* 로그인이 안 되었을 때 */
@@ -200,15 +223,15 @@ class NavigateComponent extends HTMLElement {
           <div id="home-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
             <label class="w-8 h-8 flex items-center justify-center ">
             <!-- 체크박스 숨김 -->
-            <input name="navi-checkbox" type="checkbox" class="sr-only peer" />            
+            <input name="navi-checkbox" type="radio" value="home" class="sr-only peer" />            
             <!-- 기본 아이콘 (체크 전) -->
-            <a href="/index.html">
+            
             <img
               src="/icon/Home.svg"
               alt="홈 아이콘 기본"
               class="peer-checked:hidden"
             />
-            </a>            
+                        
               <!-- 체크 아이콘 (체크 후) -->
             <img
               src="/icon/HomeActive.svg"
@@ -222,15 +245,13 @@ class NavigateComponent extends HTMLElement {
           <div id="search-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
             <label class="w-8 h-8 flex items-center justify-center ">
             <!-- 체크박스 숨김 -->
-          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+          <input name="navi-checkbox" type="radio" value="search" class="sr-only peer" />
             <!-- 기본 아이콘 (체크 전) -->
-              <a href='/src/pages/search/Search.html'>
             <img
               src="/icon/Search.svg"
               alt="발견 아이콘 기본"
               class="peer-checked:hidden"
             />
-            </a>            
               <!-- 체크 아이콘 (체크 후) -->
             <img
               src="/icon/SearchActive.svg"
@@ -244,10 +265,9 @@ class NavigateComponent extends HTMLElement {
           <div id="write-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
             <label class="w-8 h-8 flex items-center justify-center ">
             <!-- 체크박스 숨김 -->
-          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
+          <input name="navi-checkbox" type="radio" value="writepage" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->          
           <img
-            onClick="alert('로그인이 필요한 화면입니다')"
             src="/icon/EditSquare.svg"
             alt="글쓰기 아이콘 기본"
             class="peer-checked:hidden"            
@@ -265,16 +285,13 @@ class NavigateComponent extends HTMLElement {
           <div id="Inventory-button" class="flex-1 flex flex-col items-center justify-center text-[var(--icon)] text-base py-2 gap-[10px]">
             <label class="w-8 h-8 flex items-center justify-center ">
             <!-- 체크박스 숨김 -->
-          <input name="navi-checkbox" type="checkbox" class="sr-only peer" />
-            <!-- 기본 아이콘 (체크 전) -->
-          <a href='/src/pages/mypage/MyPage.html'>
+          <input name="navi-checkbox" type="radio" value="mypage" class="sr-only peer" />
+            <!-- 기본 아이콘 (체크 전) -->          
             <img
-              onClick="alert('로그인이 필요한 화면입니다')"
               src="/icon/Inventory.svg"
               alt="내서랍 아이콘 기본"
               class="peer-checked:hidden"
-            />
-          </a>
+            />          
               <!-- 체크 아이콘 (체크 후) -->
             <img
               src="/icon/InventoryActive.svg"
@@ -401,18 +418,23 @@ class SubscribeButtonComponent extends HTMLElement {
 class TopComponent extends HTMLElement {
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
   // 컴포넌트 렌더링과 이벤트 초기화를 수행
-  connectedCallback() {
+
+  async connectedCallback() {
     // appendChild 를 사용하므로 먼저 html이 렌더 되어야 함
     this.render();
-    //세션 스토리지에서 로그인된 사용자 정보를 가져옴
-    const user: User | null = this.getUser();
-    console.log(user);
-    // 로그인 성공시 아바타 버튼 추가
-    if (user != null) {
-      this.loggedInHTML();
+
+    //로그인 되어 있는지 체크
+    if (sessionStorage.getItem('userid')) {
+      const user: User | null = await this.getUser();
+      console.log(user?.name, user?.avatarUrl);
+      if (user) {
+        this.loggedInHTML(user);
+      }
     } else {
+      // 로그인 되어 있지 않을 때
       this.loggedOutHTML();
     }
+
     //탑헤더를 화면에 렌더링
 
     //로고를 클릭했을 때 메인화면으로 이동
@@ -422,18 +444,52 @@ class TopComponent extends HTMLElement {
       window.location.assign('/');
     });
   }
+  // axios 이용 API 가져오기 함수 ------------------------------------------------
+  private async retrieveAPI(userId: number): Promise<UserResponse | null> {
+    //alert(userId);
+    const url = `https://fesp-api.koyeb.app/market/users/${userId}`;
+    try {
+      const response = await axios.get<UserResponse>(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': 'febc15-vanilla02-ecad',
+        },
+      });
+
+      // 성공 여부 확인
+      if (response.data.ok === 1) {
+        return response.data; // 타입 OK
+      } else {
+        console.warn('유저 정보 조회 실패: ok != 1');
+        return null;
+      }
+    } catch (error) {
+      console.error('GET 회원 목록 가져오기 실패:', error);
+      return null; // error 객체를 반환하면 타입 오류 발생 → null 반환
+    }
+  }
 
   // 세션스토리지에서 현재 로그인 정보 읽기
   //로컬세션 확인
-  private getUser() {
-    const name = sessionStorage.getItem('userName') || localStorage.getItem('userName');
-    const token = sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
-    if (!name || !token) return null;
-
-    return {
-      name,
-      avatarUrl: 'https://via.placeholder.com/50',
-    };
+  private async getUser(): Promise<User | null> {
+    const userId: number = parseInt(sessionStorage.getItem('userid') || '0');
+    //API 함수 호출
+    //console.log('userId: ', userId);
+    const data = await this.retrieveAPI(userId);
+    // ok === 1 → 성공 타입으로 좁혀짐
+    if (data?.ok === 1) {
+      const user: UserInfo = data.item;
+      console.log(user.image);
+      return {
+        id: user._id,
+        name: user.name,
+        avatarUrl: user.image,
+      };
+    } else {
+      // 실패 타입(APIError)
+      console.error('API Error:', data?.message);
+      return null;
+    }
   }
 
   // UI를 렌더링
@@ -460,17 +516,18 @@ class TopComponent extends HTMLElement {
     `;
   }
 
-  private appendAvatarBtn() {
+  private appendAvatarBtn(user: User) {
     const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
     const avatarBtn = document.createElement('button');
     avatarBtn.id = 'avatar-icon';
     avatarBtn.className = 'text-br-start hover:text-[var(--start)] cursor-pointer';
 
     const img = document.createElement('img');
-    img.src = '/icon/Face.svg';
+    img.src = user.avatarUrl;
+    img.className = 'w-[30px] h-[30px] rounded-full object-cover border border-gray-400';
     img.alt = '아바타 아이콘';
     img.addEventListener('click', () => {
-      window.location.href = `/src/pages/mypage/MyPage.html?id=_id`;
+      window.location.href = `/src/pages/mypage/MyPage.html?_id=${user?.id}`;
     });
 
     avatarBtn.appendChild(img);
@@ -486,7 +543,7 @@ class TopComponent extends HTMLElement {
 
     const img = document.createElement('img');
     img.src = '/icon/Alarm.svg';
-    img.alt = '검색 아이콘';
+    img.alt = '알림 아이콘';
 
     alertBtn.appendChild(img);
     parentDiv?.prepend(alertBtn);
@@ -505,13 +562,13 @@ class TopComponent extends HTMLElement {
   }
 
   private loggedOutHTML() {
-    console.log('호출됨');
+    //console.log('호출됨');
     this.appendStartBtn();
   }
 
-  private loggedInHTML() {
+  private loggedInHTML(user: User) {
     this.appendAlertBtn();
-    this.appendAvatarBtn();
+    this.appendAvatarBtn(user);
   }
 }
 
@@ -557,25 +614,24 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 }
 
 // 로그인 함수 호출
-/*
-(async () => {
-  try {
-    const result = await loginUser('w1@market.com', '11111111');
-    if (result.ok == 1) {
-      console.log('로그인 성공:', result.item.name);
-      console.log('액세스 토큰:', result.item.token.accessToken);
 
-      // 세션스토리지에 토큰 저장
-      sessionStorage.setItem('accessToken', result.item.token.accessToken);
-      sessionStorage.setItem('refreshToken', result.item.token.refreshToken);
-      sessionStorage.setItem('userName', result.item.name);
-      // 로컬스토리지에도 동일한 토큰 저장
-      localStorage.setItem('accessToken', result.item.token.accessToken);
-      localStorage.setItem('refreshToken', result.item.token.refreshToken);
-      localStorage.setItem('userName', result.item.name);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-})();
-*/
+// (async () => {
+//   try {
+//     const result = await loginUser('w1@market.com', '11111111');
+//     if (result.ok == 1) {
+//       console.log('로그인 성공:', result.item.name);
+//       console.log('액세스 토큰:', result.item.token.accessToken);
+
+//       // 세션스토리지에 토큰 저장
+//       sessionStorage.setItem('accessToken', result.item.token.accessToken);
+//       sessionStorage.setItem('refreshToken', result.item.token.refreshToken);
+//       sessionStorage.setItem('userName', result.item.name);
+//       // 로컬스토리지에도 동일한 토큰 저장
+//       localStorage.setItem('accessToken', result.item.token.accessToken);
+//       localStorage.setItem('refreshToken', result.item.token.refreshToken);
+//       localStorage.setItem('userName', result.item.name);
+//     }
+//   } catch (e) {
+//     console.error(e);
+//   }
+// })();

@@ -7,6 +7,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <script type="module" src="./src/commons/Commons.ts"></script>
     <script type="module" src="./src/main.ts"></script>
+    <script type="module" src="./src/pages/home/Adv.ts"></script>
     <script type="module" src="./src/pages/home/Home.ts"></script>
   </head>
   <body class="font-Pretendard min-w-[360px]">
@@ -23,24 +24,36 @@
     <!-- 공통 컴포넌트 불러오기-->
     <top-header></top-header>
 
-    <section class="p-4 min-w-[360px]">
-      <p class="text-sm text-br-contentSecondary mb-1 italic">Today's Pick</p>
-      <h1 class="text-2xl font-normal mb-6">요즘 뜨는 브런치</h1>
+    <!-- 광고 배너-->
+    <div id="adv-container"></div>
+    <section class="px-[25px] min-w-[360px] my-[50px]">
+      <p class="text-sm mb-1 italic">Today's Pick</p>
+      <h1 class="text-2xl font-semibold mb-6 text-blac">요즘 뜨는 브런치</h1>
 
       <ul class="brunch-container flex flex-col gap-6 min-w-[360px]"></ul>
     </section>
 
-    <hr class="h-px my-8 border-br-contentTertiary w-full" />
+    <!-- 섹션 구분선-->
+    <div class="relative">
+      <div class="h-px bg-gray-200"></div>
+      <div class="absolute top-full w-full h-[3px] bg-black/10 blur-[3px]"></div>
+    </div>
 
     <!-- 오늘의 작가 -->
 
-    <div class="today-author-container p-0">
+    <div class="today-author-container p-0 px-">
       <div class="today-author-works flex flex-col gap-[15px]"></div>
     </div>
 
+    <!-- 섹션 구분선-->
+    <div class="relative">
+      <div class="h-px bg-gray-200"></div>
+      <div class="absolute top-full w-full h-[3px] bg-black/10 blur-[3px]"></div>
+    </div>
+
     <!-- 구독자(TOP) 급등 작가 -->
-    <section>
-      <h2 class="p-5 text-[22px] font-normal mb-[30px]">구독자 급등 작가</h2>
+    <section class="my-[50px] px-[25px]">
+      <h2 class="text-[22px] font-semibold mb-[30px]">Top 구독 작가</h2>
 
       <div class="top-author-container grid grid-cols-2 border-0"></div>
     </section>
@@ -54,6 +67,7 @@
     <navigate-component></navigate-component>
   -->
     <footer class="bg-[#333333] py-16 px-4 sm:px-6 lg:px-8">
+      <img src="/img/List.png " class="mx-auto block mb-8" />
       <div class="max-w-7xl mx-auto text-center">
         <div class="flex flex-wrap justify-center space-x-4 sm:space-x-6 text-gray-400 text-sm mb-2">
           <a href="#" class="hover:text-white transition duration-150 ease-in-out whitespace-nowrap">이용약관</a>
