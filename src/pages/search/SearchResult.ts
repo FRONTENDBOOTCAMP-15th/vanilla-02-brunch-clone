@@ -137,7 +137,7 @@ async function searchAuthors() {
 
         <div>
           <h2 id="name" class="text-[16px] text-br-detailsTitle mb-1">${user.name}</h2>
-          <h3 id="job" class="text-[12px] text-br-contentSecondary mb-1">${user.extra.job}</h3>
+          <h3 id="job" class="text-[12px] text-br-contentSecondary mb-1">${user.extra?.job}</h3>
         </div>
       </article>
    

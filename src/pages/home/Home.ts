@@ -2,9 +2,9 @@ import axios from 'axios';
 import type { PostItem, PostListResponse, UserListResponse, UserInfo } from '../../utils/types';
 
 /* utility 함수*/
-function removeImgTags(html: string): string {
-  return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
-}
+// function removeImgTags(html: string): string {
+//   return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
+// }
 function removeTags(html: string): string {
   return html.replace(/<\/?[^>]+(>|$)/g, '');
 }
