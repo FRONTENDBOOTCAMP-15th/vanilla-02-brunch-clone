@@ -95,6 +95,7 @@ export interface PostItem {
   updatedAt: string;
   bookmarks: number;
   myBookmarkId: number;
+  likes: number;
 }
 
 export interface Pagination {
@@ -168,6 +169,12 @@ export interface PostTargetBookmark extends BaseBookmarkItem {
 export type UserBookmarkListRes = {
   ok: 1;
   item: UserBookmarkItem[];
+};
+
+// 사용자가 좋아요한 게시글 리스트
+export type PostLikeListRes = {
+  ok: 1;
+  item: PostTargetBookmark[];
 };
 
 // 북마크, 좋아요 추가 응답
