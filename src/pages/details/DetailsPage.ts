@@ -191,9 +191,13 @@ async function loadPost(id: string) {
         explainLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
       }
 
-      const subCountLink = document.querySelector<HTMLAnchorElement>('.details-subscribe-count');
-      if (subCountLink && currentAuthorId) {
-        subCountLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
+      if (subscribeCount && currentAuthorId) {
+        subscribeCount.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
+      }
+
+      const subsLink = document.querySelector<HTMLAnchorElement>('.details-subscribe');
+      if (subsLink && currentAuthorId) {
+        subsLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
       }
 
       // 최근 본 글로 저장
