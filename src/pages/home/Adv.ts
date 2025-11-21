@@ -8,7 +8,7 @@ function removeImgTags(html: string): string {
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
 function createBannerCard(post: PostItem, index: number): HTMLElement | null {
-  let postContent = removeImgTags(post.content).substring(0, 160);
+  //let postContent = removeImgTags(post.content).substring(0, 160);
   let srcImg: string = '';
 
   if (post.image && post.image.length > 0) {
@@ -17,37 +17,33 @@ function createBannerCard(post: PostItem, index: number): HTMLElement | null {
 
   const wrapper: HTMLElement | null = document.getElementById('adv-container');
   if (wrapper) {
-    wrapper.className = 'bg-[#8D4E8E]  h-[488px] min-w-[360px] p-8 flex flex-col items-center justify overflow-hidden';
+    wrapper.className = 'bg-[#F6F2E5]  h-[488px] min-w-[360px] flex flex-col items-center justify-center px-10 py-px';
     wrapper.innerHTML = `
-        <div class="relative max-w-lg w-full">       
+       
+    <div class="text-center ">
+        
+        <header class="mb-12">
+            <h1 class="text-xl sm:text-4xl font-sans text-br-detailsContent>
+                <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">${post.title}</a>
+            </h1>
+            <p class="text-lg opacity-75 italic mb-20 text-br-detailsContent mt-5">
+                <a href="/src/pages/author/AuthorPage.html?_id=${post.user._id}">by ${post.user.name}</a>
+            </p>
+        </header>
 
-        <h1 class="text-white text-5xl font-light mb-2 text-center tracking-wide">
-            ${post.title}
-        </h1>
-
-        <p class="text-white text-lg font-light opacity-75 mb-10 text-center italic">
-            by ${post.user.name}
-        </p>
-
-        <div class="w-full relative pt-[100%]">
-            <img 
-                src="${srcImg}"
-                alt="책 표지 이미지" 
-                class="absolute top-0 object-cover shadow-2xl rounded-lg"
-            >
-                <span class="absolute top-0 right-0 -mr-4 -mt-4 transform translate-x-1/4 translate-y-1/4 z-10">
-                <div class="bg-blue-500 text-white text-sm font-semibold rounded-full px-3 py-1 shadow-lg border-2 border-white">
+        <div class="relative inline-block">
+            <div class="w-[136px] h-[190px] bg-white rounded-lg shadow-xl overflow-hidden flex justify-center items-center">
+                <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
+                <img src="${srcImg}" 
+                     alt="표지 이미지" 
+                     class="w-full h-full object-fill m-0 p-0"> 
+                </a>
+            </div>           
+            <div class="absolute top-0 right-[-20px] -translate-y-1/2 bg-blue-500 text-white text-xs font-bold py-1 px-3 rounded-full shadow-lg">
                     응원
                 </div>
-            </span>
-
-            <div class="absolute h-full top-1/4 left-1/2 transform -translate-x-1/2 bg-white p-2 shadow-xl border border-gray-200 w-[50%]">
-                <p class="flex justify-center text-2xl mt-4 font-normal text-gray-800 ">
-                    ${post.title}
-                </p>
-            </div>
         </div>
-
+        
     </div>
     `;
     wrapper?.addEventListener('click', () => {
@@ -129,16 +125,15 @@ function checkImageUrl(url: string): Promise<boolean> {
   postRes = (await retrieveAPI(url)) as PostListResponse;
   if (postRes.ok === 1) {
     const data = postRes.item as PostItem[];
-    //최신 순으로 정렬(광고 사용료를 낸 작품)
-    //data.sort((a, b) => b.likes - a.likes);
-
     data.forEach(async (post, i) => {
       //console.log(JSON.stringify(post));
       // 이미지가 있는 포스트만 가져옴
-      // 성공하면 리턴
-      if (await checkImageUrl(post?.image?.[0])) {
-        const card = createBannerCard(post, i);
-        return;
+      //최신 순으로 정렬(광고 사용료를 낸 작품)
+      if (post._id == 19) {
+        if (await checkImageUrl(post?.image?.[0])) {
+          const card = createBannerCard(post, i);
+          return;
+        }
       }
     });
   } else {
