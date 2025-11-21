@@ -9,7 +9,7 @@ function removeTags(html: string): string {
   return html.replace(/<\/?[^>]+(>|$)/g, '');
 }
 
-function isWithinOneDay(dateStr) {
+function isWithinOneDay(dateStr: string) {
   // 'YYYY.MM.DD HH:MM:SS' → Date 객체로 변환
   const [datePart, timePart] = dateStr.split(' ');
   const [year, month, day] = datePart.split('.').map(Number);
@@ -18,7 +18,7 @@ function isWithinOneDay(dateStr) {
   const targetDate = new Date(year, month - 1, day, hour, minute, second); // month는 0~11
   const now = new Date();
 
-  const diff = Math.abs(now - targetDate); // 밀리초 차이
+  const diff = Math.abs(now.getTime() - targetDate.getTime()); // 밀리초 차이
   const oneDay = 1000 * 60 * 60 * 24; // 1일 밀리초
 
   return diff <= oneDay;
