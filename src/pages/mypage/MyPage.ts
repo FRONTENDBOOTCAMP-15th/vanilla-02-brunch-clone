@@ -90,7 +90,7 @@ function renderBookmarkPost(posts: Bookmark[]) {
     return `
     <a href="/src/pages/details/DetailsPage.html?_id=${post.post?._id}" >
             <div class="flex flex-col items-center shrink-0 w-[123px]">
-              <img src="" alt="${post.post?.title}표지" class="w-[123px] h-[172px] mb-4 object-cover" />
+              <img src="${post.post?.image?.[0] || '/img/sky.jpg'}" alt="${post.post?.title}표지" class="w-[123px] h-[172px] mb-4 object-cover" />
               <p class="text-xs mb-0.5 text-black text-center ">${post.post?.title}</p>
               <div class="flex gap-1">
                 <i class="text-[13px] text-br-contentTertiary">by</i>
