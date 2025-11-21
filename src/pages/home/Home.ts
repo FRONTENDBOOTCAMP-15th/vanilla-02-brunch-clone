@@ -73,9 +73,12 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
+        <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
+        <p class="italic text-br-contentTertiary">by</p>
+        <p> ${post.user.name}</p> </div>
+        
 
-        <p class="text-[14px] text-br-contentPrimary leading-[1.4] text-ellipsis whitespace-normal ">
+        <p class="text-[13px] font-light text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal pt-5 overflow-hidden text-ellipsis line-clamp-2">
           ${postContent}
         </p>
       </div>
@@ -97,10 +100,12 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
+        <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
+        <p class="italic text-br-contentTertiary">by</p>
+        <p> ${post.user.name}</p> </div>
 
         <!-- 텍스트가 오른쪽 전체 폭 사용 -->
-        <p class="text-[14px] text-br-contentPrimary leading-[1.4] overflow-hidden text-ellipsis line-clamp-2">
+        <p class="text-[13px] pt-5 font-light text-br-contentSecondary leading-[1.4] overflow-hidden text-ellipsis line-clamp-2 ">
           ${postContent}
         </p>
       </div>
