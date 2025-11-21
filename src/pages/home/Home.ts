@@ -58,7 +58,11 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   }
 
   const wrapper: HTMLLIElement = document.createElement('li');
+<<<<<<< HEAD
   wrapper.className = 'flex items-start cursor-pointer border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
+=======
+  wrapper.className = 'flex items-start gap-5 cursor-pointer  border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
+>>>>>>> a857d466349cdb49a83ab6284c01d3c63709f675
   wrapper.addEventListener('click', () => {
     window.location.href = `/src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
@@ -203,7 +207,11 @@ async function renderTodayAuthorSection(post: UserInfo) {
   section.className = 'p-[25px] bg-white';
   //img가 없을 때는 <img> 태그를 넣지 않음
   section.innerHTML = `
+<<<<<<< HEAD
   <div class="flex items-start justify-between p-0 h-[100px]">
+=======
+  <div class="flex items-start justify-between p-0  h-[100px]">
+>>>>>>> a857d466349cdb49a83ab6284c01d3c63709f675
   
   <div class="flex flex-col">
     
