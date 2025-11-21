@@ -1,0 +1,80 @@
+
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../../public/font/suit/SUIT-Variable.css" />
+    <link rel="stylesheet" href="../../styles/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+<div class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white p-8 rounded-lg shadow-xl border border-gray-100">
+        
+        <div class="text-center mb-10">
+            <div class="w-24 h-24 rounded-full mx-auto overflow-hidden ring-4 ring-white shadow-md mb-3">
+                <img src="placeholder-image.jpg" alt="피터팬 프로필" class="w-full h-full object-cover">
+            </div>
+            
+            <h1 class="text-xl font-semibold text-gray-800 mb-0">피터팬</h1>
+            
+            <p class="text-sm text-gray-500">목사 만화가</p>
+        </div>
+
+        <div class="text-center mb-8">
+            <button class="text-lg font-bold text-teal-500 hover:text-teal-600 transition duration-150">
+                글쓰기
+            </button>
+        </div>
+
+        <div class="space-y-6 mb-8">
+            
+            <div>
+                <label for="email" class="text-sm text-gray-600">이메일</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="" 
+                    class="w-full mt-1 border-b-2 border-gray-300 focus:border-teal-500 focus:outline-none p-1 text-base text-gray-800 transition duration-150"
+                >
+            </div>
+
+            <div>
+                <label for="password" class="text-sm text-gray-600">비밀번호</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="" 
+                    class="w-full mt-1 border-b-2 border-gray-300 focus:border-teal-500 focus:outline-none p-1 text-base text-gray-800 transition duration-150"
+                >
+            </div>
+        </div>
+        
+        <div class="flex items-center mb-8">
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <div class="relative">
+                    <input type="checkbox" id="rememberMe" class="sr-only peer" checked>
+                    <div class="w-6 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-500 transition duration-150 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-150" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                </div>
+                <span class="text-base text-gray-700">로그인 정보 저장</span>
+            </label>
+        </div>
+
+        <div class="space-y-4">
+            
+            <button class="w-full py-3 bg-gray-400 text-white font-semibold rounded-lg shadow-md hover:bg-gray-500 transition duration-150" disabled>
+                로그인
+            </button>
+            
+            <button class="w-full py-3 border border-teal-500 text-teal-500 font-semibold rounded-lg hover:bg-teal-50 hover:text-teal-600 transition duration-150">
+                회원가입
+            </button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
