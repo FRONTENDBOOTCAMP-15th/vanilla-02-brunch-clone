@@ -178,7 +178,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
 
   container.innerHTML = '';
   const section = document.createElement('div');
-  section.className = 'p-5 bg-white';
+  section.className = 'p-[25px] bg-white';
   //img가 없을 때는 <img> 태그를 넣지 않음
   section.innerHTML = `
   <div class="flex items-start justify-between p-0 min-w-[360px] h-[100px]">
