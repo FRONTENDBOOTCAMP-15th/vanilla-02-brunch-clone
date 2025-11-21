@@ -69,7 +69,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   return wrapper;
 }
 
-//구독자 급등 작가
+//구독 급등 작가
 function createWriterCard(post: any): HTMLElement {
   const card = document.createElement('div');
   card.addEventListener('click', () => {
