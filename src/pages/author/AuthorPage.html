@@ -11,10 +11,10 @@
 
     <title>Document</title>
   </head>
-  <body>
+  <body class="font-Pretendard">
     <top-header></top-header>
     <main class="max-w-sm mx-auto px-4 pt-6 pb-10">
-      <div class="flex justify-between items-start">
+      <div id="author-profile" class="flex justify-between items-start">
         <div>
           <h2 id="name" class="text-[27px] text-br-detailsTitle mb-2"></h2>
           <h3 id="job" class="text-[12px] text-br-contentSecondary"></h3>
@@ -22,7 +22,15 @@
         <img id="image" src="" alt="작가이미지" />
       </div>
 
-      <section class="mt-2"></section>
+      <section class="mt-2 flex pt-3 items-center">
+        <div class="flex flex-col mr-[29px] text-xs text-br-contentSecondary">구독자<span id="subCount" class="text-br-detailsSubtitle text-base"></span></div>
+        <div class="flex flex-col mr-[29px] text-xs text-br-contentSecondary">관심작가<span id="followCount" class="text-br-detailsSubtitle text-base"></span></div>
+        <button type="button" aria-pressed="false" class="subscribe-button ml-[142px] inline-flex flex-nowrap justify-center items-center gap-0.5 cursor-pointer rounded-full bg-br-contentsBg border border-br-primary text-br-primary w-[65px] h-9">
+          <img src="/icon/IconPlus.svg" alt="구독 플러스" class="icon-plus w-[17px] h-[17px]" />
+          <img src="/icon/IconSubscribeCheck.svg" alt="구독 중 체크" class="icon-check hidden w-[17px] h-[17px]" />
+          <span>구독</span>
+        </button>
+      </section>
 
       <!-- 글 목록 -->
       <section id="article-list" class="mt-6">

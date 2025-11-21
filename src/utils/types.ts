@@ -59,7 +59,7 @@ export interface UserInfo {
   loginType: string;
   image: string;
 
-  extra: {
+  extra?: {
     job?: string;
     biography?: string;
     keyword: string[];
@@ -95,6 +95,7 @@ export interface PostItem {
   updatedAt: string;
   bookmarks: number;
   myBookmarkId: number;
+  likes: number;
 }
 
 export interface Pagination {
@@ -139,14 +140,6 @@ export type UserResponse =
     }
   | APIError;
 
-// 응답 타입 정의
-export type LoginResponse =
-  | {
-      ok: 1;
-      item: LoginUser;
-    }
-  | APIError;
-
 // 좋아요/구독 추가
 
 export type BookmarkType = 'user' | 'post';
@@ -160,12 +153,11 @@ export type BookmarkLikeReq = {
 export interface BaseBookmarkItem {
   _id: number; // 북마크 자체 id (삭제할 때 필요)
   user_id: number; // 북마크/좋아요를 한 사용자 id (= 로그인한 나)
-  createdAt: string;
 }
 
 // user 타입 북마크: 내가 북마크 한 "사용자" 목록
 export interface UserBookmarkItem extends BaseBookmarkItem {
-  user: UserInfo; // 북마크 대상 사용자(작가)
+  user: Pick<UserInfo, '_id' | 'image' | 'name'>; // 북마크 대상 사용자(작가)
 }
 
 // post 타입 좋아요: 내가 좋아요 한 "게시글" 목록
@@ -177,6 +169,12 @@ export interface PostTargetBookmark extends BaseBookmarkItem {
 export type UserBookmarkListRes = {
   ok: 1;
   item: UserBookmarkItem[];
+};
+
+// 사용자가 좋아요한 게시글 리스트
+export type PostLikeListRes = {
+  ok: 1;
+  item: PostTargetBookmark[];
 };
 
 // 북마크, 좋아요 추가 응답
@@ -201,6 +199,13 @@ export interface RecentPost {
   authorId: number; // 작성자 id
   username: string; // 작성자 이름
 }
+
+export type LoginResponse =
+  | {
+      ok: 1;
+      item: LoginUser;
+    }
+  | APIError;
 
 //로그인 유저 타입
 export interface LoginUser {

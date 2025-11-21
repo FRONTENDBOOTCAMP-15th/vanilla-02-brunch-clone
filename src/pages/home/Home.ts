@@ -18,21 +18,20 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   const wrapper: HTMLLIElement = document.createElement('li');
   wrapper.className = 'flex items-start gap-5 cursor-pointer min-w-[360px] border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
   wrapper.addEventListener('click', () => {
-    window.location.href = `./src/pages/details/DetailsPage.html?_id=${post._id}`;
+    window.location.href = `/src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
 
   // 이미지 있는 경우
   if (srcImg && srcImg.includes('http')) {
     wrapper.innerHTML = `
       <div class="text-[26px] font-normal text-color-br-primary
-            flex justify-center items-center
-            w-[40px] h-[40px] flex-shrink-0 ">
+            flex justify-center items-center pr-[15px] pl-[7px]">
         ${index + 1}
       </div>
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-br-contentTertiary mb-2">by ${post.user.name}</p>
+        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
 
         <p class="text-[14px] text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal ">
           ${postContent}
@@ -50,13 +49,13 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   // 이미지 없는 경우 (텍스트 전체 폭)
   else {
     wrapper.innerHTML = `
-      <div class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex items-center">
+      <div class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex items-center pl-[7px]">
         ${index + 1}
       </div>
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-[#999] mb-2">by ${post.user.name}</p>
+        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
 
         <!-- 텍스트가 오른쪽 전체 폭 사용 -->
         <p class="text-[14px] text-[#444] leading-[1.4] overflow-hidden text-ellipsis line-clamp-2">
@@ -69,7 +68,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   return wrapper;
 }
 
-//구독자 급등 작가
+//구독 급등 작가
 function createWriterCard(post: any): HTMLElement {
   const card = document.createElement('div');
   card.addEventListener('click', () => {
@@ -135,7 +134,7 @@ export async function fetchAuthorPosts(authorId: number): Promise<PostListRespon
         },
       };
 
-      console.log(JSON.stringify(bookData.item[0], null, 2));
+      //console.log(JSON.stringify(bookData.item[0], null, 2));
 
       return bookData;
     }
@@ -172,7 +171,6 @@ function getValidImageUrl(imageUrl: any): string {
 
 // 단일 PostItem을 받아서 오늘의 작가 섹션 + 작품 목록 생성
 async function renderTodayAuthorSection(post: UserInfo) {
-  console.log(JSON.stringify(post));
   const container = document.querySelector('.today-author-container');
   if (!container) return;
 
@@ -180,29 +178,30 @@ async function renderTodayAuthorSection(post: UserInfo) {
 
   container.innerHTML = '';
   const section = document.createElement('div');
-  section.className = 'p-5 bg-white';
+  section.className = 'p-[25px] bg-white';
   //img가 없을 때는 <img> 태그를 넣지 않음
   section.innerHTML = `
   <div class="flex items-start justify-between p-0 min-w-[360px] h-[100px]">
   
   <div class="flex flex-col">
     
-    <div class="text-green-500 text-sm font-semibold">오늘의 작가</div>
+    <div class="text-br-primary text-sm font-semibold">오늘의 작가</div>
     
-    <div class="inline-block p-1">
-      <h3 class="text-3xl font-bold text-bg-primary">${post?.name || '익명'}</h3>
+    <div class="inline-block">
+      <h3 class="text-3xl font-semibold text-bg-primary">${post?.name || '익명'}</h3>
     </div>    
-    <div class="w-full pb-1 text-sm text-gray-700">작가</div>
+    <div class="w-full pb-1 text-sm text-br-contentSecondary">작가</div>
   </div>
   
   <div class="flex-shrink-0 ml-4 h-full">
-   <img class="rounded-full object-cover mr-8 h-full" 
+  <a href="/src/pages/author/AuthorPage.html?_id=${post._id}">
+   <img class="rounded-full object-cover h-full border border-gray-300" 
           src="${srcImg}"           
           alt="프로필 사진" />
-        </a>
+    </a>
   </div>
 </div>
-    <p class="text-[15px] leading-[1.6] text-[#555] mt-2 mb-[30px]">${post.extra?.biography || '소개글이 없습니다'}</p>
+    <p class="text-[15px] leading-[1.6] text-br-detailsSubtitle mt-2 mb-[30px]">${post.extra?.biography || '소개글이 없습니다'}</p>
     <div class="flex flex-col gap-[15px] today-author-works"></div>
   `;
 
@@ -218,11 +217,11 @@ async function renderTodayAuthorSection(post: UserInfo) {
       if (idx >= 2) return;
       const card = document.createElement('div');
       card.addEventListener('click', () => {
-        window.location.href = `./src/pages/details/DetailsPage.html?_id=${p._id}`;
+        window.location.href = `/src/pages/details/DetailsPage.html?_id=${p._id}`;
       });
       card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer';
 
-      const imgUrl = p.image[0] || '/img/NoBookImage.png';
+      const imgUrl = p?.image?.[0] || '/img/NoBookImage.png';
 
       card.innerHTML = `
         <div class="relative flex-shrink-0 px-4 h-[110px]">
@@ -230,7 +229,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
           ${
             idx === 0
               ? `
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-1 text-[11px] font-normal text-white bg-br-contentPrimary whitespace-nowrap" 
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-1 text-[11px] font-normal text-white bg-br-contentPrimary whitespace-nowrap rounded-sm" 
                   style="bottom: -12px; z-index: 10;"> 
               최신작
             </span>
@@ -287,16 +286,20 @@ export async function retrieveAPI(url: string): Promise<any> {
 
   //요즘 뜨는 브런치
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
-  postRes = await retrieveAPI(url);
+  postRes = (await retrieveAPI(url)) as PostListResponse;
   if (postRes.ok === 1) {
-    //console.log(JSON.stringify(postRes.item[3]));
-    //console.log(JSON.stringify(postRes.item[4]));
     const container = document.querySelector('.brunch-container');
     if (!container) return;
 
     container.innerHTML = ''; // 기존 내용 제거
 
-    postRes.item.forEach((post, i) => {
+    const data = postRes.item as PostItem[];
+
+    //구독한 사용자가 많은 순으로 정렬
+    data.sort((a, b) => b.likes - a.likes);
+
+    data.forEach((post, i) => {
+      //console.log(JSON.stringify(post));
       if (i >= 10) return;
       const card = createBrunchCard(post, i);
       container.appendChild(card);
@@ -323,20 +326,22 @@ export async function retrieveAPI(url: string): Promise<any> {
   // 오늘 날짜와 회원번호를 매핑
   url = 'https://fesp-api.koyeb.app/market/users?sort={"bookmarkedBy.users": -1}';
   userRes = (await retrieveAPI(url)) as UserListResponse;
-  console.log(userRes);
+  //console.log(userRes);
   if (userRes.ok === 1) {
     const date: Date = new Date();
     const day: string = String(date.getDate()).padStart(2, '0');
     const dayToNum: number = Number(day) % 10;
-    for (let i: number = 0; i < userRes.item.length; i++) {
-      if (i >= 10) break;
-      // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리 같은 회원
-      // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
-      if (userRes.item[i]._id == dayToNum) {
-        console.log(JSON.stringify(userRes.item[i], null, 2));
-        renderTodayAuthorSection(userRes.item[i]);
-        break;
-      } else renderTodayAuthorSection(userRes.item[0]);
-    }
+    const data = userRes.item as UserInfo[];
+    data.forEach((user) => {
+      for (let i: number = 0; i < data.length; i++) {
+        if (i >= 10) break;
+        // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리가 같은 회원
+        // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
+        if (user._id % 10 == dayToNum) {
+          renderTodayAuthorSection(user);
+          break;
+        } else renderTodayAuthorSection(data[0]);
+      }
+    });
   }
 })();
