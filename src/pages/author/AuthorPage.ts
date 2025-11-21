@@ -123,7 +123,7 @@ function removeImagesFromHtml(html: string): string {
   tmp.innerHTML = html;
 
   // 모든 img 태그 제거
-  tmp.querySelectorAll('img').forEach((img) => img.remove());
+  tmp.querySelectorAll('img, br, div').forEach((img) => img.remove());
 
   // 태그 구조는 유지하고 싶으면 innerHTML 반환
   return tmp.innerHTML;
