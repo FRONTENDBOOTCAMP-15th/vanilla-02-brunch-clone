@@ -176,6 +176,26 @@ async function loadPost(id: string) {
         checkLike(post._id);
       }
 
+      const writerLink = document.querySelector<HTMLAnchorElement>('.details-writer-img');
+      if (writerLink && currentAuthorId) {
+        writerLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
+      }
+
+      const jobLink = document.querySelector<HTMLAnchorElement>('.details-writer-job');
+      if (jobLink && currentAuthorId) {
+        jobLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
+      }
+
+      const explainLink = document.querySelector<HTMLAnchorElement>('.details-explain');
+      if (explainLink && currentAuthorId) {
+        explainLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
+      }
+
+      const subCountLink = document.querySelector<HTMLAnchorElement>('.details-subscribe-count');
+      if (subCountLink && currentAuthorId) {
+        subCountLink.href = `/src/pages/author/AuthorPage.html?_id=${currentAuthorId}`;
+      }
+
       // 최근 본 글로 저장
       saveRecentPost(post);
     }
