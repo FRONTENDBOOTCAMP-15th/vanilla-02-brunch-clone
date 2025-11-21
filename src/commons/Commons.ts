@@ -58,30 +58,64 @@ class InputComponent extends HTMLElement {
 
 // Navigate
 class NavigateComponent extends HTMLElement {
+  private userId = 0;
   // 웹 컴포넌트가 DOM 연결될 때 호출되는 메서드
-  // 컴포넌트 렌더링과 이벤트 초기화를 수행
+  //   // 컴포넌트 렌더링과 이벤트 초기화를 수행
+
   connectedCallback() {
     this.render();
     //현재 페이지의 주소를 가져옴
     const path = window.location.pathname;
     let str: string | null = null;
-    if (path.includes('index.html')) {
+    if (path.match(/\/$/) || path.includes('index.html')) {
       str = 'home';
-    } else if (path.includes('search')) {
+    } else if (path.includes('/search')) {
       str = 'search';
-    } else if (path.includes('write')) {
+    } else if (path.includes('/write')) {
       str = 'writepage';
-    } else if (path.includes('mypage')) {
+    } else if (path.includes('/mypage')) {
       str = 'mypage';
     }
+
     const radios = document.getElementsByName('navi-checkbox') as NodeListOf<HTMLInputElement>;
 
+    if (parseInt(sessionStorage.getItem('userid') || '0') != 0) {
+      this.userId = parseInt(sessionStorage.getItem('userid') || '0');
+    }
     radios.forEach((radio) => {
       if (radio.value === str) {
         radio.checked = true;
         //alert(path);
       } else {
         radio.checked = false; // 나머지는 체크 해제 (실제 radio는 자동 처리되지만 명시 가능)
+      }
+      // 이미지버튼에 링크를 추가
+      if (radio.value === 'search') {
+        radio.addEventListener('click', () => {
+          window.location.href = '/src/pages/search/Search.html';
+        });
+      } else if (radio.value === 'home') {
+        radio.addEventListener('click', () => {
+          window.location.href = '/';
+        });
+      } else if (radio.value === 'writepage') {
+        radio.addEventListener('click', () => {
+          if (this.userId > 0) {
+            window.location.href = '/src/pages/write/WritingPage.html';
+          } else {
+            alert('로그인이 필요한 화면입니다');
+            window.location.href = '/src/pages/login/SignIn.html';
+          }
+        });
+      } else if (radio.value === 'mypage') {
+        radio.addEventListener('click', () => {
+          if (this.userId > 0) {
+            window.location.href = `/src/pages/mypage/MyPage.html?_id=${this.userId}`;
+          } else {
+            alert('로그인이 필요한 화면입니다');
+            window.location.href = '/src/pages/login/SignIn.html';
+          }
+        });
       }
     });
   }
@@ -99,14 +133,12 @@ class NavigateComponent extends HTMLElement {
           <label class="w-8 h-8 flex items-center justify-center cursor-pointer">
             <!-- 체크박스 숨김 -->
           <input name="navi-checkbox" type="radio" value="home" class="sr-only peer" />
-          <a href='/index.html'>
           <!-- 기본 아이콘 (체크 전) -->
           <img
             src="/icon/Home.svg"
             alt="홈 아이콘 기본"
             class="peer-checked:hidden"
           />
-          </a>
             <!-- 체크 아이콘 (체크 후) -->
           <img
             src="/icon/HomeActive.svg"
@@ -122,13 +154,11 @@ class NavigateComponent extends HTMLElement {
           <!-- 체크박스 숨김 -->
         <input name="navi-checkbox" type="radio" value="search" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->
-          <a href='/src/pages/search/Search.html'>
           <img
             src="/icon/Search.svg"
             alt="발견 아이콘 기본"
             class="peer-checked:hidden"
           />
-          </a>
             <!-- 체크 아이콘 (체크 후) -->
           <img
             src="/icon/SearchActive.svg"
@@ -144,13 +174,11 @@ class NavigateComponent extends HTMLElement {
           <!-- 체크박스 숨김 -->
         <input name="navi-checkbox" type="radio" value="writepage" class="sr-only peer" />
         <!-- 기본 아이콘 (체크 전) -->
-        <a href='/src/pages/write/WritingPage.html'>
         <img
           src="/icon/EditSquare.svg"
           alt="글쓰기 아이콘 기본"
           class="peer-checked:hidden"
         />
-        </a>
                 <!-- 체크 아이콘 (체크 후) -->
         <img
           src="/icon/EditSquareActive.svg"
@@ -167,13 +195,12 @@ class NavigateComponent extends HTMLElement {
           <!-- 체크박스 숨김 -->
         <input name="navi-checkbox" type="radio" value="mypage" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->
-          <a href='/src/pages/mypage/MyPage.html?_id=${userId}'>
           <img
             src="/icon/Inventory.svg"
             alt="내서랍 아이콘 기본"
             class="peer-checked:hidden"
           />
-          </a>
+        
             <!-- 체크 아이콘 (체크 후) -->
           <img
             src="/icon/InventoryActive.svg"
@@ -198,13 +225,13 @@ class NavigateComponent extends HTMLElement {
             <!-- 체크박스 숨김 -->
             <input name="navi-checkbox" type="radio" value="home" class="sr-only peer" />            
             <!-- 기본 아이콘 (체크 전) -->
-            <a href="/index.html">
+            
             <img
               src="/icon/Home.svg"
               alt="홈 아이콘 기본"
               class="peer-checked:hidden"
             />
-            </a>            
+                        
               <!-- 체크 아이콘 (체크 후) -->
             <img
               src="/icon/HomeActive.svg"
@@ -220,13 +247,11 @@ class NavigateComponent extends HTMLElement {
             <!-- 체크박스 숨김 -->
           <input name="navi-checkbox" type="radio" value="search" class="sr-only peer" />
             <!-- 기본 아이콘 (체크 전) -->
-              <a href='/src/pages/search/Search.html'>
             <img
               src="/icon/Search.svg"
               alt="발견 아이콘 기본"
               class="peer-checked:hidden"
             />
-            </a>            
               <!-- 체크 아이콘 (체크 후) -->
             <img
               src="/icon/SearchActive.svg"
