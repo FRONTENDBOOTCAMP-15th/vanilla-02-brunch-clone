@@ -5,15 +5,15 @@ import { initSearchEvent } from './Search';
 
 const axios = getAxios();
 
-function init(){
+function init() {
   searchPosts(); // 2. 검색
-  setKeyword() // 검색어 입력창에 검색어 세팅
+  setKeyword(); // 검색어 입력창에 검색어 세팅
   initSearchEvent(); // 검색어 입력후 엔터 이벤트 등록
   setTabEvent(); // 글/작가 이동
 }
 init(); // 1
 
-function setKeyword(){
+function setKeyword() {
   const keyword = new URLSearchParams(window.location.search).get('keyword')!;
   console.log(keyword);
   const searchInput = document.querySelector<HTMLInputElement>('#search-input')!;
@@ -22,7 +22,7 @@ function setKeyword(){
 
 // 게시물 검색 API 호출
 async function getPosts(keyword: string): Promise<PostListResponse | undefined> {
-  try{
+  try {
     const response = await axios.get<PostListResponse>(`posts`, {
       params: {
         type: 'brunch',
@@ -30,10 +30,10 @@ async function getPosts(keyword: string): Promise<PostListResponse | undefined> 
       },
     });
     return response.data;
-  }catch(err){
-    if(err instanceof AxiosError){
+  } catch (err) {
+    if (err instanceof AxiosError) {
       alert(err.response?.data.message || err.message);
-    }else{
+    } else {
       alert((err as Error).message);
     }
   }
@@ -41,18 +41,18 @@ async function getPosts(keyword: string): Promise<PostListResponse | undefined> 
 
 // 작가 검색 API 호출
 async function getAuthors(keyword: string): Promise<UserListResponse | undefined> {
-  try{
-    const custom = { name: { $regex: keyword, $options: 'i' }};
+  try {
+    const custom = { name: { $regex: keyword, $options: 'i' } };
     const response = await axios.get<UserListResponse>(`users`, {
       params: {
         custom: JSON.stringify(custom),
       },
     });
     return response.data;
-  }catch(err){
-    if(err instanceof AxiosError){
+  } catch (err) {
+    if (err instanceof AxiosError) {
       alert(err.response?.data.message || err.message);
-    }else{
+    } else {
       alert((err as Error).message);
     }
   }
@@ -78,7 +78,7 @@ async function searchPosts() {
       articleList.innerHTML = `
         <p class="text-center text-sm text-gray-500 py-10">검색 결과가 없습니다.</p>
       `;
-    }else{
+    } else {
       // 검색 결과 수 출력
       const countSpan = document.querySelector<HTMLSpanElement>('#post-count span')!;
       countSpan.textContent = data.item.length.toString();
@@ -122,7 +122,7 @@ async function searchAuthors() {
       articleList.innerHTML = `
         <p class="text-center text-sm text-gray-500 py-10">검색 결과가 없습니다.</p>
       `;
-    }else{
+    } else {
       // 검색 결과 수 출력
       const countSpan = document.querySelector<HTMLSpanElement>('#post-count span')!;
       countSpan.textContent = data.item.length.toString();
@@ -143,7 +143,7 @@ async function searchAuthors() {
 }
 
 // 탭 이벤트 추가
-function setTabEvent(){
+function setTabEvent() {
   document.querySelector('#posts')?.addEventListener('click', () => {
     searchPosts();
   });
@@ -151,3 +151,22 @@ function setTabEvent(){
     searchAuthors();
   });
 }
+
+// 글/작가 버튼 클릭시 밑줄 색 변경
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab-btn');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      // 모든 탭 초기화
+      tabs.forEach((t) => {
+        t.classList.remove('active');
+        t.classList.add('text-br-contentSecondary');
+      });
+
+      // 클릭된 탭 활성화
+      tab.classList.add('active');
+      tab.classList.remove('text-br-contentSecondary');
+    });
+  });
+});
