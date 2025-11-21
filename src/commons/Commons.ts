@@ -69,7 +69,7 @@ class NavigateComponent extends HTMLElement {
       str = 'home';
     } else if (path.includes('search')) {
       str = 'search';
-    } else if (path.includes('writepage')) {
+    } else if (path.includes('write')) {
       str = 'writepage';
     } else if (path.includes('mypage')) {
       str = 'mypage';
