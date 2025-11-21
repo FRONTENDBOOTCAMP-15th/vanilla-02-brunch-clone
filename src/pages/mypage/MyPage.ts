@@ -159,3 +159,25 @@ logout?.addEventListener('click', () => {
   alert('로그아웃 성공! 홈으로 이동합니다');
   location.href = '/index.html';
 });
+
+//내 이름, 글쓰기
+function renderMyProfile() {
+  //이름 로컬에서 가져오기
+  //이름 태그에 넣기
+  //클릭이벤트로 글스기 페이지로 넘어가기
+  const userName = localStorage.getItem('userName') || sessionStorage.getItem('userName');
+
+  const myPageUserName = document.querySelector('#mypage-user-name');
+  const myPageWriteBtn = document.querySelector('#mypage-write');
+
+  if (myPageUserName) {
+    myPageUserName.textContent = userName;
+  }
+
+  if (myPageWriteBtn) {
+    myPageWriteBtn.addEventListener('click', () => {
+      window.location.href = '/src/pages/write/WritingPage.html';
+    });
+  }
+}
+renderMyProfile();

@@ -157,7 +157,7 @@ async function searchAuthors() {
             </div>
           </a>
         </article>
-
+   
         `;
         articleList.innerHTML += article;
       });
