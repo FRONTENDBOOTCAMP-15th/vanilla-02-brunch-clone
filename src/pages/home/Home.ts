@@ -8,6 +8,25 @@ import type { PostItem, PostListResponse, UserListResponse, UserInfo } from '../
 function removeTags(html: string): string {
   return html.replace(/<\/?[^>]+(>|$)/g, '');
 }
+
+function isWithinOneDay(dateStr) {
+  // 'YYYY.MM.DD HH:MM:SS' → Date 객체로 변환
+  const [datePart, timePart] = dateStr.split(' ');
+  const [year, month, day] = datePart.split('.').map(Number);
+  const [hour, minute, second] = timePart.split(':').map(Number);
+
+  const targetDate = new Date(year, month - 1, day, hour, minute, second); // month는 0~11
+  const now = new Date();
+
+  const diff = Math.abs(now - targetDate); // 밀리초 차이
+  const oneDay = 1000 * 60 * 60 * 24; // 1일 밀리초
+
+  return diff <= oneDay;
+}
+
+// 사용 예시
+//console.log(isWithinOneDay("2025.11.22 00:27:08")); // true 또는 false
+
 /*
 function checkImageUrl(url: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -48,9 +67,13 @@ function getValidImageUrl(imageUrl: any): string {
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
 function createBrunchCard(post: PostItem, index: number): HTMLElement {
-  let postContent = removeTags(post.content).substring(0, 50);
-  //console.log(postContent);
+  let postContent: string;
+  if (window.innerWidth < 400 && post.image) {
+    postContent = removeTags(post.content).substring(0, 50);
+  } else postContent = removeTags(post.content);
 
+  //console.log(post.createdAt);
+  //console.log(isWithinOneDay('2025.11.20 00:27:08'));
   let srcImg: string = '';
 
   if (post.image && post.image.length > 0) {
@@ -66,12 +89,12 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   // 이미지 있는 경우
   if (srcImg && srcImg.includes('http')) {
     wrapper.innerHTML = `
-      <div class="text-[26px] font-normal text-color-br-primary
-            flex justify-center items-center pr-[15px] pl-[7px]">
+      <div id="rank-${index + 1}" class="text-[26px] font-normal text-color-br-primary
+            flex flex-col justify-center items-center pr-[15px] pl-[7px]">
         ${index + 1}
       </div>
 
-      <div class="flex-1">
+      <div class="flex-1 ml-2">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
         <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
         <p class="italic text-br-contentTertiary">by</p>
@@ -94,22 +117,33 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   // 이미지 없는 경우 (텍스트 전체 폭)
   else {
     wrapper.innerHTML = `
-      <div class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex items-center pl-[7px]">
-        ${index + 1}
-      </div>
+    <div id="rank-${index + 1}" class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex flex-col items-center pl-[7px]">
+      <span>${index + 1}</span>
+    </div>
 
-      <div class="flex-1">
-        <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
+    <div class="flex-1 ml-2">
+      <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
+      <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
         <p class="italic text-br-contentTertiary">by</p>
-        <p> ${post.user.name}</p> </div>
-
-        <!-- 텍스트가 오른쪽 전체 폭 사용 -->
-        <p class="text-[13px] pt-5 font-light text-br-contentSecondary leading-[1.4] overflow-hidden text-ellipsis line-clamp-2 ">
-          ${postContent}
-        </p>
+        <p> ${post.user.name}</p>
       </div>
-    `;
+
+      <p class="text-[13px] pt-5 font-light text-br-contentSecondary leading-[1.4] overflow-hidden text-ellipsis line-clamp-2 ">
+        ${postContent}
+      </p>
+    </div>
+  `;
+  }
+  // wrapper 내부에서 안전하게 요소 선택
+  const rankEl = wrapper.querySelector(`#rank-${index + 1}`);
+  if (rankEl && isWithinOneDay(post.createdAt)) {
+    const imgEl = document.createElement('img');
+    imgEl.src = '/icon/new-line.svg';
+    imgEl.className = 'w-6 h-6 mt-1'; // w-6=24px, h-6=24px, mt-1=위쪽 마진 4px
+    imgEl.style.width = '24px';
+    imgEl.style.height = '24px';
+    imgEl.style.marginLeft = '4px';
+    rankEl.appendChild(imgEl);
   }
 
   return wrapper;
@@ -153,23 +187,23 @@ function createWriterCard(post: any): HTMLElement {
 }
 
 //오늘의 작가 dom 구현
-export async function fetchAuthorPosts(authorId: number): Promise<PostListResponse | undefined> {
+export async function fetchAuthorPosts(authorId: number): Promise<PostItem[] | undefined> {
   const url = `https://fesp-api.koyeb.app/market/posts?type=brunch`;
 
-  try {
-    const response = await axios.get<PostListResponse>(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'client-id': 'febc15-vanilla02-ecad',
-      },
-    });
-    if (response.data.ok === 1) {
-      const data: PostListResponse = response.data;
+  const response = await axios.get<PostListResponse>(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      'client-id': 'febc15-vanilla02-ecad',
+    },
+  });
+  if (response.data.ok === 1) {
+    const data: PostItem[] = response.data.item;
 
-      // user._id가 authorId와 일치하는 게시물만 필터링
-      const filteredItems = data.item.filter((post) => post.user._id === authorId);
+    // user._id가 authorId와 일치하는 게시물만 필터링
+    const filteredItems = data.filter((post) => post.user._id === authorId);
 
-      // bookData 생성
+    // bookData 생성
+    /*
       const bookData: PostListResponse = {
         ok: 1,
         item: filteredItems,
@@ -180,18 +214,11 @@ export async function fetchAuthorPosts(authorId: number): Promise<PostListRespon
           totalPages: 1,
         },
       };
+      */
 
-      //console.log(JSON.stringify(bookData.item[0], null, 2));
+    //console.log(JSON.stringify(bookData.item[0], null, 2));
 
-      return bookData;
-    }
-  } catch (err: any) {
-    console.error('작가 작품 가져오기 실패:', err);
-
-    return {
-      ok: 0,
-      message: '',
-    };
+    return filteredItems;
   }
 }
 
@@ -237,19 +264,19 @@ async function renderTodayAuthorSection(post: UserInfo) {
   if (!worksArea) return;
 
   // 작가 작품 가져오기
-  const authorPosts: PostListResponse | undefined = await fetchAuthorPosts(post._id || 0);
-  if (authorPosts?.ok === 1) {
-    authorPosts.item.forEach((p, idx) => {
-      if (idx >= 2) return;
-      const card = document.createElement('div');
-      card.addEventListener('click', () => {
-        window.location.href = `/src/pages/details/DetailsPage.html?_id=${p._id}`;
-      });
-      card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer ';
+  const authorPosts: PostItem[] | undefined = await fetchAuthorPosts(post._id || 0);
 
-      const imgUrl = p?.image?.[0] || '/img/sky.jpg';
+  authorPosts?.forEach((p, idx) => {
+    if (idx >= 2) return;
+    const card = document.createElement('div');
+    card.addEventListener('click', () => {
+      window.location.href = `/src/pages/details/DetailsPage.html?_id=${p._id}`;
+    });
+    card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer ';
 
-      card.innerHTML = `
+    const imgUrl = p?.image?.[0] || '/img/sky.jpg';
+
+    card.innerHTML = `
         <div class="relative flex-shrink-0 px-4">
           <img class="object-cover block relative w-[60px] h-[85px]" src="${imgUrl}" alt="${p.title} 표지" />
           ${
@@ -269,9 +296,8 @@ async function renderTodayAuthorSection(post: UserInfo) {
         </div>
       `;
 
-      worksArea.appendChild(card);
-    });
-  }
+    worksArea.appendChild(card);
+  });
 }
 
 // axios 이용 API 가져오기 함수 ------------------------------------------------
