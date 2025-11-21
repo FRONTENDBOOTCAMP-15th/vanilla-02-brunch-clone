@@ -196,7 +196,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
   
   <div class="flex-shrink-0 ml-4 h-full">
   <a href="/src/pages/author/AuthorPage.html?_id=${post._id}">
-   <img class="rounded-full object-cover mr-8 h-full" 
+   <img class="rounded-full object-cover mr-8 h-full border border-gray-300" 
           src="${srcImg}"           
           alt="프로필 사진" />
     </a>
@@ -287,14 +287,20 @@ export async function retrieveAPI(url: string): Promise<any> {
 
   //요즘 뜨는 브런치
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
-  postRes = await retrieveAPI(url);
+  postRes = (await retrieveAPI(url)) as PostListResponse;
   if (postRes.ok === 1) {
     const container = document.querySelector('.brunch-container');
     if (!container) return;
 
     container.innerHTML = ''; // 기존 내용 제거
 
-    postRes.item.forEach((post, i) => {
+    const data = postRes.item as PostItem[];
+
+    //구독한 사용자가 많은 순으로 정렬
+    data.sort((a, b) => b.likes - a.likes);
+
+    data.forEach((post, i) => {
+      //console.log(JSON.stringify(post));
       if (i >= 10) return;
       const card = createBrunchCard(post, i);
       container.appendChild(card);
@@ -326,15 +332,19 @@ export async function retrieveAPI(url: string): Promise<any> {
     const date: Date = new Date();
     const day: string = String(date.getDate()).padStart(2, '0');
     const dayToNum: number = Number(day) % 10;
-    for (let i: number = 0; i < userRes.item.length; i++) {
-      if (i >= 10) break;
-      // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리 같은 회원
-      // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
-      if (userRes.item[i]._id == dayToNum) {
-        //console.log(JSON.stringify(userRes.item[i], null, 2));
-        renderTodayAuthorSection(userRes.item[i]);
-        break;
-      } else renderTodayAuthorSection(userRes.item[0]);
-    }
+    const data = userRes.item as UserInfo[];
+    data.forEach(user => {
+       for (let i: number = 0; i < data.length; i++) {
+            if (i >= 10) break;
+            // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리가 같은 회원
+            // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
+            if (user._id % 10 == dayToNum) {
+              renderTodayAuthorSection(user);
+              break;
+            } else renderTodayAuthorSection(data[0]);
+          }
+      
+    });
+   
   }
 })();

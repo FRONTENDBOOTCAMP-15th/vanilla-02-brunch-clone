@@ -502,7 +502,7 @@ class TopComponent extends HTMLElement {
 
     const img = document.createElement('img');
     img.src = user.avatarUrl;
-    img.className = 'w-[30px] h-[30px] rounded-full object-cover';
+    img.className = 'w-[30px] h-[30px] rounded-full object-cover border border-gray-400';
     img.alt = '아바타 아이콘';
     img.addEventListener('click', () => {
       window.location.href = `/src/pages/mypage/MyPage.html?_id=${user?.id}`;
