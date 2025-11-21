@@ -16,6 +16,7 @@ export default defineConfig({
         mypage: path.resolve(__dirname, 'src/pages/mypage/MyPage.html'),
         authorpage: path.resolve(__dirname, 'src/pages/author/AuthorPage.html'),
         search: path.resolve(__dirname, 'src/pages/search/Search.html'),
+        search2: path.resolve(__dirname, 'src/pages/search/SearchResult.html'),
       },
     },
   },
