@@ -48,7 +48,7 @@ function getValidImageUrl(imageUrl: any): string {
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
 function createBrunchCard(post: PostItem, index: number): HTMLElement {
-  let postContent = removeTags(post.content).substring(0, 80);
+  let postContent = removeTags(post.content).substring(0, 50);
   //console.log(postContent);
 
   let srcImg: string = '';
