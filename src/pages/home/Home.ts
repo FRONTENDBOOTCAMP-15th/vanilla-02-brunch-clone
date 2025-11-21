@@ -48,7 +48,7 @@ function getValidImageUrl(imageUrl: any): string {
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
 function createBrunchCard(post: PostItem, index: number): HTMLElement {
-  let postContent = removeTags(post.content).substring(0, 80);
+  let postContent = removeTags(post.content).substring(0, 50);
   //console.log(postContent);
 
   let srcImg: string = '';
@@ -58,7 +58,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   }
 
   const wrapper: HTMLLIElement = document.createElement('li');
-  wrapper.className = 'flex items-start gap-5 cursor-pointer min-w-[360px] border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
+  wrapper.className = 'flex items-start gap-5 cursor-pointer  border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
   wrapper.addEventListener('click', () => {
     window.location.href = `/src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
@@ -202,7 +202,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
   section.className = 'p-[25px] bg-white';
   //img가 없을 때는 <img> 태그를 넣지 않음
   section.innerHTML = `
-  <div class="flex items-start justify-between p-0 min-w-[360px] h-[100px]">
+  <div class="flex items-start justify-between p-0  h-[100px]">
   
   <div class="flex flex-col">
     

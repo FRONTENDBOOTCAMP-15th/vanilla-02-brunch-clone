@@ -59,15 +59,15 @@ async function getAuthors(keyword: string): Promise<UserListResponse | undefined
 }
 
 // 이미지 제거 함수
-function removeImages(html: string): string {
-  if (!html) return '';
+function removeImagesFromHtml(html: string): string {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
 
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = html;
+  // 모든 img 태그 제거
+  tmp.querySelectorAll('img, br, div').forEach((img) => img.remove());
 
-  wrapper.querySelectorAll('img, figure, picture, source, br ').forEach((el) => el.remove());
-
-  return wrapper.innerHTML.trim();
+  // 태그 구조는 유지하고 싶으면 innerHTML 반환
+  return tmp.innerHTML;
 }
 
 // 게시물 검색
@@ -97,7 +97,7 @@ async function searchPosts() {
 
       // 검색 결과 수 만큼 화면에 article 출력
       data.item.forEach((post) => {
-        const cleanedContent = removeImages(post.content ?? '');
+        const cleanedContent = removeImagesFromHtml(post.content ?? '');
 
         const article = `
           <article class="border-b border-br-line py-4">
