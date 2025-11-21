@@ -162,7 +162,6 @@ async function loadUserPosts() {
         </article>
         
       `;
-
         articleList.innerHTML += article;
       });
     }
