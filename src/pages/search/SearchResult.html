@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/styles/style.css" />
+    <script type="module" src="../../commons/Commons.ts"></script>
+    <script type="module" src="../../pages/search/SearchResult.ts"></script>
+    <script type="module" src="/src/main.ts"></script>
+    <title>Document</title>
+  </head>
+  <body class="bg-br-searchBackground font-Pretendard">
+    <div class="min-h-screen flex flex-col">
+      <!-- 상단 검색바 -->
+      <header class="bg-white">
+        <div class="relative px-4 py-3">
+          <label for="search-input" class="sr-only">검색어 입력</label>
+          <input id="search-input" type="search" placeholder="검색어 입력" aria-label="검색어 입력" class="w-full h-[111px] text-center text-[24px] text-br-detailsTitle placeholder-br-contentTertiary focus:outline-none" />
+        </div>
+
+        <nav id="tabNav" aria-label="탭 내비게이션">
+          <ul class="flex relative border-b border-gray-200">
+            <li class="flex-1 text-center pb-2">
+              <button id="posts" class="tab-btn text-[14px] w-full py-2 text-br-primary active">글</button>
+            </li>
+
+            <li class="flex-1 text-center pb-2">
+              <button id="authors" class="tab-btn text-[14px] w-full py-2 text-br-contentSecondary">작가</button>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- 콘텐츠 영역 -->
+      <main class="mx-auto px-4">
+        <!-- 글 검색 결과 수 -->
+        <section id="post-count" aria-labelledby="popular-keywords-title">
+          <h2 id="popular-keywords-title" class="text-[12px] text-br-contentTertiary mt-7">글 검색 결과 <span>0</span>건</h2>
+        </section>
+
+        <!-- 글 검색 결과 -->
+        <section id="article-list" aria-labelledby="recent-searches-title" class="mt-[12px] border-t border-br-line">
+          
+        </section>
+
+        <!-- 글 검색 결과 -->
+        <section id="author-list" aria-labelledby="author-list-title">
+          
+        </section>
+      </main>
+    </div>
+    <navigate-component></navigate-component>
+  </body>
+</html>
