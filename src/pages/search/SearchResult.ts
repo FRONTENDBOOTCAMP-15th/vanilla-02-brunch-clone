@@ -65,7 +65,7 @@ function removeImages(html: string): string {
   const wrapper = document.createElement('div');
   wrapper.innerHTML = html;
 
-  wrapper.querySelectorAll('img, figure, picture, source').forEach((el) => el.remove());
+  wrapper.querySelectorAll('img, figure, picture, source, br ').forEach((el) => el.remove());
 
   return wrapper.innerHTML.trim();
 }
@@ -163,6 +163,16 @@ async function searchAuthors() {
       });
     }
   }
+}
+
+function removeHtmlTags(html: string): string {
+  if (!html) return '';
+
+  // 1) 태그 전체 제거
+  const withoutTags = html.replace(/<[^>]*>/g, '');
+
+  // 2) 공백 정리
+  return withoutTags.trim();
 }
 
 // 탭 이벤트 추가
