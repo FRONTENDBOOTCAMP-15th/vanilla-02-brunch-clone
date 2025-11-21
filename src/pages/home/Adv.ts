@@ -23,7 +23,7 @@ function createBannerCard(post: PostItem, index: number): HTMLElement | null {
     <div class="text-center mb-8">
         
         <header class="mb-10">
-            <h1 class="text-4xl sm:text-5xl font-sans text-white mb-2">
+            <h1 class="text-4xl sm:text-5xl text-white mt-[55px] mb-2">
                 <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">${post.title}</a>
             </h1>
             <p class="text-lg text-white opacity-75 italic">
