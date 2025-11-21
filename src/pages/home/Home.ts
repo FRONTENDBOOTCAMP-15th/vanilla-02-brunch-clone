@@ -58,11 +58,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   }
 
   const wrapper: HTMLLIElement = document.createElement('li');
-<<<<<<< HEAD
   wrapper.className = 'flex items-start cursor-pointer border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
-=======
-  wrapper.className = 'flex items-start gap-5 cursor-pointer  border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
->>>>>>> a857d466349cdb49a83ab6284c01d3c63709f675
   wrapper.addEventListener('click', () => {
     window.location.href = `/src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
@@ -207,11 +203,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
   section.className = 'p-[25px] bg-white';
   //img가 없을 때는 <img> 태그를 넣지 않음
   section.innerHTML = `
-<<<<<<< HEAD
   <div class="flex items-start justify-between p-0 h-[100px]">
-=======
-  <div class="flex items-start justify-between p-0  h-[100px]">
->>>>>>> a857d466349cdb49a83ab6284c01d3c63709f675
   
   <div class="flex flex-col">
     
@@ -249,18 +241,18 @@ async function renderTodayAuthorSection(post: UserInfo) {
       card.addEventListener('click', () => {
         window.location.href = `/src/pages/details/DetailsPage.html?_id=${p._id}`;
       });
-      card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer';
+      card.className = 'flex py-[15px] border-b border-[#eee] bg-br-contentsBg cursor-pointer ';
 
-      const imgUrl = p?.image?.[0] || '/img/NoBookImage.png';
+      const imgUrl = p?.image?.[0] || '/img/sky.jpg';
 
       card.innerHTML = `
-        <div class="relative flex-shrink-0 px-4 h-[110px]">
-          <img class="w-full h-full object-cover block relative" src="${imgUrl}" alt="${p.title} 표지" />
+        <div class="relative flex-shrink-0 px-4">
+          <img class="object-cover block relative w-[60px] h-[85px]" src="${imgUrl}" alt="${p.title} 표지" />
           ${
             idx === 0
               ? `
             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-1 text-[11px] font-normal text-white bg-br-contentPrimary whitespace-nowrap rounded-md" 
-                  style="bottom: -12px; z-index: 10;"> 
+                  style="bottom: -10px; z-index: 10;"> 
               최신작
             </span>
             `
