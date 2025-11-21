@@ -117,6 +117,18 @@ async function loadUserProfile() {
   }
 }
 
+// 이미지 태그 제거
+function removeImagesFromHtml(html: string): string {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+
+  // 모든 img 태그 제거
+  tmp.querySelectorAll('img').forEach((img) => img.remove());
+
+  // 태그 구조는 유지하고 싶으면 innerHTML 반환
+  return tmp.innerHTML;
+}
+
 // 2. 사용자가 작성한 글 목록 조회
 async function loadUserPosts() {
   try {
@@ -134,13 +146,15 @@ async function loadUserPosts() {
         console.log(`내용: ${post.content}`);
         console.log('부제목', post.extra.subTitle);
         console.log('날짜', post.updatedAt);
+        const contentWithoutImg = removeImagesFromHtml(post.content);
 
         const article = `          
         <article class="border-b border-br-line py-4">
           <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
             <div class="underline decoration text-[13px] text-br-primary pb-[10px]">${post.extra.subTitle}</div>
             <h3 class="text-[17px] mt-[14px]">${post.title}</h3>          
-            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden ">${post.content}</p>
+            <p class="mt-10 text-[12px] text-xs text-br-contentSecondary mt-[8px] line-clamp-3 break-words overflow-hidden ">${contentWithoutImg}
+</p>
             <div class="flex items-center gap-2 mt-[8px]">
               <span class="text-[12px] text-br-contentSecondary">${post.updatedAt}</span>
             </div>
