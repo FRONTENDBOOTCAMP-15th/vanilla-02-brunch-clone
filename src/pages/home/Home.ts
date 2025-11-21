@@ -229,7 +229,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
           ${
             idx === 0
               ? `
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-1 text-[11px] font-normal text-white bg-br-contentPrimary whitespace-nowrap" 
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 px-3 py-1 text-[11px] font-normal text-white bg-br-contentPrimary whitespace-nowrap rounded-sm" 
                   style="bottom: -12px; z-index: 10;"> 
               최신작
             </span>

@@ -1,13 +1,9 @@
 import axios from 'axios';
-import type { PostItem, PostListResponse, APIError } from '../../utils/types';
-
-function removeImgTags(html: string): string {
-  return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
-}
+import type { PostItem, PostListResponse } from '../../utils/types';
 
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
-function createBannerCard(post: PostItem, index: number): HTMLElement | null {
+function createBannerCard(post: PostItem): HTMLElement | null {
   //let postContent = removeImgTags(post.content).substring(0, 160);
   let srcImg: string = '';
 
@@ -23,7 +19,7 @@ function createBannerCard(post: PostItem, index: number): HTMLElement | null {
     <div class="text-center ">
         
         <header class="mb-12">
-            <h1 class="text-xl sm:text-4xl font-sans text-br-detailsContent>
+            <h1 class="text-xl sm:text-4xl text-br-detailsContent">
                 <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">${post.title}</a>
             </h1>
             <p class="text-lg opacity-75 italic mb-20 text-br-detailsContent mt-5">
@@ -125,13 +121,13 @@ function checkImageUrl(url: string): Promise<boolean> {
   postRes = (await retrieveAPI(url)) as PostListResponse;
   if (postRes.ok === 1) {
     const data = postRes.item as PostItem[];
-    data.forEach(async (post, i) => {
+    data.forEach(async (post) => {
       //console.log(JSON.stringify(post));
       // 이미지가 있는 포스트만 가져옴
       //최신 순으로 정렬(광고 사용료를 낸 작품)
       if (post._id == 19) {
         if (await checkImageUrl(post?.image?.[0])) {
-          const card = createBannerCard(post, i);
+            createBannerCard(post);
           return;
         }
       }

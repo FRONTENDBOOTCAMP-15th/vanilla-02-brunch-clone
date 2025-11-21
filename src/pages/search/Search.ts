@@ -1,12 +1,12 @@
 import { AxiosError } from 'axios';
 import { getAxios } from '../../utils/axios';
-import type { PostListResponse, UserListResponse } from '../../utils/types';
+import type { PostListResponse } from '../../utils/types';
 
 const axios = getAxios();
 
 const tabNav = document.querySelector('#tabNav') as HTMLElement;
 const titleSection = document.querySelector('#title') as HTMLElement;
-const articleList = document.querySelector('#article-list') as HTMLElement;
+//const articleList = document.querySelector('#article-list') as HTMLElement;
 
 function onSearch() {
   tabNav.removeAttribute('hidden');

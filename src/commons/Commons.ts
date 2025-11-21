@@ -268,7 +268,6 @@ class NavigateComponent extends HTMLElement {
           <input name="navi-checkbox" type="radio" value="writepage" class="sr-only peer" />
           <!-- 기본 아이콘 (체크 전) -->          
           <img
-            onClick="alert('로그인이 필요한 화면입니다')"
             src="/icon/EditSquare.svg"
             alt="글쓰기 아이콘 기본"
             class="peer-checked:hidden"            
@@ -289,14 +288,12 @@ class NavigateComponent extends HTMLElement {
           <input name="navi-checkbox" type="radio" value="mypage" class="sr-only peer" />
             <!-- 기본 아이콘 (체크 전) -->          
             <img
-              onClick="alert('로그인이 필요한 화면입니다'); window.location.href='/src/pages/login/SignIn.html';"
               src="/icon/Inventory.svg"
               alt="내서랍 아이콘 기본"
               class="peer-checked:hidden"
             />          
               <!-- 체크 아이콘 (체크 후) -->
             <img
-            
               src="/icon/InventoryActive.svg"
               alt="내서랍 아이콘 채움"
               class="hidden peer-checked:block"
