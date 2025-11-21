@@ -58,7 +58,11 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   }
 
   const wrapper: HTMLLIElement = document.createElement('li');
+<<<<<<< HEAD
   wrapper.className = 'flex items-start cursor-pointer border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
+=======
+  wrapper.className = 'flex items-start  cursor-pointer  border-b border-gray-100 pb-4 pt-4 last:border-b-0 last:pb-0 last:pt-4';
+>>>>>>> 0ed256789029e8ee522f97b89b5f329630a50792
   wrapper.addEventListener('click', () => {
     window.location.href = `/src/pages/details/DetailsPage.html?_id=${post._id}`;
   });
@@ -67,20 +71,23 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   if (srcImg && srcImg.includes('http')) {
     wrapper.innerHTML = `
       <div class="text-[26px] font-normal text-color-br-primary
-                flex justify-center items-center pr-[10px] pl-[5px] w-[35px] gap-0">
+            flex justify-center items-center pr-[15px] pl-[7px]">
         ${index + 1}
       </div>
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
+        <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
+        <p class="italic text-br-contentTertiary">by</p>
+        <p> ${post.user.name}</p> </div>
+        
 
-        <p class="text-[14px] text-br-contentPrimary leading-[1.4] text-ellipsis whitespace-normal ">
+        <p class="text-[13px] font-light text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal pt-5 overflow-hidden text-ellipsis line-clamp-2">
           ${postContent}
         </p>
       </div>
 
-      <div class="w-[80px] h-[112px] rounded shadow-[0_2px_5px_rgba(0,0,0,0.1)] flex-shrink-0 ml-2">
+      <div class="w-[80px] h-[112px] rounded shadow-[0_2px_5px_rgba(0,0,0,0.1)] flex-shrink-0">
         <img class="w-full h-full object-cover block"
              src="${srcImg}"
              alt="${post.title}" />
@@ -91,17 +98,18 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   // 이미지 없는 경우 (텍스트 전체 폭)
   else {
     wrapper.innerHTML = `
-      <div class="text-[26px] font-normal text-color-br-primary 
-                flex justify-center items-center pr-[15px] pl-[7px] w-[35px] gap-0">
+      <div class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex items-center pl-[7px]">
         ${index + 1}
       </div>
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
+        <div class="text-[14px] text-br-contentSecondary mb-2 flex items-center gap-2">
+        <p class="italic text-br-contentTertiary">by</p>
+        <p> ${post.user.name}</p> </div>
 
         <!-- 텍스트가 오른쪽 전체 폭 사용 -->
-        <p class="text-[14px] text-br-contentPrimary leading-[1.4] text-ellipsis whitespace-normal overflow-hidden line-clamp-2">
+        <p class="text-[13px] pt-5 font-light text-br-contentSecondary leading-[1.4] overflow-hidden text-ellipsis line-clamp-2 ">
           ${postContent}
         </p>
       </div>
@@ -203,7 +211,7 @@ async function renderTodayAuthorSection(post: UserInfo) {
   section.className = 'p-[25px] bg-white';
   //img가 없을 때는 <img> 태그를 넣지 않음
   section.innerHTML = `
-  <div class="flex items-start justify-between p-0 h-[100px]">
+  <div class="flex items-start justify-between p-0  h-[100px]">
   
   <div class="flex flex-col">
     
