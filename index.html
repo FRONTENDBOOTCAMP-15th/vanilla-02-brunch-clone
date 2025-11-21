@@ -8,6 +8,7 @@
     <script type="module" src="./src/commons/Commons.ts"></script>
     <script type="module" src="./src/main.ts"></script>
     <script type="module" src="./src/pages/home/Home.ts"></script>
+    <script type="module" src="./src/pages/home/Adv.ts"></script>
   </head>
   <body class="font-Pretendard min-w-[360px]">
     <!-- <h1 class="text-3xl text-blue-500 font-normal underline">Vite + Tailwind CSS</h1>
@@ -24,12 +25,10 @@
     <top-header></top-header>
 
     <!-- 광고 배너-->
-    <div>
-      <picture>
-        <source media="(min-width: 600px)" srcset="/img/Adv800.png" />
-        <img class="w-full mx-auto" src="/img/Adv600.svg" alt="반응형 이미지" />
-      </picture>
+    <div id="adv-container">
     </div>
+
+    <!-- 요즘 뜨는 브런치 -->
     <section class="p-4 min-w-[360px]">
       <p class="text-sm text-br-contentSecondary mb-1 italic">Today's Pick</p>
       <h1 class="text-2xl font-normal mb-6">요즘 뜨는 브런치</h1>
@@ -37,12 +36,20 @@
       <ul class="brunch-container flex flex-col gap-6 min-w-[360px]"></ul>
     </section>
 
-    <hr class="h-px my-8 border-br-contentTertiary w-full" />
+    <!-- 섹션 구분선-->
+    <div class="relative">    <div class="h-px bg-gray-200"></div>
+      <div class="absolute top-full w-full h-[3px] bg-black/10 blur-[3px]"></div>
+    </div>
 
     <!-- 오늘의 작가 -->
 
     <div class="today-author-container p-0">
       <div class="today-author-works flex flex-col gap-[15px]"></div>
+    </div>
+
+    <!-- 섹션 구분선-->
+    <div class="relative">    <div class="h-px bg-gray-200"></div>
+      <div class="absolute top-full w-full h-[3px] bg-black/10 blur-[3px]"></div>
     </div>
 
     <!-- 구독자(TOP) 급등 작가 -->
@@ -51,6 +58,7 @@
 
       <div class="top-author-container grid grid-cols-2 border-0"></div>
     </section>
+
 
     <!--
     <circle-component></circle-component>
