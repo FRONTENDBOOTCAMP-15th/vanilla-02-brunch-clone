@@ -17,16 +17,16 @@ function createBannerCard(post: PostItem, index: number): HTMLElement | null {
 
   const wrapper: HTMLElement | null = document.getElementById('adv-container');
   if (wrapper) {
-    wrapper.className = 'bg-[#8D4E8E]  h-[488px] min-w-[360px] flex flex-col items-center justify-start p-10';
+    wrapper.className = 'bg-[#F6F2E5]  h-[488px] min-w-[360px] flex flex-col items-center justify-center px-10 py-px';
     wrapper.innerHTML = `
        
-    <div class="text-center mb-8">
+    <div class="text-center ">
         
-        <header class="mb-10">
-            <h1 class="text-4xl sm:text-5xl text-white mt-[55px] mb-2">
+        <header class="mb-12">
+            <h1 class="text-xl sm:text-4xl font-sans text-br-detailsContent>
                 <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">${post.title}</a>
             </h1>
-            <p class="text-lg text-white opacity-75 italic">
+            <p class="text-lg opacity-75 italic mb-20 text-br-detailsContent mt-5">
                 <a href="/src/pages/author/AuthorPage.html?_id=${post.user._id}">by ${post.user.name}</a>
             </p>
         </header>
