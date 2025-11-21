@@ -1,13 +1,9 @@
 import axios from 'axios';
-import type { PostItem, PostListResponse, APIError } from '../../utils/types';
-
-function removeImgTags(html: string): string {
-  return html.replace(/<img\b[^>]*?(?:\/>|>)/gi, '');
-}
+import type { PostItem, PostListResponse } from '../../utils/types';
 
 // DOM 생성 함수 ---------------------------------------------
 // 요즘 뜨는 브런치
-function createBannerCard(post: PostItem, index: number): HTMLElement | null {
+function createBannerCard(post: PostItem): HTMLElement | null {
   //let postContent = removeImgTags(post.content).substring(0, 160);
   let srcImg: string = '';
 
