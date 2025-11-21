@@ -25,14 +25,13 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   if (srcImg && srcImg.includes('http')) {
     wrapper.innerHTML = `
       <div class="text-[26px] font-normal text-color-br-primary
-            flex justify-center items-center
-            w-[40px] h-[40px] flex-shrink-0 ">
+            flex justify-center items-center pr-[15px] pl-[7px]">
         ${index + 1}
       </div>
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-br-contentTertiary mb-2">by ${post.user.name}</p>
+        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
 
         <p class="text-[14px] text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal ">
           ${postContent}
@@ -50,13 +49,13 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
   // 이미지 없는 경우 (텍스트 전체 폭)
   else {
     wrapper.innerHTML = `
-      <div class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex items-center">
+      <div class="text-[26px] font-normal text-black w-10 flex-shrink-0 flex items-center pl-[7px]">
         ${index + 1}
       </div>
 
       <div class="flex-1">
         <h2 class="text-[18px] font-normal mb-[6px]">${post.title}</h2>
-        <p class="text-[14px] text-[#999] mb-2">by ${post.user.name}</p>
+        <p class="text-[14px] text-br-contentSecondary mb-2">by ${post.user.name}</p>
 
         <!-- 텍스트가 오른쪽 전체 폭 사용 -->
         <p class="text-[14px] text-[#444] leading-[1.4] overflow-hidden text-ellipsis line-clamp-2">
@@ -186,23 +185,23 @@ async function renderTodayAuthorSection(post: UserInfo) {
   
   <div class="flex flex-col">
     
-    <div class="text-green-500 text-sm font-semibold">오늘의 작가</div>
+    <div class="text-br-primary text-sm font-semibold">오늘의 작가</div>
     
-    <div class="inline-block p-1">
-      <h3 class="text-3xl font-bold text-bg-primary">${post?.name || '익명'}</h3>
+    <div class="inline-block">
+      <h3 class="text-3xl font-semibold text-bg-primary">${post?.name || '익명'}</h3>
     </div>    
-    <div class="w-full pb-1 text-sm text-gray-700">작가</div>
+    <div class="w-full pb-1 text-sm text-br-contentSecondary">작가</div>
   </div>
   
   <div class="flex-shrink-0 ml-4 h-full">
   <a href="/src/pages/author/AuthorPage.html?_id=${post._id}">
-   <img class="rounded-full object-cover mr-8 h-full border border-gray-300" 
+   <img class="rounded-full object-cover h-full border border-gray-300" 
           src="${srcImg}"           
           alt="프로필 사진" />
     </a>
   </div>
 </div>
-    <p class="text-[15px] leading-[1.6] text-[#555] mt-2 mb-[30px]">${post.extra?.biography || '소개글이 없습니다'}</p>
+    <p class="text-[15px] leading-[1.6] text-br-detailsSubtitle mt-2 mb-[30px]">${post.extra?.biography || '소개글이 없습니다'}</p>
     <div class="flex flex-col gap-[15px] today-author-works"></div>
   `;
 
@@ -333,18 +332,16 @@ export async function retrieveAPI(url: string): Promise<any> {
     const day: string = String(date.getDate()).padStart(2, '0');
     const dayToNum: number = Number(day) % 10;
     const data = userRes.item as UserInfo[];
-    data.forEach(user => {
-       for (let i: number = 0; i < data.length; i++) {
-            if (i >= 10) break;
-            // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리가 같은 회원
-            // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
-            if (user._id % 10 == dayToNum) {
-              renderTodayAuthorSection(user);
-              break;
-            } else renderTodayAuthorSection(data[0]);
-          }
-      
+    data.forEach((user) => {
+      for (let i: number = 0; i < data.length; i++) {
+        if (i >= 10) break;
+        // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리가 같은 회원
+        // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
+        if (user._id % 10 == dayToNum) {
+          renderTodayAuthorSection(user);
+          break;
+        } else renderTodayAuthorSection(data[0]);
+      }
     });
-   
   }
 })();
