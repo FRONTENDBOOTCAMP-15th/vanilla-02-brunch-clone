@@ -160,6 +160,8 @@ async function loadPost(id: string) {
 
       // 작가 이름
       if (authorContents) {
+        const byContents = document.querySelector('.details-by') as HTMLLIElement;
+        byContents.textContent = 'by';
         authorContents.textContent = post.user.name;
       }
 
