@@ -83,6 +83,41 @@ function updateLikeButtonUI() {
   }
 }
 
+function parseDateSafely(dateStr: string): Date | null {
+  if (!dateStr) return null;
+
+  // 1차: 일단 브라우저 기본 파서에 한 번 맡겨 본다.
+  const direct = new Date(dateStr);
+  if (!Number.isNaN(direct.getTime())) {
+    return direct;
+  }
+
+  // 2차: "YYYY-MM-DD HH:MM:SS" 또는 "YYYY-MM-DDTHH:MM:SS" 형태 직접 파싱
+  const match = dateStr.match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+  if (match) {
+    const [, y, m, d, hh, mm, ss] = match;
+    return new Date(
+      Number(y),
+      Number(m) - 1, // JS는 0~11월
+      Number(d),
+      Number(hh),
+      Number(mm),
+      Number(ss)
+    );
+  }
+
+  // 3차: 그냥 "YYYY-MM-DD" 만 있는 경우
+  const dateOnly = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (dateOnly) {
+    const [, y, m, d] = dateOnly;
+    return new Date(Number(y), Number(m) - 1, Number(d));
+  }
+
+  // 여기까지 와도 안 되면 포기
+  console.error('날짜 파싱 실패:', dateStr);
+  return null;
+}
+
 // url에서 id 값 꺼내기
 const params = new URLSearchParams(location.search);
 const postId = params.get('_id');
@@ -125,23 +160,51 @@ async function loadPost(id: string) {
 
       // 작가 이름
       if (authorContents) {
+        const byContents = document.querySelector('.details-by') as HTMLLIElement;
+        byContents.textContent = 'by';
         authorContents.textContent = post.user.name;
       }
 
       // 작성 날짜
       if (timeContents) {
-        const created = new Date(post.createdAt);
+        const created = parseDateSafely(post.createdAt);
 
-        const year = created.getFullYear();
-        const monthIndex = created.getMonth(); // 1월이 0부터 시작
-        const day = created.getDate();
+        let year: number;
+        let monthIndex: number; // 0 ~ 11
+        let day: number;
+
+        if (created && !Number.isNaN(created.getTime())) {
+          // 1️ 파싱이 성공한 경우 → Date 객체에서 바로 꺼내기
+          year = created.getFullYear();
+          monthIndex = created.getMonth();
+          day = created.getDate();
+        } else {
+          // 2️ 여전히 실패하면 문자열에서 날짜 부분만 직접 뽑기
+          // 예: "2025.11.22 01:50:54" → "2025.11.22"
+          const raw = post.createdAt ?? '';
+          const datePart = raw.split(' ')[0]; // 공백 기준 앞쪽(날짜)만
+
+          // 구분자가 . 이든 - 이든 / 이든 다 잡기
+          const parts = datePart.split(/[.\-\/]/); // 2025, 11, 22
+
+          if (parts.length === 3) {
+            year = Number(parts[0]);
+            monthIndex = Number(parts[1]) - 1; // 0 ~ 11로 맞추기
+            day = Number(parts[2]);
+          } else {
+            // 그래도 못 뽑으면 그냥 원본 보여주고 끝
+            console.error('날짜 파싱 완전 실패:', post.createdAt);
+            timeContents.textContent = raw;
+            return;
+          }
+        }
 
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        const month = monthNames[monthIndex];
-
+        const month = monthIndex >= 0 && monthIndex < 12 ? monthNames[monthIndex] : '';
         const dayStr = day.toString().padStart(2, '0');
 
+        // 최종 표시: Nov.22.2025
         timeContents.textContent = `${month}.${dayStr}.${year}`;
       }
 

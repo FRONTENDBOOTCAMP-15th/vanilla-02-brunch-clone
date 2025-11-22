@@ -101,7 +101,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
         <p> ${post.user.name}</p> </div>
         
 
-        <p class="text-[13px] font-light text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal pt-5 overflow-hidden text-ellipsis line-clamp-2">
+        <p class="text-[13px] font-light text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal pt-5 overflow-hidden text-ellipsis line-clamp-2 pr-[17px]">
           ${postContent}
         </p>
       </div>
