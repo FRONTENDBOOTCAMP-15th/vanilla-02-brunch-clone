@@ -58,11 +58,23 @@ async function getAuthors(keyword: string): Promise<UserListResponse | undefined
   }
 }
 
+// 이미지 제거 함수
+function removeImagesFromHtml(html: string): string {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+
+  // 모든 img 태그 제거
+  tmp.querySelectorAll('img, br, div').forEach((img) => img.remove());
+
+  // 태그 구조는 유지하고 싶으면 innerHTML 반환
+  return tmp.innerHTML;
+}
+
 // 게시물 검색
 async function searchPosts() {
-  // 3. 쿼리스트링에서 검색어 추출
+  // 검색어 추출
   const keyword = new URLSearchParams(window.location.search).get('keyword')!;
-  // 4. API 서버에서 검색
+  // API 서버에서 검색
   const data = await getPosts(keyword);
 
   console.log('검색 응답:', data);
@@ -85,18 +97,22 @@ async function searchPosts() {
 
       // 검색 결과 수 만큼 화면에 article 출력
       data.item.forEach((post) => {
+        const cleanedContent = removeImagesFromHtml(post.content ?? '');
+
         const article = `
           <article class="border-b border-br-line py-4">
             <a href="/src/pages/details/DetailsPage.html?_id=${post._id}">
-            <h3 class="text-[17px] mt-[14px]">${post.title ?? ''}</h3>
-            <p class="mt-10 text-[12px] text-br-contentSecondary line-clamp-3">
-              ${post.content ?? ''}
-            </p>
-            <div class="flex items-center gap-2 mt-[8px]">
-              <span class="text-[12px] text-br-contentSecondary">${post.updatedAt ?? ''}</span>
-            </div>
+              <h3 class="text-[17px] mt-[14px]">${post.title ?? ''}</h3>
+              <p class="mt-10 text-[12px] text-br-contentSecondary line-clamp-3 leading-normal">
+                ${cleanedContent}
+              </p>
+              <div class="flex items-center gap-2 mt-[8px]">
+                <span class="text-[12px] text-br-contentSecondary">${post.updatedAt ?? ''}</span>
+              </div>
+            </a>
           </article>
         `;
+
         articleList.innerHTML += article;
       });
     }
@@ -132,15 +148,15 @@ async function searchAuthors() {
       data.item.forEach((user) => {
         const article = `
          
-        <article class="flex items-center gap-3">
-        <img id="image" src="${user.image}" alt=" 이미지" class="w-12 h-12 rounded-full object-cover" />
-
-        <div>
-          <h2 id="name" class="text-[16px] text-br-detailsTitle mb-1">${user.name}</h2>
-          <h3 id="job" class="text-[12px] text-br-contentSecondary mb-1">${user.extra?.job}</h3>
-        </div>
-      </article>
-   
+        <article class="flex items-start gap-3 py-3">
+          <a href="/src/pages/Author/AuthorPage.html?_id=${user._id}" class="flex items-start gap-3 ">
+            <img src="${user.image}" alt=" 프로필 이미지" class="w-12 h-12 rounded-full object-cover  " />
+            <div class="flex flex-col">
+              <h2 id="name" class="text-[16px] text-br-detailsTitle mb-1">${user.name}</h2>
+              <h3 id="job" class="text-[12px] text-br-contentSecondary mb-1 line-clamp-2">${user.extra?.job ?? ''}</h3>
+            </div>
+          </a>
+        </article>
         `;
         articleList.innerHTML += article;
       });
