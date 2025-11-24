@@ -9,7 +9,7 @@ function removeTags(html: string): string {
   return html.replace(/<\/?[^>]+(>|$)/g, '');
 }
 
-function isWithinOneDay(dateStr: string): boolean {
+function isWithinOneDay(dateStr: string) {
   // 'YYYY.MM.DD HH:MM:SS' → Date 객체로 변환
   const [datePart, timePart] = dateStr.split(' ');
   const [year, month, day] = datePart.split('.').map(Number);
@@ -101,7 +101,7 @@ function createBrunchCard(post: PostItem, index: number): HTMLElement {
         <p> ${post.user.name}</p> </div>
         
 
-        <p class="text-[13px] font-light text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal pt-5 overflow-hidden text-ellipsis line-clamp-2">
+        <p class="text-[13px] font-light text-br-contentSecondary leading-[1.4] text-ellipsis whitespace-normal pt-5 overflow-hidden text-ellipsis line-clamp-2 pr-[17px]">
           ${postContent}
         </p>
       </div>
