@@ -512,15 +512,44 @@ class TopComponent extends HTMLElement {
           <img src="/icon/SearchVector.svg" alt="검색 아이콘" />
         </button>
       </div>
+        <!-- 이름 박스: 초기에는 hidden -->
+  <div id="nameBubble" class="absolute left-1/2 transform -translate-x-1/2 mt-2 hidden">
+    <div class="bg-white text-sm text-gray-800 px-2 py-1 rounded-md shadow-md border border-gray-100 whitespace-nowrap">
+      <!-- JS로 이름 넣기 -->
+      <span id="displayName"></span>
+    </div>
+  </div>
     </div>
     `;
   }
 
   private appendAvatarBtn(user: User) {
     const parentDiv = document.getElementById('menu-items'); // 실제 부모 div id로 변경
+    const nameBubble = document.getElementById('nameBubble') as HTMLDivElement;
+    const displayName = document.getElementById('displayName') as HTMLSpanElement;
     const avatarBtn = document.createElement('button');
     avatarBtn.id = 'avatar-icon';
-    avatarBtn.className = 'text-br-start hover:text-[var(--start)] cursor-pointer';
+    avatarBtn.className = 'text-br-start cursor-pointer';
+    const userName: string | null = sessionStorage.getItem('userName');
+    displayName.textContent = userName;
+
+    avatarBtn.addEventListener('mousemove', (event: MouseEvent) => {
+      // 마우스 좌표 기준으로 이름 박스 위치 설정
+      const offsetX = 0; // 수평 오프셋 필요 시 조정
+      const offsetY = 8; // 마우스 바로 아래 간격
+
+      // 페이지 기준 좌표
+      const posX = event.pageX + offsetX;
+      const posY = event.pageY + offsetY;
+
+      nameBubble.style.left = `${posX}px`;
+      nameBubble.style.top = `${posY}px`;
+      nameBubble.classList.remove('hidden');
+    });
+
+    avatarBtn.addEventListener('mouseleave', () => {
+      nameBubble.classList.add('hidden'); // 마우스 나가면 숨김
+    });
 
     const img = document.createElement('img');
     img.src = user.avatarUrl;
@@ -539,7 +568,7 @@ class TopComponent extends HTMLElement {
 
     const alertBtn = document.createElement('button');
     alertBtn.id = 'alert-icon';
-    alertBtn.className = 'text-br-start hover:text-[var(--start)] cursor-pointer';
+    alertBtn.className = 'text-br-start cursor-pointer';
 
     const img = document.createElement('img');
     img.src = '/icon/Alarm.svg';
@@ -621,7 +650,6 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 //     if (result.ok == 1) {
 //       console.log('로그인 성공:', result.item.name);
 //       console.log('액세스 토큰:', result.item.token.accessToken);
-
 //       // 세션스토리지에 토큰 저장
 //       sessionStorage.setItem('accessToken', result.item.token.accessToken);
 //       sessionStorage.setItem('refreshToken', result.item.token.refreshToken);

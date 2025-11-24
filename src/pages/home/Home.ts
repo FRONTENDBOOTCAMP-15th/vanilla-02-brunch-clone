@@ -335,23 +335,17 @@ export async function retrieveAPI(url: string): Promise<any> {
 (async () => {
   let postRes: PostListResponse;
   let userRes: UserListResponse;
-
   //요즘 뜨는 브런치
   let url: string = 'https://fesp-api.koyeb.app/market/posts?type=brunch';
   postRes = (await retrieveAPI(url)) as PostListResponse;
   if (postRes.ok === 1) {
     const container = document.querySelector('.brunch-container');
     if (!container) return;
-
     container.innerHTML = ''; // 기존 내용 제거
-
     const data = postRes.item as PostItem[];
-
     //구독한 사용자가 많은 순으로 정렬
     data.sort((a, b) => b.likes - a.likes);
-
     data.forEach((post, i) => {
-      //console.log(JSON.stringify(post));
       if (i >= 10) return;
       const card = createBrunchCard(post, i);
       container.appendChild(card);
@@ -359,7 +353,7 @@ export async function retrieveAPI(url: string): Promise<any> {
   } else {
     console.log('로드 실패');
   }
-  // 구독자(TOP 구독) 급등 작가
+  // TOP 구독 작가
   url = 'https://fesp-api.koyeb.app/market/users?sort={"bookmarkedBy.users": -1}';
   userRes = await retrieveAPI(url);
   if (userRes.ok === 1) {
@@ -378,22 +372,22 @@ export async function retrieveAPI(url: string): Promise<any> {
   // 오늘 날짜와 회원번호를 매핑
   url = 'https://fesp-api.koyeb.app/market/users?sort={"bookmarkedBy.users": -1}';
   userRes = (await retrieveAPI(url)) as UserListResponse;
-  //console.log(userRes);
   if (userRes.ok === 1) {
     const date: Date = new Date();
     const day: string = String(date.getDate()).padStart(2, '0');
     const dayToNum: number = Number(day) % 10;
     const data = userRes.item as UserInfo[];
-    data.forEach((user) => {
-      for (let i: number = 0; i < data.length; i++) {
-        if (i >= 10) break;
-        // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리가 같은 회원
-        // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
-        if (user._id % 10 == dayToNum) {
-          renderTodayAuthorSection(user);
-          break;
-        } else renderTodayAuthorSection(data[0]);
+    let matchAuthor: UserInfo = data[0];
+    for (let i: number = 0; i < data.length; i++) {
+      const user = data[i];
+      if (i >= 10) break;
+      // 탑구독 작가 10 명 중에서 오늘 날짜와 회원번호 끝자리가 같은 회원
+      // 회원번호 끝자리가 같은 회원이 여러 명이명 순위가 높은 회원
+      if (user._id % 10 == dayToNum) {
+        matchAuthor = user;
+        break;
       }
-    });
+    }
+    renderTodayAuthorSection(matchAuthor);
   }
 })();
